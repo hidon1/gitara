@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עולם הגיטרה - חנות הספרים הרשמית</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&family=Secular+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #b8860b; /* זהב עתיק */
+            --bg: #f9f9f9;
+            --white: #ffffff;
+            --text: #333;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            scroll-behavior: smooth;
+        }
+
+        /* סרגל ניווט */
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-family: 'Secular One', sans-serif; font-size: 1.8rem; color: var(--primary); }
+        
+        nav a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        nav a:hover { color: var(--accent); }
+
+        /* אזור ראשי */
+        .hero {
+            background: linear-gradient(45deg, rgba(44, 62, 80, 0.9), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1550985543-f47f38aee62e?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+        /* אפשרויות ספרים */
+        .book-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 60px 5%;
+            flex-wrap: wrap;
+        }
+
+        .book-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            transition: transform 0.3s;
+        }
+        .book-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .book-card h3 { color: var(--accent); font-size: 1.5rem; }
+        .price { font-size: 2rem; font-weight: 800; margin: 15px 0; }
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--accent); }
+
+        /* גלריה מורחבת */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 40px 5%;
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            filter: grayscale(30%);
+            transition: 0.4s;
+        }
+        .gallery-grid img:hover { filter: grayscale(0%); transform: scale(1.02); }
+
+        /* טבלת נקודות מכירה */
+        .sales-container {
+            padding: 60px 5%;
+            background: white;
+        }
+        .sales-table {
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        .sales-table th { background: var(--primary); color: white; padding: 15px; }
+        .sales-table td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
+        .sales-table tr:nth-child(even) { background: #f8f9fa; }
+
+        /* תחתית */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px 5%;
+            text-align: center;
+        }
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        h2 { text-align: center; font-size: 2.2rem; margin-top: 50px; position: relative; }
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">מיתר המדריך</div>
+        <nav>
+            <a href="#home">בית</a>
+            <a href="#books">הספרים שלנו</a>
+            <a href="#gallery">גלריה</a>
+            <a href="#locations">איפה לקנות?</a>
+            <a href="#contact">צור קשר</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>להוציא מעצמך את המקסימום</h1>
+        <p>שיטת הלימוד המתקדמת ביותר לגיטרה - עכשיו בשתי מהדורות</p>
+    </section>
+
+    <h2 id="books">בחר את המהדורה שלך</h2>
+    <section class="book-options">
+        <div class="book-card">
+            <h3>ספר דיגיטלי (PDF)</h3>
+            <p>גישה מיידית מכל מכשיר, כולל סרטוני הדגמה בקישורים חיים.</p>
+            <div class="price">₪89</div>
+            <a href="#" class="btn">רכישה מאובטחת</a>
+        </div>
+        <div class="book-card">
+            <h3>מהדורה מודפסת</h3>
+            <p>כריכה קשה ואיכותית, דפי כרומו צבעוניים - מתנה מושלמת לכל נגן.</p>
+            <div class="price">₪149</div>
+            <a href="#" class="btn">הזמן עותק פיזי</a>
+        </div>
+    </section>
+
+    <h2 id="gallery">מבט מקרוב</h2>
+    <section class="gallery-grid" id="gallery">
+        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400" alt="תווים">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400" alt="גיטרה וטבע">
+        <img src="https://images.unsplash.com/photo-1525201548942-d8b8bb097fb3?w=400" alt="נגינה">
+        <img src="https://images.unsplash.com/photo-1561777841-6cdb97143685?w=400" alt="אקורדים">
+    </section>
+
+    <h2 id="locations">נקודות מכירה והפצה</h2>
+    <section class="sales-container">
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>עיר</th>
+                    <th>שם החנות</th>
+                    <th>כתובת</th>
+                    <th>סטטוס מלאי</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ירושלים</td>
+                    <td>צלילי הקודש</td>
+                    <td>רחוב המלך ג'ורג' 12</td>
+                    <td><strong>זמין במלאי</strong></td>
+                </tr>
+                <tr>
+                    <td>בני ברק</td>
+                    <td>היכל המוזיקה</td>
+                    <td>רחוב רבי עקיבא 55</td>
+                    <td><strong>זמין במלאי</strong></td>
+                </tr>
+                <tr>
+                    <td>תל אביב</td>
+                    <td>מיתר וצליל</td>
+                    <td>דיזנגוף סנטר</td>
+                    <td>אזל זמנית</td>
+                </tr>
+                <tr>
+                    <td>חיפה</td>
+                    <td>מנגינות הצפון</td>
+                    <td>דרך העצמאות 10</td>
+                    <td><strong>זמין במלאי</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer id="contact">
+        <h3>צור קשר להזמנות כמותיות או שאלות</h3>
+        <div class="contact-grid">
+            <div>📞 050-123-4567</div>
+            <div>📧 office@guitar-book.co.il</div>
+            <div>💬 וואטסאפ זמין לשירותכם</div>
+        </div>
+        <p style="margin-top: 30px; opacity: 0.7;">&copy; 2025 כל הזכויות שמורות למחברי "מיתר המדריך"</p>
+    </footer>
+
+</body>
+</html>
