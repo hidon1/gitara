@@ -20,7 +20,7 @@
             margin: 0;
             font-family: 'Assistant', sans-serif;
             color: var(--primary);
-            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('רקע.PNG');
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1600&q=80');
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
@@ -120,10 +120,10 @@
 
         .card {
             background: white;
-            padding: 60px;
+            padding: 40px;
             border-radius: 16px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.04);
-            margin-bottom: 70px;
+            margin-bottom: 50px;
             border: 2px solid #f5f5f5;
             transition: all 0.4s ease;
             opacity: 0;
@@ -230,9 +230,9 @@
         /* כרטיסי ספרים */
         .books-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-            gap: 50px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
         }
 
         .book-card {
@@ -270,7 +270,7 @@
 
         .book-image {
             width: 100%;
-            height: 480px;
+            height: 320px;
             object-fit: cover;
             background: #f5f5f5;
             transition: transform 0.5s ease;
@@ -281,7 +281,7 @@
         }
 
         .book-details {
-            padding: 40px;
+            padding: 30px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -302,10 +302,10 @@
         }
 
         .book-price {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: var(--price);
             font-weight: 800;
-            margin: 25px 0;
+            margin: 20px 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
@@ -313,15 +313,17 @@
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), #2c4158);
             color: white;
-            padding: 18px 45px;
+            padding: 14px 30px;
             text-decoration: none;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             border-radius: 8px;
             transition: all 0.4s ease;
-            margin-top: 15px;
+            margin-top: 10px;
             box-shadow: 0 5px 15px rgba(26, 42, 60, 0.3);
             position: relative;
             overflow: hidden;
+            border: none;
+            cursor: pointer;
         }
 
         .book-btn::before {
@@ -494,6 +496,130 @@
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
         }
+
+        /* סל קניות */
+        .cart-toggle {
+            background: linear-gradient(135deg, var(--accent), #d2a253);
+            color: var(--primary);
+            border: none;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cart-toggle:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+
+        .cart-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 320px;
+            max-height: 70vh;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+            padding: 18px;
+            border: 2px solid #f0f0f0;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1100;
+            backdrop-filter: blur(10px);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .cart-items { display: flex; flex-direction: column; gap: 10px; overflow: auto; }
+
+        .cart-item {
+            padding: 12px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border: 1px solid #eaeaea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover { border-color: var(--accent); }
+
+        .cart-item.selected {
+            background: linear-gradient(135deg, rgba(176, 141, 87, 0.1), rgba(15, 31, 47, 0.05));
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        .cart-actions { display: flex; gap: 10px; }
+
+        .cart-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cart-btn.primary {
+            background: linear-gradient(135deg, var(--primary), #2c4158);
+            color: white;
+            box-shadow: 0 8px 20px rgba(26, 42, 60, 0.25);
+        }
+
+        .cart-btn.secondary {
+            background: linear-gradient(135deg, #f3f3f3, #ffffff);
+            color: var(--primary);
+            border: 1px solid #e0e0e0;
+        }
+
+        .cart-btn:hover { transform: translateY(-2px); }
+
+        .cart-hint {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .pill-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin: 15px 0 5px;
+        }
+
+        .pill {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid #e6d5b8;
+            padding: 10px 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
     </style>
     </head>
     <body>
@@ -508,12 +634,19 @@
             <a href="#gallery">גלריה</a>
             <a href="#reviews">תגובות</a>
             <a href="#contact">צור קשר</a>
+            <button class="cart-toggle" id="cartToggle">סל קניות (<span id="cartCount">0</span>)</button>
         </nav>
     </header>
 
     <div class="hero">
         <h1>להיטי עולם הישיבות</h1>
         <p>ספר האקורדים הפרקטי לקומזיצים ולשירת ישיבה ברמה גבוהה</p>
+        <div class="pill-row">
+            <div class="pill">משלוח מהיר עד הבית</div>
+            <div class="pill">עדכון דיגיטלי חינם</div>
+            <div class="pill">תמיכה אישית בווטסאפ</div>
+            <div class="pill">תשלום מאובטח</div>
+        </div>
     </div>
 
     <div class="container">
@@ -570,9 +703,12 @@
                             מושלם ללמידה ולתרגול ליד הגיטרה.
                         </p>
                         <div class="book-price">₪149</div>
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=enb0548459819@gmail.com&su=הזמנת הספר 'להיטי עולם הישיבות' - מהדורה מודפסת&body=שלום רב,%0D%0A%0D%0Aאני מעוניין/ת להזמין את הספר 'להיטי עולם הישיבות' במהדורה המודפסת במחיר 149 ש״ח.%0D%0A%0D%0Aפרטים אישיים:%0D%0Aשם מלא: %0D%0Aטלפון: %0D%0Aכתובת למשלוח: %0D%0A%0D%0Aתודה רבה!" target="_blank" class="book-btn">
-                            <span>הזמן במייל עכשיו</span>
-                        </a>
+                        <div class="book-actions">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=enb0548459819@gmail.com&su=הזמנת הספר 'להיטי עולם הישיבות' - מהדורה מודפסת&body=שלום רב,%0D%0A%0D%0Aאני מעוניין/ת להזמין את הספר 'להיטי עולם הישיבות' במהדורה המודפסת במחיר 149 ש״ח.%0D%0A%0D%0Aפרטים אישיים:%0D%0Aשם מלא: %0D%0Aטלפון: %0D%0Aכתובת למשלוח: %0D%0A%0D%0Aתודה רבה!" target="_blank" class="book-btn">
+                                <span>הזמן במייל עכשיו</span>
+                            </a>
+                            <button type="button" class="book-btn add-to-cart" data-name="מהדורה מודפסת" data-price="149">הוסף לסל</button>
+                        </div>
                     </div>
                 </div>
 
@@ -586,9 +722,12 @@
                             אפשרות לצפייה בכל מכשיר וזמינות מכל מקום.
                         </p>
                         <div class="book-price">₪79</div>
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=enb0548459819@gmail.com&su=רכישת הספר 'להיטי עולם הישיבות' - מהדורה דיגיטלית&body=שלום רב,%0D%0A%0D%0Aאני מעוניין/ת לרכוש את הספר 'להיטי עולם הישיבות' במהדורה הדיגיטלית במחיר 79 ש״ח.%0D%0A%0D%0Aפרטים אישיים:%0D%0Aשם מלא: %0D%0Aטלפון: %0D%0Aאימייל לקבלת הקובץ: %0D%0A%0D%0Aתודה רבה!" target="_blank" class="book-btn">
-                            <span>רכישה מיידית</span>
-                        </a>
+                        <div class="book-actions">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=enb0548459819@gmail.com&su=רכישת הספר 'להיטי עולם הישיבות' - מהדורה דיגיטלית&body=שלום רב,%0D%0A%0D%0Aאני מעוניין/ת לרכוש את הספר 'להיטי עולם הישיבות' במהדורה הדיגיטלית במחיר 79 ש״ח.%0D%0A%0D%0Aפרטים אישיים:%0D%0Aשם מלא: %0D%0Aטלפון: %0D%0Aאימייל לקבלת הקובץ: %0D%0A%0D%0Aתודה רבה!" target="_blank" class="book-btn">
+                                <span>רכישה מיידית</span>
+                            </a>
+                            <button type="button" class="book-btn add-to-cart" data-name="מהדורה דיגיטלית" data-price="79">הוסף לסל</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -649,9 +788,114 @@
 
     </div>
 
-    <footer>
-        &copy; 2025 להיטי עולם הישיבות | הוצאה לאור של ספרי נגינה איכותיים
-    </footer>
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <span>סל הקניות</span>
+            <button class="cart-close" id="closeCart" aria-label="סגור סל">✕</button>
+        </div>
+        <div class="cart-hint">לחצו על פריט כדי להדגיש אותו לפני שליחה.</div>
+        <div id="emptyCart">הסל ריק כרגע</div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-actions">
+            <button class="cart-btn secondary" id="clearCart">נקה סל</button>
+            <button class="cart-btn primary" id="sendCart">בקש רכישה</button>
+        </div>
+    </div>
+
+<footer>
+    &copy; 2025 להיטי עולם הישיבות | הוצאה לאור של ספרי נגינה איכותיים
+</footer>
+
+<script>
+    (() => {
+        const cart = [];
+        const cartPanel = document.getElementById('cartPanel');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartToggle = document.getElementById('cartToggle');
+        const closeCart = document.getElementById('closeCart');
+        const emptyState = document.getElementById('emptyCart');
+        const sendCart = document.getElementById('sendCart');
+        const clearCart = document.getElementById('clearCart');
+        const emailAddress = 'enb0548459819@gmail.com';
+
+        const renderCart = () => {
+            cartCount.textContent = cart.length;
+            cartItemsContainer.innerHTML = '';
+            if (!cart.length) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            cart.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'cart-item' + (item.selected ? ' selected' : '');
+                div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;"><span>${item.name}</span><strong>₪${item.price}</strong></div>`;
+                div.addEventListener('click', () => {
+                    item.selected = !item.selected;
+                    div.classList.toggle('selected', item.selected);
+                });
+                cartItemsContainer.appendChild(div);
+            });
+        };
+
+        const showCart = (force) => {
+            cartPanel.style.display = force === false ? 'none' : 'flex';
+        };
+
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name || 'מוצר';
+                const price = btn.dataset.price || '';
+                cart.push({ name, price, selected: true });
+                renderCart();
+                showCart(true);
+            });
+        });
+
+        cartToggle.addEventListener('click', () => {
+            if (cartPanel.style.display === 'flex') {
+                showCart(false);
+            } else {
+                showCart(true);
+            }
+        });
+
+        closeCart.addEventListener('click', () => showCart(false));
+
+        clearCart.addEventListener('click', () => {
+            cart.splice(0, cart.length);
+            renderCart();
+        });
+
+        sendCart.addEventListener('click', () => {
+            const selected = cart.filter(item => item.selected);
+            const itemsToSend = selected.length ? selected : cart;
+            if (!itemsToSend.length) {
+                alert('הסל ריק כרגע.');
+                return;
+            }
+            const bodyLines = [
+                'שלום רב,',
+                '',
+                'אשמח לבצע רכישה של הפריטים הבאים:',
+                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - ₪${item.price}`),
+                '',
+                'פרטים אישיים:',
+                'שם מלא:',
+                'טלפון:',
+                'כתובת למשלוח / אימייל לקבלה:'
+            ];
+
+            const subject = encodeURIComponent('בקשת רכישה - להיטי עולם הישיבות');
+            const body = encodeURIComponent(bodyLines.join('\n'));
+            window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+        });
+
+        renderCart();
+    })();
+</script>
 
 </body>
 </html>
