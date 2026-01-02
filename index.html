@@ -11,6 +11,7 @@
             --accent: #b08d57;
             --price: #1f8a54;
             --bg-overlay: rgba(248, 248, 248, 0.96);
+            --bg-guitar: url('guitar-bg.svg');
         }
 
         * { box-sizing: border-box; }
@@ -20,7 +21,8 @@
             margin: 0;
             font-family: 'Assistant', sans-serif;
             color: var(--primary);
-            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1600&q=80');
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), var(--bg-guitar, #f8f8f8);
+            background-color: #f8f8f8;
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
@@ -565,6 +567,12 @@
             box-shadow: 0 10px 20px rgba(212, 175, 55, 0.25);
         }
 
+        .cart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .cart-actions { display: flex; gap: 10px; }
 
         .cart-btn {
@@ -796,6 +804,7 @@
         <div class="cart-hint">לחצו על פריט כדי להדגיש אותו לפני שליחה.</div>
         <div id="emptyCart">הסל ריק כרגע</div>
         <div class="cart-items" id="cartItems"></div>
+        <div class="cart-hint" id="cartStatus" aria-live="polite"></div>
         <div class="cart-actions">
             <button class="cart-btn secondary" id="clearCart">נקה סל</button>
             <button class="cart-btn primary" id="sendCart">בקש רכישה</button>
@@ -817,21 +826,38 @@
         const emptyState = document.getElementById('emptyCart');
         const sendCart = document.getElementById('sendCart');
         const clearCart = document.getElementById('clearCart');
-        const emailAddress = 'enb0548459819@gmail.com';
+        const cartStatus = document.getElementById('cartStatus');
+        const emailLink = document.querySelector('.contact-btn.email-btn');
+        const fallbackEmail = 'enb0548459819@gmail.com';
+        const emailMatch = (emailLink?.href || '').match(/mailto:([^?&#]+)/);
+        const emailAddress = emailMatch ? decodeURIComponent(emailMatch[1]) : fallbackEmail;
+        const DEFAULT_ITEM_NAME = 'מוצר';
+        const DEFAULT_ITEM_PRICE = '0';
+        let cartOpen = false;
 
         const renderCart = () => {
             cartCount.textContent = cart.length;
             cartItemsContainer.innerHTML = '';
             if (!cart.length) {
                 emptyState.style.display = 'block';
+                cartStatus.textContent = 'הוסיפו פריטים כדי לשלוח בקשה.';
                 return;
             }
             emptyState.style.display = 'none';
+            cartStatus.textContent = '';
 
-            cart.forEach((item, index) => {
+            cart.forEach((item) => {
                 const div = document.createElement('div');
                 div.className = 'cart-item' + (item.selected ? ' selected' : '');
-                div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;"><span>${item.name}</span><strong>₪${item.price}</strong></div>`;
+                const row = document.createElement('div');
+                row.className = 'cart-row';
+                const nameEl = document.createElement('span');
+                nameEl.textContent = item.name;
+                const priceEl = document.createElement('strong');
+                priceEl.textContent = `₪${item.price}`;
+                row.appendChild(nameEl);
+                row.appendChild(priceEl);
+                div.appendChild(row);
                 div.addEventListener('click', () => {
                     item.selected = !item.selected;
                     div.classList.toggle('selected', item.selected);
@@ -841,39 +867,41 @@
         };
 
         const showCart = (force) => {
-            cartPanel.style.display = force === false ? 'none' : 'flex';
+            cartOpen = force ?? !cartOpen;
+            cartPanel.style.display = cartOpen ? 'flex' : 'none';
         };
 
         document.querySelectorAll('.add-to-cart').forEach(btn => {
             btn.addEventListener('click', () => {
-                const name = btn.dataset.name || 'מוצר';
-                const price = btn.dataset.price || '';
+                const name = btn.dataset.name || DEFAULT_ITEM_NAME;
+                const price = btn.dataset.price || DEFAULT_ITEM_PRICE;
+                if (cart.some(item => item.name === name)) {
+                    cartStatus.textContent = `${name} כבר נמצא בסל.`;
+                    showCart(true);
+                    return;
+                }
                 cart.push({ name, price, selected: true });
                 renderCart();
+                cartStatus.textContent = `${name} נוסף לסל.`;
                 showCart(true);
             });
         });
 
-        cartToggle.addEventListener('click', () => {
-            if (cartPanel.style.display === 'flex') {
-                showCart(false);
-            } else {
-                showCart(true);
-            }
-        });
+        cartToggle.addEventListener('click', () => showCart(!cartOpen));
 
         closeCart.addEventListener('click', () => showCart(false));
 
         clearCart.addEventListener('click', () => {
-            cart.splice(0, cart.length);
+            cart.length = 0;
             renderCart();
+            cartStatus.textContent = 'הסל נוקה.';
         });
 
         sendCart.addEventListener('click', () => {
             const selected = cart.filter(item => item.selected);
             const itemsToSend = selected.length ? selected : cart;
             if (!itemsToSend.length) {
-                alert('הסל ריק כרגע.');
+                cartStatus.textContent = 'הסל ריק כרגע.';
                 return;
             }
             const bodyLines = [
@@ -890,7 +918,8 @@
 
             const subject = encodeURIComponent('בקשת רכישה - להיטי עולם הישיבות');
             const body = encodeURIComponent(bodyLines.join('\n'));
-            window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+            cartStatus.textContent = 'פותחים מייל עם הפריטים שסימנתם.';
+            window.open(`mailto:${emailAddress}?subject=${subject}&body=${body}`, '_blank');
         });
 
         renderCart();
