@@ -238,16 +238,16 @@
         /* כרטיסי ספרים */
         .books-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
             margin-top: 30px;
         }
 
         .book-card {
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.08);
             transition: all 0.5s ease;
             border: 2px solid #e9e0d1;
             position: relative;
@@ -278,7 +278,7 @@
 
         .book-image {
             width: 100%;
-            height: 240px;
+            height: 200px;
             object-fit: cover;
             background: #f5f5f5;
             transition: transform 0.5s ease;
@@ -289,7 +289,7 @@
         }
 
         .book-details {
-            padding: 22px;
+            padding: 18px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -297,23 +297,23 @@
 
         .book-title {
             font-family: 'Bellefair', serif;
-            font-size: 1.9rem;
+            font-size: 1.7rem;
             color: var(--primary);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .book-description {
             color: #666;
-            line-height: 1.7;
-            margin-bottom: 18px;
-            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-size: 1rem;
         }
 
         .book-price {
-            font-size: 2.3rem;
+            font-size: 2rem;
             color: var(--price);
             font-weight: 800;
-            margin: 14px 0;
+            margin: 12px 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
@@ -483,19 +483,19 @@
 
         .songs-grid {
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            gap: 25px; 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            gap: 16px; 
             text-align: center; 
             font-weight: bold;
         }
 
         .song-item {
             background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            padding: 25px 20px;
+            padding: 14px 12px;
             border-radius: 10px;
             transition: all 0.3s ease;
             border: 2px solid #f0f0f0;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
         .song-item:hover {
@@ -563,6 +563,7 @@
             border: 1px solid #eaeaea;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .cart-item:hover { border-color: var(--accent); }
@@ -577,6 +578,51 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .cart-check {
+            font-weight: 900;
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            color: var(--primary);
+        }
+
+        .cart-item.selected .cart-check {
+            opacity: 1;
+        }
+
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            border: 1px solid #dcdcdc;
+            background: white;
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .qty-btn:hover, .qty-btn:focus {
+            outline: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            background: #f7f7f7;
+        }
+
+        .qty-value {
+            min-width: 22px;
+            text-align: center;
+            font-weight: 800;
         }
 
         .cart-actions { display: flex; gap: 10px; }
@@ -752,8 +798,6 @@
             <div class="songs-grid">
                 <div class="song-item">אחת שאלתי</div>
                 <div class="song-item">מקימי מעפר</div>
-                <div class="song-item">לבני ימין אמר</div>
-                <div class="song-item">וזכני לגדל</div>
                 <div class="song-item">הנשמה לך</div>
                 <div class="song-item">ניגון באבוב</div>
             </div>
@@ -839,8 +883,32 @@
         let cartOpen = false;
         const buildGmailUrl = (to, subject, body) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${subject}&body=${body}`;
 
+        const totalItems = () => cart.reduce((sum, item) => sum + (item.quantity ?? 1), 0);
+        const updateCartCount = () => { cartCount.textContent = totalItems(); };
+        const removeItem = (item, element) => {
+            const currentIndex = cart.findIndex(cartItem => cartItem === item);
+            if (currentIndex !== -1) {
+                cart.splice(currentIndex, 1);
+            }
+            element.remove();
+            const remaining = totalItems();
+            updateCartCount();
+            if (!remaining) {
+                emptyState.style.display = 'block';
+                cartStatus.textContent = 'הוסיפו פריטים כדי לשלוח בקשה.';
+            } else {
+                emptyState.style.display = 'none';
+                cartStatus.textContent = `${item.name} הוסר מהסל.`;
+            }
+        };
+        const updateQuantity = (item, qtyElement, delta) => {
+            item.quantity = (item.quantity ?? 1) + delta;
+            qtyElement.textContent = item.quantity;
+            updateCartCount();
+        };
+
         const renderCart = () => {
-            cartCount.textContent = cart.length;
+            updateCartCount();
             cartItemsContainer.innerHTML = '';
             if (!cart.length) {
                 emptyState.style.display = 'block';
@@ -851,17 +919,52 @@
             cartStatus.textContent = '';
 
             cart.forEach((item) => {
+                item.quantity = item.quantity ?? 1;
                 const div = document.createElement('div');
                 div.className = 'cart-item' + (item.selected ? ' selected' : '');
                 const row = document.createElement('div');
                 row.className = 'cart-row';
+                const checkEl = document.createElement('span');
+                checkEl.className = 'cart-check';
+                checkEl.textContent = '✔';
                 const nameEl = document.createElement('span');
                 nameEl.textContent = item.name;
                 const priceEl = document.createElement('strong');
                 priceEl.textContent = `₪${item.price}`;
+                row.appendChild(checkEl);
                 row.appendChild(nameEl);
                 row.appendChild(priceEl);
                 div.appendChild(row);
+                const quantityRow = document.createElement('div');
+                quantityRow.className = 'cart-quantity';
+                const minusBtn = document.createElement('button');
+                minusBtn.type = 'button';
+                minusBtn.className = 'qty-btn';
+                minusBtn.textContent = '−';
+                const qtyValue = document.createElement('span');
+                qtyValue.className = 'qty-value';
+                qtyValue.textContent = item.quantity;
+                const plusBtn = document.createElement('button');
+                plusBtn.type = 'button';
+                plusBtn.className = 'qty-btn';
+                plusBtn.textContent = '+';
+                minusBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (item.quantity > 1) {
+                        updateQuantity(item, qtyValue, -1);
+                    } else {
+                        removeItem(item, div);
+                        return;
+                    }
+                });
+                plusBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    updateQuantity(item, qtyValue, 1);
+                });
+                quantityRow.appendChild(minusBtn);
+                quantityRow.appendChild(qtyValue);
+                quantityRow.appendChild(plusBtn);
+                div.appendChild(quantityRow);
                 div.addEventListener('click', () => {
                     item.selected = !item.selected;
                     div.classList.toggle('selected', item.selected);
@@ -879,12 +982,15 @@
             btn.addEventListener('click', () => {
                 const name = btn.dataset.name || DEFAULT_ITEM_NAME;
                 const price = btn.dataset.price || DEFAULT_ITEM_PRICE;
-                if (cart.some(item => item.name === name)) {
-                    cartStatus.textContent = `${name} כבר נמצא בסל.`;
+                const existing = cart.find(item => item.name === name);
+                if (existing) {
+                    existing.quantity += 1;
+                    renderCart();
+                    cartStatus.textContent = `${name} עודכן לכמות ${existing.quantity}.`;
                     showCart(true);
                     return;
                 }
-                cart.push({ name, price, selected: true });
+                cart.push({ name, price, selected: true, quantity: 1 });
                 renderCart();
                 cartStatus.textContent = `${name} נוסף לסל.`;
                 showCart(true);
@@ -912,7 +1018,7 @@
                 'שלום רב,',
                 '',
                 'אשמח לבצע רכישה של הפריטים הבאים:',
-                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - ₪${item.price}`),
+                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - כמות: ${item.quantity} - ₪${item.price}`),
                 '',
                 'פרטים אישיים:',
                 'שם מלא:',
