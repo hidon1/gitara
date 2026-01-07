@@ -296,9 +296,21 @@
         /* כרטיסי ספרים */
         .books-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
             margin-top: 30px;
+        }
+
+        .book-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .books-container {
+                grid-template-columns: 1fr;
+            }
         }
 
         .book-card {
@@ -863,60 +875,57 @@
         <section id="books" class="card">
             <h2 class="section-title">להיטי עולם הישיבות – הסדרה שכל נגן חייב</h2>
             
-            <!-- Part A Description -->
-            <div class="book-description-section">
-                <h3 class="book-desc-title">האנציקלופדיה של השירים (280 שירים)</h3>
-                <p class="book-desc-subtitle">הבסיס המושלם לכל נגן שרוצה להכיר את הקלאסיקות.</p>
-                <ul class="book-desc-points">
-                    <li><span class="emoji">🎼</span><span><strong>מאגר אדיר ומגוון:</strong> 280 שירים מכל הסגנונות ומכל הזמנים (עד תשפ"א) – כל מה ששרים בקומזיץ ובאירועים במקום אחד.</span></li>
-                    <li><span class="emoji">🎹</span><span><strong>נגינה זורמת מהרגע הראשון:</strong> כל השירים נכתבו בסולמות קלים (כמו Am) תוך פישוט אקורדים מורכבים, כדי שתוכלו לנגן ברצף בלי להסתבך.</span></li>
-                    <li><span class="emoji">🗓️</span><span><strong>סדר במעגל השנה:</strong> עשרות להיטים המסודרים לפי חודשי השנה, החגים והמועדים – פשוט מושלם לכל עת.</span></li>
-                    <li><span class="emoji">💡</span><span><strong>ערך מוסף בכל עמוד:</strong> שזורים בחוברת עשרות "טיפים" ואנקדוטות מתאוריית המוזיקה המעשירים את הידע תוך כדי נגינה.</span></li>
-                </ul>
-            </div>
-
-            <!-- Divider -->
-            <div class="book-desc-divider"></div>
-
-            <!-- Part B Description -->
-            <div class="book-description-section">
-                <h3 class="book-desc-title">הלהיטים החדשים (93 שירים)</h3>
-                <p class="book-desc-subtitle">לנגנים שרוצים להישאר מעודכנים ולהתמקצע ברמה הגבוהה ביותר.</p>
-                <ul class="book-desc-points">
-                    <li><span class="emoji">🔥</span><span><strong>מעודכנים בלהיטים:</strong> 93 השירים הכי חמים שפרצו לעולם הישיבות בין השנים תשפ"א-תשפ"ד, בדגש על הסגנון החסידי האותנטי.</span></li>
-                    <li><span class="emoji">🎯</span><span><strong>דיוק מקצועי:</strong> רמת אקורדים גבוהה ומדויקת להפליא, ששומרת על פשטות הסולם (Am) מצד אחד, אך מביאה את העומק ההרמוני מצד שני.</span></li>
-                    <li><span class="emoji">🎓</span><span><strong>קורס תאוריה בתוך החוברת:</strong> עשרות עמודי העשרה בסוף הספר על תאוריית המוזיקה והולכת קולות – מוגש בשפה עממית, ברורה ובגובה העיניים.</span></li>
-                    <li><span class="emoji">✨</span><span><strong>חווית משתמש משודרגת:</strong> פורמט מרובע ייחודי, נח במיוחד להצבה על הסטנד, בעיצוב מודרני ומלא סטייל שכיף לפתוח.</span></li>
-                </ul>
-            </div>
-
             <div class="books-container">
                 <!-- חלק א' -->
-                <div class="book-card">
-                    <img src="תמונת-ספר-מהדורה-מודפסת.PNG" alt="חלק א' - אנציקלופדיה של שירים" class="book-image">
-                    <div class="book-details">
-                        <h3 class="book-title">חלק א' - The Encyclopedia of Songs</h3>
-                        <p class="book-description">
-                            מאגר מקיף של 280 שירים מכל הזמנים - מהקלאסיקות הנוסטלגיות ועד ללהיטים האהובים. 
-                            כל השירים עם אקורדים מדויקים וקלים לביצוע.
-                        </p>
-                        <div class="book-actions">
-                            <button type="button" class="book-btn add-to-cart" data-name="חלק א' - The Encyclopedia of Songs (280 שירים)" data-price="149">הוסף לסל</button>
+                <div class="book-column">
+                    <div class="book-description-section">
+                        <h3 class="book-desc-title">חלק א' - האנציקלופדיה של השירים (280 שירים)</h3>
+                        <p class="book-desc-subtitle">הבסיס המושלם לכל נגן שרוצה להכיר את הקלאסיקות.</p>
+                        <ul class="book-desc-points">
+                            <li><span class="emoji">🎼</span><span><strong>מאגר אדיר ומגוון:</strong> 280 שירים מכל הסגנונות ומכל הזמנים (עד תשפ"א) – כל מה ששרים בקומזיץ ובאירועים במקום אחד.</span></li>
+                            <li><span class="emoji">🎹</span><span><strong>נגינה זורמת מהרגע הראשון:</strong> כל השירים נכתבו בסולמות קלים (כמו Am) תוך פישוט אקורדים מורכבים, כדי שתוכלו לנגן ברצף בלי להסתבך.</span></li>
+                            <li><span class="emoji">🗓️</span><span><strong>סדר במעגל השנה:</strong> עשרות להיטים המסודרים לפי חודשי השנה, החגים והמועדים – פשוט מושלם לכל עת.</span></li>
+                            <li><span class="emoji">💡</span><span><strong>ערך מוסף בכל עמוד:</strong> שזורים בחוברת עשרות "טיפים" ואנקדוטות מתאוריית המוזיקה המעשירים את הידע תוך כדי נגינה.</span></li>
+                        </ul>
+                    </div>
+                    <div class="book-card">
+                        <img src="תמונת-ספר-מהדורה-מודפסת.PNG" alt="חלק א' - אנציקלופדיה של שירים" class="book-image">
+                        <div class="book-details">
+                            <h3 class="book-title">חלק א' - The Encyclopedia of Songs</h3>
+                            <p class="book-description">
+                                מאגר מקיף של 280 שירים מכל הזמנים - מהקלאסיקות הנוסטלגיות ועד ללהיטים האהובים. 
+                                כל השירים עם אקורדים מדויקים וקלים לביצוע.
+                            </p>
+                            <div class="book-actions">
+                                <button type="button" class="book-btn add-to-cart" data-name="חלק א' - The Encyclopedia of Songs (280 שירים)" data-price="149">הוסף לסל</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- חלק ב' -->
-                <div class="book-card">
-                    <img src="תמונת-ספר-מהדורה-דיגיטלית.PNG" alt="חלק ב' - הלהיטים החדשים" class="book-image">
-                    <div class="book-details">
-                        <h3 class="book-title">חלק ב' - The New Hits</h3>
-                        <p class="book-description">
-                            93 להיטים חדשים מהשנים האחרונות - כל מה שחם ועדכני בעולם המוזיקה החסידית. 
-                            תמיד עם היד על הדופק!
-                        </p>
-                        <div class="book-actions">
-                            <button type="button" class="book-btn add-to-cart" data-name="חלק ב' - The New Hits (93 שירים)" data-price="79">הוסף לסל</button>
+                <div class="book-column">
+                    <div class="book-description-section">
+                        <h3 class="book-desc-title">חלק ב' - הלהיטים החדשים (93 שירים)</h3>
+                        <p class="book-desc-subtitle">לנגנים שרוצים להישאר מעודכנים ולהתמקצע ברמה הגבוהה ביותר.</p>
+                        <ul class="book-desc-points">
+                            <li><span class="emoji">🔥</span><span><strong>מעודכנים בלהיטים:</strong> 93 השירים הכי חמים שפרצו לעולם הישיבות בין השנים תשפ"א-תשפ"ד, בדגש על הסגנון החסידי האותנטי.</span></li>
+                            <li><span class="emoji">🎯</span><span><strong>דיוק מקצועי:</strong> רמת אקורדים גבוהה ומדויקת להפליא, ששומרת על פשטות הסולם (Am) מצד אחד, אך מביאה את העומק ההרמוני מצד שני.</span></li>
+                            <li><span class="emoji">🎓</span><span><strong>קורס תאוריה בתוך החוברת:</strong> עשרות עמודי העשרה בסוף הספר על תאוריית המוזיקה והולכת קולות – מוגש בשפה עממית, ברורה ובגובה העיניים.</span></li>
+                            <li><span class="emoji">✨</span><span><strong>חווית משתמש משודרגת:</strong> פורמט מרובע ייחודי, נח במיוחד להצבה על הסטנד, בעיצוב מודרני ומלא סטייל שכיף לפתוח.</span></li>
+                        </ul>
+                    </div>
+                    <div class="book-card">
+                        <img src="תמונת-ספר-מהדורה-דיגיטלית.PNG" alt="חלק ב' - הלהיטים החדשים" class="book-image">
+                        <div class="book-details">
+                            <h3 class="book-title">חלק ב' - The New Hits</h3>
+                            <p class="book-description">
+                                93 להיטים חדשים מהשנים האחרונות - כל מה שחם ועדכני בעולם המוזיקה החסידית. 
+                                תמיד עם היד על הדופק!
+                            </p>
+                            <div class="book-actions">
+                                <button type="button" class="book-btn add-to-cart" data-name="חלק ב' - The New Hits (93 שירים)" data-price="79">הוסף לסל</button>
+                            </div>
                         </div>
                     </div>
                 </div>
