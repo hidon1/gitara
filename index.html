@@ -872,7 +872,6 @@
 
         .modal-close {
             color: #aaa;
-            float: left;
             font-size: 32px;
             font-weight: bold;
             cursor: pointer;
@@ -1054,8 +1053,8 @@
             <h2 class="section-title">מה בספר?</h2>
             
             <div class="song-list-buttons">
-                <button class="song-list-btn" id="openPartA">📜 רשימת שירים - חלק א'</button>
-                <button class="song-list-btn" id="openPartB">📜 רשימת שירים - חלק ב'</button>
+                <button class="song-list-btn" id="openPartA" aria-label="פתח רשימת שירים חלק א'">📜 רשימת שירים - חלק א'</button>
+                <button class="song-list-btn" id="openPartB" aria-label="פתח רשימת שירים חלק ב'">📜 רשימת שירים - חלק ב'</button>
             </div>
             
             <div class="songs-grid">
@@ -1112,7 +1111,7 @@
     <!-- Modal for Part A -->
     <div id="modalPartA" class="modal">
         <div class="modal-content">
-            <span class="modal-close" id="closePartA">&times;</span>
+            <span class="modal-close" id="closePartA" role="button" aria-label="סגור" tabindex="0">&times;</span>
             <h2 class="modal-title">🎵 רשימת השירים המלאה - חלק א'</h2>
             
             <div class="modal-section">
@@ -1246,7 +1245,7 @@
     <!-- Modal for Part B -->
     <div id="modalPartB" class="modal">
         <div class="modal-content">
-            <span class="modal-close" id="closePartB">&times;</span>
+            <span class="modal-close" id="closePartB" role="button" aria-label="סגור" tabindex="0">&times;</span>
             <h2 class="modal-title">🎹 רשימת השירים המלאה - חלק ב'</h2>
             <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 1.1rem;">הלהיטים הגדולים של השנים האחרונות (תשפ"א - תשפ"ד)</p>
             
@@ -1537,6 +1536,21 @@
 
         closePartB.addEventListener('click', () => {
             modalPartB.style.display = 'none';
+        });
+
+        // Add keyboard support for close buttons
+        closePartA.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                modalPartA.style.display = 'none';
+            }
+        });
+
+        closePartB.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                modalPartB.style.display = 'none';
+            }
         });
 
         // Close modal when clicking outside
