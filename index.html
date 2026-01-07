@@ -224,9 +224,21 @@
         /* נקודות מכירה */
         .selling-points {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-top: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .selling-points {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .selling-points {
+                grid-template-columns: 1fr;
+            }
         }
 
         .point-card {
@@ -305,6 +317,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            align-items: stretch;
         }
 
         @media (max-width: 768px) {
@@ -800,6 +813,119 @@
             max-width: 600px;
             opacity: 0.3;
         }
+
+        /* Song list buttons and modals */
+        .song-list-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .song-list-btn {
+            padding: 14px 30px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, var(--primary), #2c4158);
+            color: white;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .song-list-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(176, 141, 87, 0.35);
+            background: linear-gradient(135deg, var(--accent), #d3a25f);
+            color: var(--primary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 30px 40px;
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            color: #aaa;
+            float: left;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 15px;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: var(--primary);
+        }
+
+        .modal-title {
+            font-family: 'Bellefair', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+        }
+
+        .modal-section-title {
+            font-family: 'Bellefair', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+        }
+
+        .modal-subsection {
+            margin-bottom: 20px;
+        }
+
+        .modal-subsection-title {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .modal-song-list {
+            line-height: 1.8;
+            color: #444;
+            font-size: 1rem;
+        }
+    
     </style>
     </head>
     <body>
@@ -926,6 +1052,12 @@
 
         <section id="songs" class="card">
             <h2 class="section-title">מה בספר?</h2>
+            
+            <div class="song-list-buttons">
+                <button class="song-list-btn" id="openPartA">📜 רשימת שירים - חלק א'</button>
+                <button class="song-list-btn" id="openPartB">📜 רשימת שירים - חלק ב'</button>
+            </div>
+            
             <div class="songs-grid">
                 <div class="song-item">אחת שאלתי</div>
                 <div class="song-item">מקימי מעפר</div>
@@ -975,6 +1107,220 @@
             </div>
         </section>
 
+    </div>
+
+    <!-- Modal for Part A -->
+    <div id="modalPartA" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="closePartA">&times;</span>
+            <h2 class="modal-title">🎵 רשימת השירים המלאה - חלק א'</h2>
+            
+            <div class="modal-section">
+                <h3 class="modal-section-title">🗓️ מעגל השנה ומועדי ישראל</h3>
+                
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">שירי ימים נוראים</h4>
+                    <p class="modal-song-list">אוחילה לקל | מלאכי רחמים | לבקש רחמים | מידת הרחמים | אין לנו מלך | אבינו מלכנו | זכרנו לחיים | פנה לעלבון | חמול | ארשת שפתינו | ותשובה ותפילה</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">סוכות ושמחת תורה</h4>
+                    <p class="modal-song-list">ושמחת בחגך (2 גרסאות) | הרחמן הוא יקים | שאו שערים | כי מציון | אהללה | ברוך הוא אלוקינו</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">חנוכה</h4>
+                    <p class="modal-song-list">חשוף | מעוז צור | על הניסים | יוונים נקבצו</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">פורים</h4>
+                    <p class="modal-song-list">ליהודים הייתה אורה | שושנת יעקב | וגם חרבונא | משנכנס אדר | אם על המלך | והריקותי לכם ברכה | ותוסף אסתר ותדבר</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">פסח</h4>
+                    <p class="modal-song-list">בצאת ישראל | מה נשתנה | חסל סידור פסח | לשנה הבאה (3 גרסאות) | ממצרים גאלתנו</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">ל"ג בעומר</h4>
+                    <p class="modal-song-list">אביכם שבשמיים | בר יוחאי | ואמרתם כה לחי | אמר רבי עקיבא</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">שבועות</h4>
+                    <p class="modal-song-list">עליונים ששו | ובאו כולם | כד יתבין</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">שבת קודש</h4>
+                    <p class="modal-song-list">ברכו | שלום עליכם (2 גרסאות) | אנא מלך | ושמרו | קה אכסוף | מעין עולם הבא | אליהו הנביא</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">חתונה ושמחה</h4>
+                    <p class="modal-song-list">ניגון החופה | עוד ישמע | מהרה השם | ענבי הגפן | ימים | יפרח בימיו צדיק | אורך ימים | שיר המעלות</p>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🎤 להיטים לפי אמנים</h3>
+                
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">נפתלי קמפה</h4>
+                    <p class="modal-song-list">ושם נעבדך | בעבור אבותינו | תפילת חנה | כל הנחלים | עברו בשערים | ליחדא שמא | לב נשבר | לבוחן לבבות | אנה אלך | מעיין החיים</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">מרדכי בן דוד (MBD)</h4>
+                    <p class="modal-song-list">שמע בני | לולי תורתך | פתחו לי | תורה הקדושה | מה אשיב | הנני רופא לך | תפילה לעני | והיה | מקימי | והביאותים | בואי כלה</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">אברהם פריד</h4>
+                    <p class="modal-song-list">עד הנה | תניא | שהשמש תעבור עלי | אדרבה | הוא יבנה | כי הרבית | שירת העשבים | מנורה | רצוננו | אתך אני | הנני בידך | אני שר | ירושלים שבלב | אבא | אוטוטו</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">יעקב שוואקי</h4>
+                    <p class="modal-song-list">עלינו | ברשות | רחם | ונא אל תצריכנו | אב הרחמים | מה מה מה | והערב נא | תפילת כלה | יזכרם | אל תקצוף | והיא שעמדה | בשעה | קולות</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">מוטי שטיינמץ</h4>
+                    <p class="modal-song-list">זכור ברית | ויהי נועם | כאיל תערוג | ויהיו רחמיך | שימני כחותם | אל הנער | הנשמה בקרבי | נפשי | בזכות התורה</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">שולי רנד</h4>
+                    <p class="modal-song-list"><strong>מתוך "נקודה טובה":</strong> אייכה | סגולה | ערפל | המשורר | בן מלך | מתוך שינה | רפא א-ל | אחותי</p>
+                    <p class="modal-song-list"><strong>מתוך "רצוא ושוב":</strong> אברם | עץ ופרי | הילד המשיח | צדיק | אדי | ספינה | החקלאים | עוד טיפה | דע בני אהובי | עבדים | אבא שלום</p>
+                    <p class="modal-song-list"><strong>סינגלים:</strong> אביסל'ה אושר | אלוקי נשמה | בראשית | עליזה | רוץ כצבי | משניתנה הרשות</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">ישי ריבו</h4>
+                    <p class="modal-song-list">לים | תוכו רצוף אהבה | לשוב הביתה | שטח אפור | הלב שלי | נחכה לך | והאמת | כל מעייני</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">ביני לנדאו</h4>
+                    <p class="modal-song-list">אור בהירות הדרך | ארמונו של מלך | מופקר כמדבר | משכן | מתוך הפיכה | כנפי רוח | כחרס הנשבר | ברכת כהנים | מבוע | כתר</p>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🎸 עוד להיטים גדולים בספר</h3>
+                
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">רבי שלמה קרליבך</h4>
+                    <p class="modal-song-list">ממקומך | ולא נבוש | שפכי | אשא עיני | אם אשכחך | ונשגב | מלוך על כל העולם | הנשמה לך | נחמו | כל העולם כולו</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">יונתן שיינפלד</h4>
+                    <p class="modal-song-list">תנצל נפשי | אם תחנה | באתי לגני | אהבת חינם</p>
+                </div>
+
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">אמנים נוספים</h4>
+                    <p class="modal-song-list"><strong>חנן בן ארי:</strong> אמא אם הייתי</p>
+                    <p class="modal-song-list"><strong>שלומי שבת:</strong> אבא | אין עוד מלבדו</p>
+                    <p class="modal-song-list"><strong>יונתן רזאל:</strong> קטונתי</p>
+                    <p class="modal-song-list"><strong>חב"ד:</strong> אנעים זמירות | צמאה</p>
+                    <p class="modal-song-list"><strong>שמואל גריינמן:</strong> חנון | אנת הוא זן לכולא | שערי שמיים | ואני בבואי מפדן | זאת התורה | בתי</p>
+                    <p class="modal-song-list"><strong>הלל פלאי:</strong> תחי נפשי | אם היו בני אדם | קדושה אני מבקש | לא יהיה לך</p>
+                    <p class="modal-song-list"><strong>יהודה דים:</strong> מה יותר מתוק | השבבניק | הלך | אני מאמין</p>
+                    <p class="modal-song-list"><strong>חיים ישראל:</strong> שירת המלאכים | אתה המלך | חומות של תקווה | מלך העולם | יתגדל ויתקדש | סיפור חיי | יונת שלום | אבא איתי | שפכי כמים לבך</p>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🎼 ועוד עשרות להיטים אהובים</h3>
+                <p class="modal-song-list">אדמה ושמיים | אהבת חינם | אין עוד מלבדו | אל דמי לך | אנה אמצאך | אנא בכח | אתה הראת | אתה קדוש | הבן יקיר | בין האולם | בין קודש לחול | בלילה | במקום זה | בצאת ישראל | ברכת הבנים | דאווענען | המלאך הגואל | המלאך | השבבניק | השבעתי | ואפילו בהסתרה | וזכני | ויהי נועם | ויעזור | וקווי ה' | ומחליף את הזמנים | ומלאכים | חזור בך | טוב ה' לכל | יש תקוה | כד יתבין | כי הם חיינו | לא לנו | לבחור נכון | לבכות לך | ליבי ליבי | מדוע | מודה אני | מחכה | מיין גאנצע הארץ | מלכי המלכים | מלוך מלוך | מראה כהן | מתנות קטנות | נודה לך | נשמת כל חי | פאר דיר | קודש | קולנו תשמע | קנא לשמך | קדושה אני מבקש | שמרה נפשי | שערי שמיים | תחי נפשי</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Part B -->
+    <div id="modalPartB" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="closePartB">&times;</span>
+            <h2 class="modal-title">🎹 רשימת השירים המלאה - חלק ב'</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 1.1rem;">הלהיטים הגדולים של השנים האחרונות (תשפ"א - תשפ"ד)</p>
+            
+            <div class="modal-section">
+                <h3 class="modal-section-title">🌟 הנבחרת של נפתלי קמפה</h3>
+                <p class="modal-song-list">חושב על ירושלים | בצאת ישראל | אור הגנוז | בעבור אבותינו | שנשתוקק | כמלאך | שובי | קרבני אליך | אם תעירו (עם ארי היל) | אנשים כשרים | אור אין סוף | מה אנחנו | לכה דודי | חסדי ה' | הדור נאה | שערי שמיים (עם עמיחי פלסר)</p>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🔥 להיטי ארי היל</h3>
+                <p class="modal-song-list">טאטאל'ע | אוי ירושלים (עם משה דוד וויסמנדל) | אבא איתי | איכא בשוקא (עם חיים ישראל) | גרש את העצבות | יהודי קדוש | מבטל כל הגזירות (עם שלומי מאיר) | אל תיפול (עם חיים ישראל ואהרל'ה סאמט)</p>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">💎 ישי ריבו - הלהיטים החדשים</h3>
+                <p class="modal-song-list">תכף יפתח הלב | לא נפסיק לחלום | אני שייך לעם | סיבת הסיבות | אתה זוכר (עם מרדכי בן דוד) | הלב שלי | תוכו רצוף אהבה | לשוב הביתה</p>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🎸 מוטי וייס & משה פלד</h3>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">מוטי וייס</h4>
+                    <p class="modal-song-list">מחשבות טובות | יבנה המקדש | לכבוד שבת קודש | קטנות שבקטנות | שבוע טוב יותר | דער רבי איז דא (עם ארי גולד)</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">משה פלד</h4>
+                    <p class="modal-song-list">מקום לטעויות | אותו היום | בשורה טובה | אחים</p>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🎤 ענקי הזמר בחלק ב'</h3>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">אברהם פריד</h4>
+                    <p class="modal-song-list">אלוקים שלי | מאמע | בוקר טוב רבש"ע | הוא יבנה</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">שמילי אונגר</h4>
+                    <p class="modal-song-list">בר אילעי | ירא שמיים | קל מסתתר | ואני אבטח בך | זה הקטן (עם ברוך לוין)</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">מוטי שטיינמץ</h4>
+                    <p class="modal-song-list">ומתקדש | מרן דבשמיא | קלי אתה ואודך | נפשי חמדה | אמר רבי יוחנן (עם ישי ריבו)</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">בני פרידמן</h4>
+                    <p class="modal-song-list">ימה | לחי עולמים | אהבת תורה (עם מרדכי שפירא)</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">יונתן שיינפלד</h4>
+                    <p class="modal-song-list">רגעים | מחכה בבית | באתי לגני</p>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-section-title">🎼 להיטים נוספים בחוברת</h3>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">מקהלת מלכות & זאנוויל</h4>
+                    <p class="modal-song-list">לראות בנים | ממלכת כהנים | קינדרלעך דעבדין רעותך</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">אמנים נוספים</h4>
+                    <p class="modal-song-list"><strong>אלי הרצליך:</strong> המלאך | אתה בחרתנו</p>
+                    <p class="modal-song-list"><strong>בנצי קלצקין:</strong> כל תפילותיי | ואפיל תחינתי</p>
+                    <p class="modal-song-list"><strong>עמירן דביר:</strong> תפילת האבות | מי שם פה</p>
+                    <p class="modal-song-list"><strong>Thank You Hashem:</strong> הלהיט העולמי (דודי פלדמן ושרולי ליפשיץ)</p>
+                    <p class="modal-song-list"><strong>ביני לנדאו:</strong> מסע</p>
+                </div>
+                <div class="modal-subsection">
+                    <h4 class="modal-subsection-title">שירים אהובים נוספים</h4>
+                    <p class="modal-song-list">לראות בנים (זאנוויל ויינברגר) | אידן אין אמעריקע (שלום למר והרשי וינברגר) | להזמין לי (דובי מייזלעס) | שוכן עד (יהודה גרין) | הערך הפנימי (שמוליק פראנק) | מאן דיהיב (נח פלאי) | להתפלל (ברי ובר) | בקש (אוהד מושקוביץ) | דאווענען (יואלי דיקמן) | מתיקות התורה (יונגערליך) | וזכני (שרולי ורדיגר) | אוחילה לקל (ליפא שמלצר) | ים של דמעות (נותי ליברמן) | היום (משה קליין) | סופות (איציק דדיה) | אבא תודה | שמור עלי | מתחילים מחדש | פותח את ידך (אמני ישראל)</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="cart-panel" id="cartPanel">
@@ -1164,6 +1510,52 @@
         });
 
         renderCart();
+    })();
+
+    // Modal functionality
+    (() => {
+        const modalPartA = document.getElementById('modalPartA');
+        const modalPartB = document.getElementById('modalPartB');
+        const openPartA = document.getElementById('openPartA');
+        const openPartB = document.getElementById('openPartB');
+        const closePartA = document.getElementById('closePartA');
+        const closePartB = document.getElementById('closePartB');
+
+        // Open modals
+        openPartA.addEventListener('click', () => {
+            modalPartA.style.display = 'block';
+        });
+
+        openPartB.addEventListener('click', () => {
+            modalPartB.style.display = 'block';
+        });
+
+        // Close modals
+        closePartA.addEventListener('click', () => {
+            modalPartA.style.display = 'none';
+        });
+
+        closePartB.addEventListener('click', () => {
+            modalPartB.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === modalPartA) {
+                modalPartA.style.display = 'none';
+            }
+            if (event.target === modalPartB) {
+                modalPartB.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                modalPartA.style.display = 'none';
+                modalPartB.style.display = 'none';
+            }
+        });
     })();
 </script>
 
