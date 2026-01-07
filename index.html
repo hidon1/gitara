@@ -295,24 +295,21 @@
 
         /* כרטיסי ספרים */
         .books-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
             margin-top: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .book-column {
-            flex: 1;
-            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         @media (max-width: 768px) {
             .books-container {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
             }
         }
 
@@ -324,7 +321,6 @@
             transition: all 0.5s ease;
             border: 2px solid #e9e0d1;
             position: relative;
-            height: 100%;
         }
 
         .book-card::before {
@@ -345,25 +341,50 @@
         }
 
         .book-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 70px rgba(212, 175, 55, 0.25);
             border-color: var(--accent);
         }
 
+        .book-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #f5f5f5;
+            transition: transform 0.5s ease;
+        }
+
+        .book-card:hover .book-image {
+            transform: scale(1.05);
+        }
+
         .book-details {
-            padding: 30px 20px;
+            padding: 14px;
             text-align: center;
             position: relative;
             z-index: 1;
         }
 
         .book-title {
-            font-family: 'Assistant', sans-serif;
-            font-size: 1.15rem;
+            font-family: 'Bellefair', serif;
+            font-size: 1.4rem;
             color: var(--primary);
-            margin-bottom: 20px;
-            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .book-description {
+            color: #666;
             line-height: 1.5;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .book-price {
+            font-size: 1.6rem;
+            color: var(--price);
+            font-weight: 800;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
         .book-btn {
@@ -729,6 +750,56 @@
             text-align: center;
             color: var(--primary);
         }
+
+        /* Book Descriptions */
+        .book-description-section {
+            margin-bottom: 35px;
+        }
+
+        .book-desc-title {
+            font-family: 'Bellefair', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .book-desc-subtitle {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .book-desc-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .book-desc-points li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: #444;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .book-desc-points li .emoji {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .book-desc-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+            margin: 40px auto;
+            max-width: 600px;
+            opacity: 0.3;
+        }
     </style>
     </head>
     <body>
@@ -807,7 +878,18 @@
             <div class="books-container">
                 <!-- חלק א' -->
                 <div class="book-column">
+                    <div class="book-description-section">
+                        <h3 class="book-desc-title">חלק א' - האנציקלופדיה של השירים (280 שירים)</h3>
+                        <p class="book-desc-subtitle">הבסיס המושלם לכל נגן שרוצה להכיר את הקלאסיקות.</p>
+                        <ul class="book-desc-points">
+                            <li><span class="emoji">🎼</span><span><strong>מאגר אדיר ומגוון:</strong> 280 שירים מכל הסגנונות ומכל הזמנים (עד תשפ"א) – כל מה ששרים בקומזיץ ובאירועים במקום אחד.</span></li>
+                            <li><span class="emoji">🎹</span><span><strong>נגינה זורמת מהרגע הראשון:</strong> כל השירים נכתבו בסולמות קלים (כמו Am) תוך פישוט אקורדים מורכבים, כדי שתוכלו לנגן ברצף בלי להסתבך.</span></li>
+                            <li><span class="emoji">🗓️</span><span><strong>סדר במעגל השנה:</strong> עשרות להיטים המסודרים לפי חודשי השנה, החגים והמועדים – פשוט מושלם לכל עת.</span></li>
+                            <li><span class="emoji">💡</span><span><strong>ערך מוסף בכל עמוד:</strong> שזורים בחוברת עשרות "טיפים" ואנקדוטות מתאוריית המוזיקה המעשירים את הידע תוך כדי נגינה.</span></li>
+                        </ul>
+                    </div>
                     <div class="book-card">
+                        <img src="תמונת-ספר-מהדורה-מודפסת.PNG" alt="חלק א' - אנציקלופדיה של שירים" class="book-image">
                         <div class="book-details">
                             <h3 class="book-title">חלק א': האנציקלופדיה של השירים (280 שירים)</h3>
                             <div class="book-actions">
@@ -819,7 +901,18 @@
 
                 <!-- חלק ב' -->
                 <div class="book-column">
+                    <div class="book-description-section">
+                        <h3 class="book-desc-title">חלק ב' - הלהיטים החדשים (93 שירים)</h3>
+                        <p class="book-desc-subtitle">לנגנים שרוצים להישאר מעודכנים ולהתמקצע ברמה הגבוהה ביותר.</p>
+                        <ul class="book-desc-points">
+                            <li><span class="emoji">🔥</span><span><strong>מעודכנים בלהיטים:</strong> 93 השירים הכי חמים שפרצו לעולם הישיבות בין השנים תשפ"א-תשפ"ד, בדגש על הסגנון החסידי האותנטי.</span></li>
+                            <li><span class="emoji">🎯</span><span><strong>דיוק מקצועי:</strong> רמת אקורדים גבוהה ומדויקת להפליא, ששומרת על פשטות הסולם (Am) מצד אחד, אך מביאה את העומק ההרמוני מצד שני.</span></li>
+                            <li><span class="emoji">🎓</span><span><strong>קורס תאוריה בתוך החוברת:</strong> עשרות עמודי העשרה בסוף הספר על תאוריית המוזיקה והולכת קולות – מוגש בשפה עממית, ברורה ובגובה העיניים.</span></li>
+                            <li><span class="emoji">✨</span><span><strong>חווית משתמש משודרגת:</strong> פורמט מרובע ייחודי, נח במיוחד להצבה על הסטנד, בעיצוב מודרני ומלא סטייל שכיף לפתוח.</span></li>
+                        </ul>
+                    </div>
                     <div class="book-card">
+                        <img src="תמונת-ספר-מהדורה-דיגיטלית.PNG" alt="חלק ב' - הלהיטים החדשים" class="book-image">
                         <div class="book-details">
                             <h3 class="book-title">חלק ב': הלהיטים החדשים (93 שירים)</h3>
                             <div class="book-actions">
