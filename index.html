@@ -738,6 +738,56 @@
             text-align: center;
             color: var(--primary);
         }
+
+        /* Book Descriptions */
+        .book-description-section {
+            margin-bottom: 35px;
+        }
+
+        .book-desc-title {
+            font-family: 'Bellefair', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .book-desc-subtitle {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .book-desc-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .book-desc-points li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: #444;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .book-desc-points li .emoji {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .book-desc-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+            margin: 40px auto;
+            max-width: 600px;
+            opacity: 0.3;
+        }
     </style>
     </head>
     <body>
@@ -813,6 +863,33 @@
         <section id="books" class="card">
             <h2 class="section-title">להיטי עולם הישיבות – הסדרה שכל נגן חייב</h2>
             
+            <!-- Part A Description -->
+            <div class="book-description-section">
+                <h3 class="book-desc-title">האנציקלופדיה של השירים (280 שירים)</h3>
+                <p class="book-desc-subtitle">הבסיס המושלם לכל נגן שרוצה להכיר את הקלאסיקות.</p>
+                <ul class="book-desc-points">
+                    <li><span class="emoji">🎼</span><span><strong>מאגר אדיר ומגוון:</strong> 280 שירים מכל הסגנונות ומכל הזמנים (עד תשפ"א) – כל מה ששרים בקומזיץ ובאירועים במקום אחד.</span></li>
+                    <li><span class="emoji">🎹</span><span><strong>נגינה זורמת מהרגע הראשון:</strong> כל השירים נכתבו בסולמות קלים (כמו Am) תוך פישוט אקורדים מורכבים, כדי שתוכלו לנגן ברצף בלי להסתבך.</span></li>
+                    <li><span class="emoji">🗓️</span><span><strong>סדר במעגל השנה:</strong> עשרות להיטים המסודרים לפי חודשי השנה, החגים והמועדים – פשוט מושלם לכל עת.</span></li>
+                    <li><span class="emoji">💡</span><span><strong>ערך מוסף בכל עמוד:</strong> שזורים בחוברת עשרות "טיפים" ואנקדוטות מתאוריית המוזיקה המעשירים את הידע תוך כדי נגינה.</span></li>
+                </ul>
+            </div>
+
+            <!-- Divider -->
+            <div class="book-desc-divider"></div>
+
+            <!-- Part B Description -->
+            <div class="book-description-section">
+                <h3 class="book-desc-title">הלהיטים החדשים (93 שירים)</h3>
+                <p class="book-desc-subtitle">לנגנים שרוצים להישאר מעודכנים ולהתמקצע ברמה הגבוהה ביותר.</p>
+                <ul class="book-desc-points">
+                    <li><span class="emoji">🔥</span><span><strong>מעודכנים בלהיטים:</strong> 93 השירים הכי חמים שפרצו לעולם הישיבות בין השנים תשפ"א-תשפ"ד, בדגש על הסגנון החסידי האותנטי.</span></li>
+                    <li><span class="emoji">🎯</span><span><strong>דיוק מקצועי:</strong> רמת אקורדים גבוהה ומדויקת להפליא, ששומרת על פשטות הסולם (Am) מצד אחד, אך מביאה את העומק ההרמוני מצד שני.</span></li>
+                    <li><span class="emoji">🎓</span><span><strong>קורס תאוריה בתוך החוברת:</strong> עשרות עמודי העשרה בסוף הספר על תאוריית המוזיקה והולכת קולות – מוגש בשפה עממית, ברורה ובגובה העיניים.</span></li>
+                    <li><span class="emoji">✨</span><span><strong>חווית משתמש משודרגת:</strong> פורמט מרובע ייחודי, נח במיוחד להצבה על הסטנד, בעיצוב מודרני ומלא סטייל שכיף לפתוח.</span></li>
+                </ul>
+            </div>
+
             <div class="books-container">
                 <!-- חלק א' -->
                 <div class="book-card">
