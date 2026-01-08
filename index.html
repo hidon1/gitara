@@ -944,6 +944,7 @@
             transition: max-height 0.5s ease;
         }
 
+        /* Large enough to accommodate all current and future sales locations */
         .locations-panel.open {
             max-height: 5000px;
         }
@@ -1179,7 +1180,7 @@
                 ניתן לרכוש את הספרים במוקדי המכירה שלנו ברחבי הארץ!
             </p>
             
-            <button class="locations-toggle-btn" id="toggleLocations" aria-expanded="false" aria-controls="locationsPanel">
+            <button class="locations-toggle-btn" id="toggleLocations" aria-expanded="false" aria-controls="locationsPanel" aria-label="הצג או הסתר מוקדי מכירה">
                 📍 מוקדי מכירה
             </button>
             
@@ -1860,11 +1861,21 @@
         const toggleBtn = document.getElementById('toggleLocations');
         const panel = document.getElementById('locationsPanel');
 
-        toggleBtn.addEventListener('click', () => {
+        const togglePanel = () => {
             const isOpen = panel.classList.contains('open');
             panel.classList.toggle('open');
             toggleBtn.setAttribute('aria-expanded', !isOpen);
             toggleBtn.textContent = isOpen ? '📍 מוקדי מכירה' : '📍 סגור מוקדי מכירה';
+        };
+
+        toggleBtn.addEventListener('click', togglePanel);
+
+        // Add keyboard support for Enter and Space keys
+        toggleBtn.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                togglePanel();
+            }
         });
     })();
 </script>
