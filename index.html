@@ -916,11 +916,44 @@
             margin-top: 30px;
         }
 
+        .locations-toggle-btn {
+            padding: 14px 30px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, var(--primary), #2c4158);
+            color: white;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        .locations-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(176, 141, 87, 0.35);
+            background: linear-gradient(135deg, var(--accent), #d3a25f);
+            color: var(--primary);
+        }
+
+        .locations-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        /* Large enough to accommodate all current and future sales locations */
+        .locations-panel.open {
+            max-height: 5000px;
+        }
+
         .location-city {
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border: 2px solid #e9e0d1;
             transition: all 0.3s ease;
         }
@@ -932,22 +965,22 @@
 
         .location-city-title {
             font-family: 'Bellefair', serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--primary);
-            margin-bottom: 18px;
-            padding-bottom: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 3px solid var(--accent);
             font-weight: bold;
         }
 
         .location-item {
             background: white;
-            padding: 15px 18px;
-            margin-bottom: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
             border-radius: 8px;
             border-right: 4px solid var(--accent);
-            line-height: 1.7;
-            font-size: 1.05rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
@@ -1147,6 +1180,11 @@
                 ניתן לרכוש את הספרים במוקדי המכירה שלנו ברחבי הארץ!
             </p>
             
+            <button class="locations-toggle-btn" id="toggleLocations" aria-expanded="false" aria-controls="locationsPanel" aria-label="הצג או הסתר מוקדי מכירה">
+                📍 מוקדי מכירה
+            </button>
+            
+            <div class="locations-panel" id="locationsPanel">
             <div class="locations-container">
                 <div class="location-city">
                     <h3 class="location-city-title">בני ברק</h3>
@@ -1222,6 +1260,7 @@
                     <h3 class="location-city-title">אופקים</h3>
                     <div class="location-item">🎹 מורה למוזיקה: ישי | 📞 054-993-3758</div>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -1813,6 +1852,29 @@
             if (event.key === 'Escape') {
                 modalPartA.style.display = 'none';
                 modalPartB.style.display = 'none';
+            }
+        });
+    })();
+
+    // Locations panel toggle functionality
+    (() => {
+        const toggleBtn = document.getElementById('toggleLocations');
+        const panel = document.getElementById('locationsPanel');
+
+        const togglePanel = () => {
+            const isOpen = panel.classList.contains('open');
+            panel.classList.toggle('open');
+            toggleBtn.setAttribute('aria-expanded', !isOpen);
+            toggleBtn.textContent = isOpen ? '📍 מוקדי מכירה' : '📍 סגור מוקדי מכירה';
+        };
+
+        toggleBtn.addEventListener('click', togglePanel);
+
+        // Add keyboard support for Enter and Space keys
+        toggleBtn.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                togglePanel();
             }
         });
     })();
