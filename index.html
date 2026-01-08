@@ -487,7 +487,7 @@
         .gallery img {
             width: 100%;
             height: 150px;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 8px;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -517,8 +517,8 @@
             position: relative;
             margin: auto;
             padding: 0;
-            width: 90%;
-            max-width: 1200px;
+            width: 70%;
+            max-width: 700px;
             top: 50%;
             transform: translateY(-50%);
         }
@@ -1412,101 +1412,90 @@
         <section id="partners" class="card">
             <h2 class="section-title">למורים וחנויות</h2>
             
-            <!-- מורי נגינה -->
-            <div style="max-width: 900px; margin: 0 auto 60px;">
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; text-align: center;">🎹 מורי נגינה</h3>
-                <p style="font-size: 1.25rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: center; font-weight: 600;">
-                    מקדמים את התלמידים, נהנים מהטבות בלעדיות!
-                </p>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; text-align: center;">
-                    אנחנו מזמינים אתכם להצטרף למאות מורים שכבר משתמשים בחוברות כחלק מתוכנית הלימודים ונהנים מחבילת שותפים מיוחדת:
-                </p>
-                
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.6rem; color: var(--primary); margin: 30px 0 20px; text-align: right;">מה אנחנו מציעים למורים שלנו?</h3>
-                
-                <div style="text-align: right; line-height: 2; margin-bottom: 30px;">
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">✨ התקדמות מהירה בשיעור:</strong> אקורדים מדויקים וסולמות נוחים המותאמים במיוחד לתהליך הלמידה.
+            <!-- White banner combining all content -->
+            <div style="background: rgba(255, 255, 255, 0.8); border-radius: 12px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #f0f0f0;">
+                <!-- מורי נגינה -->
+                <div style="max-width: 900px; margin: 0 auto 60px;">
+                    <h3 style="font-family: 'Bellefair', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; text-align: center;">🎹 מורי נגינה</h3>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: center; font-weight: 600;">
+                        מקדמים את התלמידים, נהנים מהטבות בלעדיות!
                     </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">💰 הכנסה נוספת:</strong> אפשרות לרכישת חוברות עבור התלמידים במחירי הפצה מיוחדים (הנחה משמעותית מהמחיר לצרכן).
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; text-align: center;">
+                        אנחנו מזמינים אתכם להצטרף למאות מורים שכבר משתמשים בחוברות כחלק מתוכנית הלימודים ונהנים מחבילת שותפים מיוחדת:
                     </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">🎁 הטבת הצטרפות:</strong> ברכישת חבילת חוברות לתלמידים – חוברת אישית מתנה למורה!
+                    
+                    <h3 style="font-family: 'Bellefair', serif; font-size: 1.6rem; color: var(--primary); margin: 30px 0 20px; text-align: right;">מה אנחנו מציעים למורים שלנו?</h3>
+                    
+                    <div style="text-align: right; line-height: 2; margin-bottom: 30px;">
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">✨ התקדמות מהירה בשיעור:</strong> אקורדים מדויקים וסולמות נוחים המותאמים במיוחד לתהליך הלמידה.
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">💰 הכנסה נוספת:</strong> אפשרות לרכישת חוברות עבור התלמידים במחירי הפצה מיוחדים (הנחה משמעותית מהמחיר לצרכן).
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">🎁 הטבת הצטרפות:</strong> ברכישת חבילת חוברות לתלמידים – חוברת אישית מתנה למורה!
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">🚚 משלוח עד הסטודיו:</strong> אנחנו דואגים להביא את החוברות אליכם, כדי שתוכלו להתמקד בנגינה.
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">📍 חשיפה באתר:</strong> מורים פעילים יוכלו להופיע ברשימת מוקדי ההפצה שלנו באתר ולהיחשף ללקוחות חדשים באזורם.
+                        </p>
+                    </div>
+                    
+                    <h3 style="font-family: 'Bellefair', serif; font-size: 1.5rem; color: var(--primary); margin: 35px 0 20px; text-align: center;">רוצים להצטרף לנבחרת המורים שלנו?</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 25px; text-align: center;">
+                        צרו קשר טלפוני ונחזור אליכם עם הצעת המחיר המשתלמת ביותר עבורכם ועבור התלמידים שלכם.
                     </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">🚚 משלוח עד הסטודיו:</strong> אנחנו דואגים להביא את החוברות אליכם, כדי שתוכלו להתמקד בנגינה.
-                    </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">📍 חשיפה באתר:</strong> מורים פעילים יוכלו להופיע ברשימת מוקדי ההפצה שלנו באתר ולהיחשף ללקוחות חדשים באזורם.
-                    </p>
+                    
+                    <div style="margin: 30px 0; text-align: center;">
+                        <a href="tel:0548459819" class="contact-btn phone-btn">
+                            יצירת קשר בטלפון: 054-845-9819
+                        </a>
+                    </div>
                 </div>
                 
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.5rem; color: var(--primary); margin: 35px 0 20px; text-align: center;">רוצים להצטרף לנבחרת המורים שלנו?</h3>
-                <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 25px; text-align: center;">
-                    צרו קשר טלפוני ונחזור אליכם עם הצעת המחיר המשתלמת ביותר עבורכם ועבור התלמידים שלכם.
-                </p>
-                
-                <div style="margin: 30px 0; text-align: center;">
-                    <a href="tel:0548459819" class="contact-btn phone-btn">
-                        יצירת קשר בטלפון: 054-845-9819
-                    </a>
-                </div>
-                </div>
-            </div>
-            
-            <!-- חנויות מוזיקה -->
-            <div style="max-width: 900px; margin: 0 auto;">
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; text-align: center;">🛍️ חנויות מוזיקה</h3>
-                <p style="font-size: 1.25rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: center; font-weight: 600;">
-                    הצטרפו להצלחה של עולם הישיבות – והכניסו את להיטי המגזר לחנות שלכם!
-                </p>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; text-align: center;">
-                    סדרת "להיטי עולם הישיבות" היא היום חוברת האקורדים המבוקשת ביותר בקרב בחורי ישיבות, נערות סמינר וחובבי נגינה מהמגזר הדתי והחרדי. עם עשרות אלפי עותקים שכבר נמכרו והפצה רחבה בכל ריכוזי המגזר, זו ההזדמנות שלכם להציע ללקוחות שלכם את מה שהם באמת מחפשים.
-                </p>
-                
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.6rem; color: var(--primary); margin: 30px 0 20px; text-align: right;">למה כדאי לכם להחזיק את "להיטי עולם הישיבות" על המדף?</h3>
-                
-                <div style="text-align: right; line-height: 2; margin-bottom: 30px;">
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">✅ ביקוש גבוה ומוכח:</strong> מוצר "חם" עם קהל לקוחות נאמן שמתרחב מדי יום.
+                <!-- חנויות מוזיקה -->
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <h3 style="font-family: 'Bellefair', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; text-align: center;">🛍️ חנויות מוזיקה</h3>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: center; font-weight: 600;">
+                        הצטרפו להצלחה של עולם הישיבות – והכניסו את להיטי המגזר לחנות שלכם!
                     </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">💰 תנאים מסחריים אטרקטיביים:</strong> מחירי סיטונאות המאפשרים נתח רווחים מצוין לחנות.
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; text-align: center;">
+                        סדרת "להיטי עולם הישיבות" היא היום חוברת האקורדים המבוקשת ביותר בקרב בחורי ישיבות, נערות סמינר וחובבי נגינה מהמגזר הדתי והחרדי. עם עשרות אלפי עותקים שכבר נמכרו והפצה רחבה בכל ריכוזי המגזר, זו ההזדמנות שלכם להציע ללקוחות שלכם את מה שהם באמת מחפשים.
                     </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">🚚 אספקה מהירה ושירות אישי:</strong> משלוחים עד החנות ושירות לקוחות זמין לכל שאלה.
+                    
+                    <h3 style="font-family: 'Bellefair', serif; font-size: 1.6rem; color: var(--primary); margin: 30px 0 20px; text-align: right;">למה כדאי לכם להחזיק את "להיטי עולם הישיבות" על המדף?</h3>
+                    
+                    <div style="text-align: right; line-height: 2; margin-bottom: 30px;">
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">✅ ביקוש גבוה ומוכח:</strong> מוצר "חם" עם קהל לקוחות נאמן שמתרחב מדי יום.
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">💰 תנאים מסחריים אטרקטיביים:</strong> מחירי סיטונאות המאפשרים נתח רווחים מצוין לחנות.
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">🚚 אספקה מהירה ושירות אישי:</strong> משלוחים עד החנות ושירות לקוחות זמין לכל שאלה.
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">📢 פרסום וקישור באתר:</strong> חנויות שותפות יופיעו במפת המוקדים הרשמית שלנו באתר, המפנה אליכם לקוחות מהאזור שלכם.
+                        </p>
+                        <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
+                            <strong style="color: var(--primary);">✨ מוצר איכותי:</strong> הדפסה משובחת, עיצוב סטייליסטי ותוכן מקצועי שמעלה את ערך המדף שלכם.
+                        </p>
+                    </div>
+                    
+                    <h3 style="font-family: 'Bellefair', serif; font-size: 1.5rem; color: var(--primary); margin: 35px 0 20px; text-align: center;">מעוניינים בפרטים על רכישה סיטונאית?</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 25px; text-align: center;">
+                        אנחנו מזמינים אתכם ליצור קשר עוד היום ולקבל הצעה מותאמת אישית לכמות הדרושה לכם.
                     </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">📢 פרסום וקישור באתר:</strong> חנויות שותפות יופיעו במפת המוקדים הרשמית שלנו באתר, המפנה אליכם לקוחות מהאזור שלכם.
-                    </p>
-                    <p style="font-size: 1.05rem; color: #444; margin-bottom: 15px;">
-                        <strong style="color: var(--primary);">✨ מוצר איכותי:</strong> הדפסה משובחת, עיצוב סטייליסטי ותוכן מקצועי שמעלה את ערך המדף שלכם.
-                    </p>
-                </div>
-                
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.5rem; color: var(--primary); margin: 35px 0 20px; text-align: center;">מעוניינים בפרטים על רכישה סיטונאית?</h3>
-                <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 25px; text-align: center;">
-                    אנחנו מזמינים אתכם ליצור קשר עוד היום ולקבל הצעה מותאמת אישית לכמות הדרושה לכם.
-                </p>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="tel:0548459819" class="contact-btn phone-btn" style="font-size: 1.2rem;">
-                        יצירת קשר בטלפון: 054-845-9819
-                    </a>
-                </div>
-            </div>
-            
-            <!-- White banner for stores section -->
-            <div style="background: rgba(255, 255, 255, 0.8); border-radius: 12px; padding: 40px; margin-top: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid #f0f0f0;">
-                <h3 style="font-family: 'Bellefair', serif; font-size: 1.6rem; color: var(--primary); margin-bottom: 20px; text-align: center;">💼 שיתוף פעולה משתלם לחנויות</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: #555; text-align: center; max-width: 700px; margin: 0 auto 25px;">
-                    הצטרפו למעגל השותפים שלנו ותהנו ממוצר מבוקש, רווחיות גבוהה, ושירות מקצועי ואישי שידאג לכל הצרכים שלכם.
-                </p>
-                <div style="text-align: center;">
-                    <a href="tel:0548459819" class="contact-btn phone-btn">
-                        📞 התקשרו עכשיו: 054-845-9819
-                    </a>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <a href="tel:0548459819" class="contact-btn phone-btn" style="font-size: 1.2rem;">
+                            יצירת קשר בטלפון: 054-845-9819
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
