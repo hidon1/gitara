@@ -456,8 +456,14 @@
         /* גלריה */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
         }
         
         .gallery img {
@@ -912,68 +918,7 @@
             font-size: 1rem;
         }
 
-        /* Sales Locations Table */
-        .locations-container {
-            margin-top: 30px;
-        }
-
-        .locations-toggle-btn {
-            padding: 14px 30px;
-            border-radius: 12px;
-            border: 2px solid var(--accent);
-            background: linear-gradient(135deg, var(--primary), #2c4158);
-            color: white;
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            display: block;
-            margin: 0 auto 20px;
-        }
-
-        .locations-toggle-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(176, 141, 87, 0.35);
-            background: linear-gradient(135deg, var(--accent), #d3a25f);
-            color: var(--primary);
-        }
-
-        .locations-panel {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        /* Large enough to accommodate all current and future sales locations */
-        .locations-panel.open {
-            max-height: 5000px;
-        }
-
-        .location-city {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 2px solid #e9e0d1;
-            transition: all 0.3s ease;
-        }
-
-        .location-city:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 20px rgba(176, 141, 87, 0.15);
-        }
-
-        .location-city-title {
-            font-family: 'Bellefair', serif;
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--accent);
-            font-weight: bold;
-        }
-
+        /* Sales Locations - removed old toggle styles */
         .location-item {
             background: white;
             padding: 12px 15px;
@@ -1085,6 +1030,80 @@
             background: linear-gradient(135deg, var(--accent), #d3a25f);
             color: var(--primary);
         }
+
+        /* City Modal Styles */
+        .city-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .city-modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 30px 40px;
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .city-modal-close {
+            color: #aaa;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 15px;
+        }
+
+        .city-modal-close:hover,
+        .city-modal-close:focus {
+            color: var(--primary);
+        }
+
+        .city-modal-title {
+            font-family: 'Bellefair', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .city-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, var(--primary), #2c4158);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            margin: 8px;
+        }
+
+        .city-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(176, 141, 87, 0.3);
+            background: linear-gradient(135deg, var(--accent), #d3a25f);
+            color: var(--primary);
+        }
     
     </style>
     </head>
@@ -1101,8 +1120,7 @@
             <a href="#reviews">תגובות</a>
             <a href="#contact">צור קשר</a>
             <a href="#locations">מוקדי מכירה</a>
-            <a href="#partners">מורי נגינה</a>
-            <a href="#stores">חנויות מוזיקה</a>
+            <a href="#partners">למורים וחנויות</a>
             <a href="#survey">סקר</a>
             <button class="cart-toggle" id="cartToggle">סל קניות (<span id="cartCount">0</span>)</button>
         </nav>
@@ -1226,11 +1244,13 @@
         </section>
 
         <section id="gallery" class="card">
-            <h2 class="section-title">הצצה לדוגמאות מתוך הספר</h2>
+            <h2 class="section-title">הצצה לדוגמאות מתוך הספר - חלק א'</h2>
             <div class="gallery">
-                <img src="דוגמה-עמוד-1.PNG" alt="דוגמה עמוד ראשון">
-                <img src="דוגמה-עמוד-2.PNG" alt="דוגמה עמוד שני">
-                <img src="דוגמה-עמוד-3.PNG" alt="דוגמה עמוד שלישי">
+                <img src="דוגמה1.PNG" alt="דוגמה 1">
+                <img src="דוגמה2.PNG" alt="דוגמה 2">
+                <img src="דוגמה3.PNG" alt="דוגמה 3">
+                <img src="דוגמה4.PNG" alt="דוגמה 4">
+                <img src="דוגמה5.jpg" alt="דוגמה 5">
             </div>
         </section>
 
@@ -1272,98 +1292,35 @@
                 ניתן לרכוש את הספרים במוקדי המכירה שלנו ברחבי הארץ!
             </p>
             
-            <div class="locations-buttons">
-                <button class="locations-toggle-btn" id="toggleLocations" aria-expanded="false" aria-controls="locationsPanel" aria-label="הצג או הסתר מוקדי מכירה">
-                    📍 מוקדי מכירה
-                </button>
+            <div style="text-align: center; margin-bottom: 30px;">
                 <button class="map-btn" id="openMapModal" aria-label="פתח מפה">
                     🗺️ מפה
                 </button>
             </div>
             
-            <div class="locations-panel" id="locationsPanel">
-            <div class="locations-container">
-                <div class="location-city">
-                    <h3 class="location-city-title">בני ברק</h3>
-                    <div class="location-item">🏠 מוקד: אלישע 27, קומה 2, משפחת פינטו | 📞 תיאום מראש: 03-619-4784</div>
-                    <div class="location-item">🛍️ חנות: קוטלר 12, "עולם המוזיקה"</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">ירושלים</h3>
-                    <div class="location-item">🎹 מורה למוזיקה: אזור רוממה, ארץ חפץ 116ה, משפחת יעקובסון | 📞 תיאום מראש: 02-580-4773</div>
-                    <div class="location-item">🛍️ חנות: אזור גאולה, עזרא 12, "עולם המוזיקה"</div>
-                    <div class="location-item">🛍️ חנות: אזור רוממה, אור אלחנן 18, "הרמוניה"</div>
-                    <div class="location-item">🛍️ חנות: אזור רמות, קניון רמות (חניה קומה 1), "סופרן"</div>
-                    <div class="location-item">🛍️ חנות: כנפי נשרים, "סאמט"</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">מודיעין עילית</h3>
-                    <div class="location-item">🏠 מוקד: נתיבות המשפט 85, קומה 2-, משפחת סלומון | 📞 תיאום מראש: 055-674-0268</div>
-                    <div class="location-item">🎹 מורה למוזיקה: שערי תשובה 12, קומה 1, משפחת צדוק | 📞 תיאום מראש: 054-848-6874</div>
-                    <div class="location-item">🛍️ חנות: יהודה הנשיא 8, קומה 3-, "אקורד" | 🕒 שעות פתיחה: 16:00-22:00 | 📞 052-6933-666</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">אלעד</h3>
-                    <div class="location-item">🏠 מוקד: מול רמב"ם 21, רועי חדד | 📞 תיאום מראש (זמין בוואטסאפ): 052-780-0806</div>
-                    <div class="location-item">🏠 מוקד: רחבת התור 13, משפחת טוויטו | 📞 תיאום מראש: 054-853-6791 | ☎️ בית: 03-909-4828</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">בית שמש</h3>
-                    <div class="location-item">🏠 מוקד: נחלה ומנוחה, אור שמח 4, משפחת פריו | 📞 תיאום מראש: 052-716-5322 (עדיף לאחר 21:45)</div>
-                    <div class="location-item">🛍️ חנות: רמה ד', תנחומא 4, "אקורד" | 🕒 שעות פתיחה: 16:00-22:00</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">ביתר עילית</h3>
-                    <div class="location-item">🏠 מוקד: גבעה A, רבי עקיבא 18 | 📞 תיאום מראש: 058-322-2583</div>
-                    <div class="location-item">🛍️ חנות: גבעה B, קדושת לוי 16, "עולם המוזיקה" | 📞 052-716-2050</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">אשדוד</h3>
-                    <div class="location-item">🛍️ חנות: אלעזר בן הורקנוס 2, "דיוטי פון מיוזיק"</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">נתיבות</h3>
-                    <div class="location-item">🏠 מוקד: עוזיאל 10, קומת קרקע, משפחת לוי | 📞 תיאום מראש: 055-668-7100</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">צפת</h3>
-                    <div class="location-item">🏠 מוקד: לוחמי הגטאות, משפחת שפירא | 📞 תיאום מראש: 058-325-5010</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">חיפה</h3>
-                    <div class="location-item">🏠 מוקד: שכונת הדר, יהושע 11, משפחת שדה | 📞 תיאום מראש: 052-722-3470 (החל מ-16:30 בלבד)</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">רכסים</h3>
-                    <div class="location-item">🏠 מוקד: הכלניות 1, כניסה ב', משפחת מנס | 📞 תיאום מראש: 053-314-8626</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">פתח תקווה</h3>
-                    <div class="location-item">🎹 מורה למוזיקה: אוהד | 📞 054-786-2371</div>
-                </div>
-
-                <div class="location-city">
-                    <h3 class="location-city-title">אופקים</h3>
-                    <div class="location-item">🎹 מורה למוזיקה: ישי | 📞 054-993-3758</div>
-                </div>
-            </div>
+            <div class="locations-buttons">
+                <button class="city-btn" data-city="בני ברק">בני ברק</button>
+                <button class="city-btn" data-city="ירושלים">ירושלים</button>
+                <button class="city-btn" data-city="מודיעין עילית">מודיעין עילית</button>
+                <button class="city-btn" data-city="אלעד">אלעד</button>
+                <button class="city-btn" data-city="בית שמש">בית שמש</button>
+                <button class="city-btn" data-city="ביתר עילית">ביתר עילית</button>
+                <button class="city-btn" data-city="אשדוד">אשדוד</button>
+                <button class="city-btn" data-city="נתיבות">נתיבות</button>
+                <button class="city-btn" data-city="צפת">צפת</button>
+                <button class="city-btn" data-city="חיפה">חיפה</button>
+                <button class="city-btn" data-city="רכסים">רכסים</button>
+                <button class="city-btn" data-city="פתח תקווה">פתח תקווה</button>
+                <button class="city-btn" data-city="אופקים">אופקים</button>
             </div>
         </section>
 
         <section id="partners" class="card">
-            <h2 class="section-title">🎹 מורי נגינה</h2>
-            <div style="max-width: 900px; margin: 0 auto;">
+            <h2 class="section-title">למורים וחנויות</h2>
+            
+            <!-- מורי נגינה -->
+            <div style="max-width: 900px; margin: 0 auto 60px;">
+                <h3 style="font-family: 'Bellefair', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; text-align: center;">🎹 מורי נגינה</h3>
                 <p style="font-size: 1.25rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: center; font-weight: 600;">
                     מקדמים את התלמידים, נהנים מהטבות בלעדיות!
                 </p>
@@ -1401,12 +1358,12 @@
                         יצירת קשר בטלפון: 054-845-9819
                     </a>
                 </div>
+                </div>
             </div>
-        </section>
-
-        <section id="stores" class="card">
-            <h2 class="section-title">🛍️ חנויות מוזיקה</h2>
+            
+            <!-- חנויות מוזיקה -->
             <div style="max-width: 900px; margin: 0 auto;">
+                <h3 style="font-family: 'Bellefair', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; text-align: center;">🛍️ חנויות מוזיקה</h3>
                 <p style="font-size: 1.25rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: center; font-weight: 600;">
                     הצטרפו להצלחה של עולם הישיבות – והכניסו את להיטי המגזר לחנות שלכם!
                 </p>
@@ -1440,8 +1397,8 @@
                 </p>
                 
                 <div style="text-align: center; margin-top: 30px;">
-                    <a href="https://forms.gle/Kz8ZveNtAndVJwgu7" target="_blank" class="hero-btn" style="font-size: 1.2rem; display: inline-block;">
-                        מלאו את הטופס ליצירת קשר
+                    <a href="tel:0548459819" class="contact-btn phone-btn" style="font-size: 1.2rem;">
+                        יצירת קשר בטלפון: 054-845-9819
                     </a>
                 </div>
             </div>
@@ -1690,6 +1647,121 @@
         </div>
     </div>
 
+    <!-- City Modals -->
+    <div id="cityModal-בני ברק" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בבני ברק</h2>
+            <div class="location-item">🏠 מוקד: אלישע 27, קומה 2, משפחת פינטו | 📞 תיאום מראש: 03-619-4784</div>
+            <div class="location-item">🛍️ חנות: קוטלר 12, "עולם המוזיקה"</div>
+        </div>
+    </div>
+
+    <div id="cityModal-ירושלים" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בירושלים</h2>
+            <div class="location-item">🎹 מורה למוזיקה: אזור רוממה, ארץ חפץ 116ה, משפחת יעקובסון | 📞 תיאום מראש: 02-580-4773</div>
+            <div class="location-item">🛍️ חנות: אזור גאולה, עזרא 12, "עולם המוזיקה"</div>
+            <div class="location-item">🛍️ חנות: אזור רוממה, אור אלחנן 18, "הרמוניה"</div>
+            <div class="location-item">🛍️ חנות: אזור רמות, קניון רמות (חניה קומה 1), "סופרן"</div>
+            <div class="location-item">🛍️ חנות: כנפי נשרים, "סאמט"</div>
+        </div>
+    </div>
+
+    <div id="cityModal-מודיעין עילית" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה במודיעין עילית</h2>
+            <div class="location-item">🏠 מוקד: נתיבות המשפט 85, קומה 2-, משפחת סלומון | 📞 תיאום מראש: 055-674-0268</div>
+            <div class="location-item">🎹 מורה למוזיקה: שערי תשובה 12, קומה 1, משפחת צדוק | 📞 תיאום מראש: 054-848-6874</div>
+            <div class="location-item">🛍️ חנות: יהודה הנשיא 8, קומה 3-, "אקורד" | 🕒 שעות פתיחה: 16:00-22:00 | 📞 052-6933-666</div>
+        </div>
+    </div>
+
+    <div id="cityModal-אלעד" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה באלעד</h2>
+            <div class="location-item">🏠 מוקד: מול רמב"ם 21, רועי חדד | 📞 תיאום מראש (זמין בוואטסאפ): 052-780-0806</div>
+            <div class="location-item">🏠 מוקד: רחבת התור 13, משפחת טוויטו | 📞 תיאום מראש: 054-853-6791 | ☎️ בית: 03-909-4828</div>
+        </div>
+    </div>
+
+    <div id="cityModal-בית שמש" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בבית שמש</h2>
+            <div class="location-item">🏠 מוקד: נחלה ומנוחה, אור שמח 4, משפחת פריו | 📞 תיאום מראש: 052-716-5322 (עדיף לאחר 21:45)</div>
+            <div class="location-item">🛍️ חנות: רמה ד', תנחומא 4, "אקורד" | 🕒 שעות פתיחה: 16:00-22:00</div>
+        </div>
+    </div>
+
+    <div id="cityModal-ביתר עילית" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בביתר עילית</h2>
+            <div class="location-item">🏠 מוקד: גבעה A, רבי עקיבא 18 | 📞 תיאום מראש: 058-322-2583</div>
+            <div class="location-item">🛍️ חנות: גבעה B, קדושת לוי 16, "עולם המוזיקה" | 📞 052-716-2050</div>
+        </div>
+    </div>
+
+    <div id="cityModal-אשדוד" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה באשדוד</h2>
+            <div class="location-item">🛍️ חנות: אלעזר בן הורקנוס 2, "דיוטי פון מיוזיק"</div>
+        </div>
+    </div>
+
+    <div id="cityModal-נתיבות" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בנתיבות</h2>
+            <div class="location-item">🏠 מוקד: עוזיאל 10, קומת קרקע, משפחת לוי | 📞 תיאום מראש: 055-668-7100</div>
+        </div>
+    </div>
+
+    <div id="cityModal-צפת" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בצפת</h2>
+            <div class="location-item">🏠 מוקד: לוחמי הגטאות, משפחת שפירא | 📞 תיאום מראש: 058-325-5010</div>
+        </div>
+    </div>
+
+    <div id="cityModal-חיפה" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בחיפה</h2>
+            <div class="location-item">🏠 מוקד: שכונת הדר, יהושע 11, משפחת שדה | 📞 תיאום מראש: 052-722-3470 (החל מ-16:30 בלבד)</div>
+        </div>
+    </div>
+
+    <div id="cityModal-רכסים" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה ברכסים</h2>
+            <div class="location-item">🏠 מוקד: הכלניות 1, כניסה ב', משפחת מנס | 📞 תיאום מראש: 053-314-8626</div>
+        </div>
+    </div>
+
+    <div id="cityModal-פתח תקווה" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה בפתח תקווה</h2>
+            <div class="location-item">🎹 מורה למוזיקה: אוהד | 📞 054-786-2371</div>
+        </div>
+    </div>
+
+    <div id="cityModal-אופקים" class="city-modal">
+        <div class="city-modal-content">
+            <span class="city-modal-close" role="button" aria-label="סגור" tabindex="0">&times;</span>
+            <h2 class="city-modal-title">מוקדי מכירה באופקים</h2>
+            <div class="location-item">🎹 מורה למוזיקה: ישי | 📞 054-993-3758</div>
+        </div>
+    </div>
+
     <!-- Map Modal -->
     <div id="mapModal" class="map-modal">
         <div class="map-modal-content">
@@ -1934,26 +2006,46 @@
         });
     })();
 
-    // Locations panel toggle functionality
+    // City Modals functionality
     (() => {
-        const toggleBtn = document.getElementById('toggleLocations');
-        const panel = document.getElementById('locationsPanel');
-
-        const togglePanel = () => {
-            const isOpen = panel.classList.contains('open');
-            panel.classList.toggle('open');
-            toggleBtn.setAttribute('aria-expanded', !isOpen);
-            toggleBtn.textContent = isOpen ? '📍 מוקדי מכירה' : '📍 סגור מוקדי מכירה';
-        };
-
-        toggleBtn.addEventListener('click', togglePanel);
-
-        // Add keyboard support for Enter and Space keys
-        toggleBtn.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                togglePanel();
-            }
+        const cityButtons = document.querySelectorAll('.city-btn');
+        
+        cityButtons.forEach(btn => {
+            const cityName = btn.dataset.city;
+            const modal = document.getElementById(`cityModal-${cityName}`);
+            const closeBtn = modal.querySelector('.city-modal-close');
+            
+            // Open modal when city button is clicked
+            btn.addEventListener('click', () => {
+                modal.style.display = 'block';
+            });
+            
+            // Close modal when close button is clicked
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            // Add keyboard support for close button
+            closeBtn.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                }
+            });
         });
     })();
 
