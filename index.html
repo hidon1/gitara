@@ -1216,6 +1216,73 @@
             background: linear-gradient(135deg, var(--accent), #d3a25f);
             color: var(--primary);
         }
+
+        /* Survey Badge - Pulsating Red Circle */
+        .survey-badge {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(150px) rotate(-15deg);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1rem;
+            line-height: 1.3;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+            animation: surveyPulse 2s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 100;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .survey-badge:hover {
+            animation: none;
+            transform: translateX(150px) rotate(-15deg) scale(1.1);
+        }
+
+        @keyframes surveyPulse {
+            0%, 100% {
+                transform: translateX(150px) rotate(-15deg) scale(1);
+                box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+            }
+            50% {
+                transform: translateX(150px) rotate(-15deg) scale(1.15);
+                box-shadow: 0 12px 35px rgba(231, 76, 60, 0.7);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .survey-badge {
+                width: 100px;
+                height: 100px;
+                font-size: 0.75rem;
+                top: 60px;
+                transform: translateX(80px) rotate(-15deg);
+            }
+
+            .survey-badge:hover {
+                transform: translateX(80px) rotate(-15deg) scale(1.1);
+            }
+
+            @keyframes surveyPulse {
+                0%, 100% {
+                    transform: translateX(80px) rotate(-15deg) scale(1);
+                    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+                }
+                50% {
+                    transform: translateX(80px) rotate(-15deg) scale(1.15);
+                    box-shadow: 0 12px 35px rgba(231, 76, 60, 0.7);
+                }
+            }
+        }
     
     </style>
     </head>
@@ -1239,6 +1306,9 @@
     </header>
 
     <div class="hero">
+        <a href="#survey" class="survey-badge">
+            ענו על סקר<br>והשפיעו!
+        </a>
         <h1>להיטי עולם הישיבות</h1>
         <p>פשוט לנגן נכון: הנגשת מיטב הלהיטים והקלאסיקות באמצעות אקורדים מדויקים וקלים לקריאה, כדי שכל אחד יוכל לנגן מהלב.</p>
         <div class="cta-buttons">
