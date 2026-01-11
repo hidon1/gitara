@@ -6,7 +6,6 @@
     <title> להיטי עולם הישיבות | המדריך ללימוד אקורדים</title>
     <link rel="icon" type="image/svg+xml" href="ImageToStl.com_Gemini_Generated_Image_p381yjp381yjp381-removebg-preview.svg">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Bellefair&display=swap" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&callback=initMap&libraries=marker" async defer></script>
     <style>
         :root {
             --primary: #0f1f2f;
@@ -32,8 +31,8 @@
 
         /* תפריט עליון */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
             padding: 20px 10%;
             display: flex;
             justify-content: space-between;
@@ -41,7 +40,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             animation: slideDown 0.6s ease;
         }
 
@@ -838,6 +837,7 @@
         .cart-hint {
             font-size: 0.9rem;
             color: #666;
+            text-align: center;
         }
 
         .book-actions {
@@ -1051,96 +1051,7 @@
             margin-bottom: 0;
         }
 
-        /* Map Modal Styles */
-        .map-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-        }
 
-        .map-modal-content {
-            background-color: #fefefe;
-            margin: 2% auto;
-            padding: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 1200px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .map-modal-close {
-            color: #aaa;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            position: absolute;
-            left: 20px;
-            top: 15px;
-        }
-
-        .map-modal-close:hover,
-        .map-modal-close:focus {
-            color: var(--primary);
-        }
-
-        .map-modal-title {
-            font-family: 'Bellefair', serif;
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            text-align: center;
-            padding-top: 10px;
-        }
-
-        .map-container {
-            width: 100%;
-            height: 600px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid #e9e0d1;
-        }
-
-        .locations-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .map-btn {
-            padding: 14px 30px;
-            border-radius: 12px;
-            border: 2px solid var(--accent);
-            background: linear-gradient(135deg, #2c4158, var(--primary));
-            color: white;
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            display: block;
-            margin: 0 auto;
-        }
-
-        .map-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(176, 141, 87, 0.35);
-            background: linear-gradient(135deg, var(--accent), #d3a25f);
-            color: var(--primary);
-        }
 
         /* City Modal Styles */
         .city-modal {
@@ -1188,7 +1099,7 @@
 
         .city-modal-title {
             font-family: 'Bellefair', serif;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             color: var(--primary);
             margin-bottom: 25px;
             text-align: center;
@@ -1202,7 +1113,7 @@
             background: linear-gradient(135deg, var(--primary), #2c4158);
             color: white;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 6px 16px rgba(0,0,0,0.12);
@@ -1490,12 +1401,6 @@
             <p style="text-align: center; font-size: 1.15rem; line-height: 1.8; max-width: 850px; margin: 0 auto 30px; color: #666;">
                 ניתן לרכוש את הספרים במוקדי המכירה שלנו ברחבי הארץ!
             </p>
-            
-            <div style="text-align: center; margin-bottom: 30px;">
-                <button class="map-btn" id="openMapModal" aria-label="פתח מפה">
-                    🗺️ מפה
-                </button>
-            </div>
             
             <div class="locations-buttons">
                 <button class="city-btn" data-city="בני ברק">בני ברק</button>
@@ -1962,14 +1867,6 @@
         </div>
     </div>
 
-    <!-- Map Modal -->
-    <div id="mapModal" class="map-modal">
-        <div class="map-modal-content">
-            <span class="map-modal-close" id="closeMapModal" role="button" aria-label="סגור" tabindex="0">&times;</span>
-            <h2 class="map-modal-title">🗺️ מפת מוקדי המכירה</h2>
-            <div id="map" class="map-container"></div>
-        </div>
-    </div>
 
     <footer style="text-align: center; padding: 20px; background: #f8f8f8; color: #aaa; font-size: 0.9rem; margin-top: 40px;">
        נבנה  על ידי י.ז.מ. אתרים<br>
@@ -2031,7 +1928,17 @@
                 return;
             }
             emptyState.style.display = 'none';
-            cartStatus.textContent = '';
+            
+            // Calculate and display total
+            const totalPrice = cart.reduce((sum, item) => {
+                const price = parseFloat(item.price) || 0;
+                const quantity = item.quantity || 1;
+                return sum + (price * quantity);
+            }, 0);
+            cartStatus.textContent = `סה"כ: ₪${totalPrice.toFixed(0)}`;
+            cartStatus.style.fontWeight = '800';
+            cartStatus.style.fontSize = '1.1rem';
+            cartStatus.style.color = 'var(--price)';
 
             cart.forEach((item) => {
                 item.quantity = item.quantity ?? 1;
@@ -2045,7 +1952,8 @@
                 const nameEl = document.createElement('span');
                 nameEl.textContent = item.name;
                 const priceEl = document.createElement('strong');
-                priceEl.textContent = `₪${item.price}`;
+                const itemTotal = (parseFloat(item.price) || 0) * (item.quantity || 1);
+                priceEl.textContent = `₪${itemTotal.toFixed(0)}`;
                 row.appendChild(checkEl);
                 row.appendChild(nameEl);
                 row.appendChild(priceEl);
@@ -2067,6 +1975,14 @@
                     e.stopPropagation();
                     if (item.quantity > 1) {
                         updateQuantity(item, qtyValue, -1);
+                        const itemTotal = (parseFloat(item.price) || 0) * item.quantity;
+                        priceEl.textContent = `₪${itemTotal.toFixed(0)}`;
+                        const totalPrice = cart.reduce((sum, item) => {
+                            const price = parseFloat(item.price) || 0;
+                            const quantity = item.quantity || 1;
+                            return sum + (price * quantity);
+                        }, 0);
+                        cartStatus.textContent = `סה"כ: ₪${totalPrice.toFixed(0)}`;
                     } else {
                         removeItem(item, div);
                         return;
@@ -2075,6 +1991,14 @@
                 plusBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     updateQuantity(item, qtyValue, 1);
+                    const itemTotal = (parseFloat(item.price) || 0) * item.quantity;
+                    priceEl.textContent = `₪${itemTotal.toFixed(0)}`;
+                    const totalPrice = cart.reduce((sum, item) => {
+                        const price = parseFloat(item.price) || 0;
+                        const quantity = item.quantity || 1;
+                        return sum + (price * quantity);
+                    }, 0);
+                    cartStatus.textContent = `סה"כ: ₪${totalPrice.toFixed(0)}`;
                 });
                 quantityRow.appendChild(minusBtn);
                 quantityRow.appendChild(qtyValue);
@@ -2129,11 +2053,21 @@
                 cartStatus.textContent = 'הסל ריק כרגע.';
                 return;
             }
+            
+            // Calculate total price
+            const totalPrice = itemsToSend.reduce((sum, item) => {
+                const price = parseFloat(item.price) || 0;
+                const quantity = item.quantity || 1;
+                return sum + (price * quantity);
+            }, 0);
+            
             const bodyLines = [
                 'שלום רב,',
                 '',
                 'אשמח לבצע רכישה של הפריטים הבאים:',
-                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - כמות: ${item.quantity} - ₪${item.price}`),
+                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - כמות: ${item.quantity} - ₪${item.price} x ${item.quantity} = ₪${(parseFloat(item.price) * item.quantity).toFixed(0)}`),
+                '',
+                `סה"כ לתשלום: ₪${totalPrice.toFixed(0)}`,
                 '',
                 'פרטים אישיים:',
                 'שם מלא:',
@@ -2251,152 +2185,6 @@
                     modal.style.display = 'none';
                 }
             });
-        });
-    })();
-
-    // Map Modal functionality
-    let map;
-    let infoWindow;
-    
-    // Initialize the map (called by Google Maps API)
-    window.initMap = function() {
-        // Map will be initialized when modal is opened
-    };
-
-    (() => {
-        const mapModal = document.getElementById('mapModal');
-        const openMapBtn = document.getElementById('openMapModal');
-        const closeMapBtn = document.getElementById('closeMapModal');
-        let mapInitialized = false;
-
-        // Sales locations with coordinates
-        const locations = [
-            // Bני ברק
-            { name: 'מוקד: אלישע 27, קומה 2, משפחת פינטו', address: 'אלישע 27, בני ברק', phone: '03-619-4784', lat: 32.0883, lng: 34.8295, city: 'בני ברק' },
-            { name: 'חנות: קוטלר 12, "עולם המוזיקה"', address: 'קוטלר 12, בני ברק', phone: '', lat: 32.0909, lng: 34.8243, city: 'בני ברק' },
-            
-            // ירושלים
-            { name: 'מורה למוזיקה: ארץ חפץ 116ה, משפחת יעקובסון', address: 'ארץ חפץ 116ה, ירושלים', phone: '02-580-4773', lat: 31.7964, lng: 35.1925, city: 'ירושלים' },
-            { name: 'חנות: עזרא 12, "עולם המוזיקה"', address: 'עזרא 12, ירושלים', phone: '', lat: 31.7906, lng: 35.2203, city: 'ירושלים' },
-            { name: 'חנות: אור אלחנן 18, "הרמוניה"', address: 'אור אלחנן 18, ירושלים', phone: '', lat: 31.7968, lng: 35.1935, city: 'ירושלים' },
-            { name: 'חנות: קניון רמות, "סופרן"', address: 'קניון רמות, ירושלים', phone: '', lat: 31.8139, lng: 35.1867, city: 'ירושלים' },
-            { name: 'חנות: כנפי נשרים, "סאמט"', address: 'כנפי נשרים, ירושלים', phone: '', lat: 31.7830, lng: 35.2177, city: 'ירושלים' },
-            
-            // מודיעין עילית
-            { name: 'מוקד: נתיבות המשפט 85, משפחת סלומון', address: 'נתיבות המשפט 85, מודיעין עילית', phone: '055-674-0268', lat: 31.9302, lng: 35.0427, city: 'מודיעין עילית' },
-            { name: 'מורה למוזיקה: שערי תשובה 12, משפחת צדוק', address: 'שערי תשובה 12, מודיעין עילית', phone: '054-848-6874', lat: 31.9313, lng: 35.0435, city: 'מודיעין עילית' },
-            { name: 'חנות: יהודה הנשיא 8, "אקורד"', address: 'יהודה הנשיא 8, מודיעין עילית', phone: '052-6933-666', lat: 31.9305, lng: 35.0420, city: 'מודיעין עילית' },
-            
-            // אלעד
-            { name: 'מוקד: מול רמב"ם 21, רועי חדד', address: 'מול רמב"ם 21, אלעד', phone: '052-780-0806', lat: 32.0526, lng: 34.9512, city: 'אלעד' },
-            { name: 'מוקד: רחבת התור 13, משפחת טוויטו', address: 'רחבת התור 13, אלעד', phone: '054-853-6791', lat: 32.0534, lng: 34.9521, city: 'אלעד' },
-            
-            // בית שמש
-            { name: 'מוקד: אור שמח 4, משפחת פריו', address: 'אור שמח 4, בית שמש', phone: '052-716-5322', lat: 31.7446, lng: 34.9890, city: 'בית שמש' },
-            { name: 'חנות: תנחומא 4, "אקורד"', address: 'תנחומא 4, בית שמש', phone: '', lat: 31.7425, lng: 34.9905, city: 'בית שמש' },
-            
-            // ביתר עילית
-            { name: 'מוקד: רבי עקיבא 18, גבעה A', address: 'רבי עקיבא 18, ביתר עילית', phone: '058-322-2583', lat: 31.6975, lng: 35.1152, city: 'ביתר עילית' },
-            { name: 'חנות: קדושת לוי 16, "עולם המוזיקה"', address: 'קדושת לוי 16, ביתר עילית', phone: '052-716-2050', lat: 31.6982, lng: 35.1145, city: 'ביתר עילית' },
-            
-            // אשדוד
-            { name: 'חנות: אלעזר בן הורקנוס 2, "דיוטי פון מיוזיק"', address: 'אלעזר בן הורקנוס 2, אשדוד', phone: '', lat: 31.7940, lng: 34.6446, city: 'אשדוד' },
-            
-            // נתיבות
-            { name: 'מוקד: עוזיאל 10, משפחת לוי', address: 'עוזיאל 10, נתיבות', phone: '055-668-7100', lat: 31.4206, lng: 34.5894, city: 'נתיבות' },
-            
-            // צפת
-            { name: 'מוקד: לוחמי הגטאות, משפחת שפירא', address: 'לוחמי הגטאות, צפת', phone: '058-325-5010', lat: 32.9658, lng: 35.4983, city: 'צפת' },
-            
-            // חיפה
-            { name: 'מוקד: יהושע 11, משפחת שדה', address: 'יהושע 11, חיפה', phone: '052-722-3470', lat: 32.8011, lng: 34.9897, city: 'חיפה' },
-            
-            // רכסים
-            { name: 'מוקד: הכלניות 1, משפחת מנס', address: 'הכלניות 1, רכסים', phone: '053-314-8626', lat: 32.4353, lng: 34.9293, city: 'רכסים' },
-            
-            // פתח תקווה
-            { name: 'מורה למוזיקה: אוהד', address: 'פתח תקווה', phone: '054-786-2371', lat: 32.0853, lng: 34.8880, city: 'פתח תקווה' },
-            
-            // אופקים
-            { name: 'מורה למוזיקה: ישי', address: 'אופקים', phone: '054-993-3758', lat: 31.3169, lng: 34.6187, city: 'אופקים' }
-        ];
-
-        function createMap() {
-            if (mapInitialized) return;
-
-            // Center of Israel
-            const israelCenter = { lat: 31.7683, lng: 35.2137 };
-            
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
-                center: israelCenter,
-                mapId: 'DEMO_MAP_ID'
-            });
-
-            infoWindow = new google.maps.InfoWindow();
-
-            // Add markers for each location
-            locations.forEach((location) => {
-                const marker = new google.maps.Marker({
-                    position: { lat: location.lat, lng: location.lng },
-                    map: map,
-                    title: location.name
-                });
-
-                // Create info window content
-                const contentString = `
-                    <div style="font-family: 'Assistant', sans-serif; padding: 10px; max-width: 300px; direction: rtl; text-align: right;">
-                        <h3 style="color: #0f1f2f; font-size: 1.1rem; margin-bottom: 10px; font-weight: 700;">${location.city}</h3>
-                        <p style="margin: 5px 0; color: #333;"><strong>📍 ${location.name}</strong></p>
-                        <p style="margin: 5px 0; color: #555;">כתובת: ${location.address}</p>
-                        ${location.phone ? `<p style="margin: 5px 0; color: #555;">📞 טלפון: <a href="tel:${location.phone}" style="color: #0f1f2f; font-weight: 600;">${location.phone}</a></p>` : ''}
-                    </div>
-                `;
-
-                // Add click listener to marker
-                marker.addListener('click', () => {
-                    infoWindow.setContent(contentString);
-                    infoWindow.open(map, marker);
-                });
-            });
-
-            mapInitialized = true;
-        }
-
-        // Open map modal
-        openMapBtn.addEventListener('click', () => {
-            mapModal.style.display = 'block';
-            // Initialize map when opening modal for the first time
-            if (typeof google !== 'undefined' && google.maps) {
-                setTimeout(createMap, 100);
-            }
-        });
-
-        // Close map modal
-        closeMapBtn.addEventListener('click', () => {
-            mapModal.style.display = 'none';
-        });
-
-        // Add keyboard support for close button
-        closeMapBtn.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                mapModal.style.display = 'none';
-            }
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (event) => {
-            if (event.target === mapModal) {
-                mapModal.style.display = 'none';
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && mapModal.style.display === 'block') {
-                mapModal.style.display = 'none';
-            }
         });
     })();
 
