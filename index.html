@@ -2518,7 +2518,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 wazeLink.className = 'nav-icon waze-icon';
                 wazeLink.setAttribute('title', `נווט ב-Waze ל: ${escapedAddress}`);
                 wazeLink.setAttribute('aria-label', `פתח ב-Waze: ${escapedAddress}`);
-                wazeLink.innerHTML = '🚗';
+                wazeLink.innerHTML = 'W';
                 
                 // Create Google Maps link
                 const mapsLink = document.createElement('a');
@@ -2528,7 +2528,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 mapsLink.className = 'nav-icon maps-icon';
                 mapsLink.setAttribute('title', `פתח ב-Google Maps: ${escapedAddress}`);
                 mapsLink.setAttribute('aria-label', `פתח ב-Google Maps: ${escapedAddress}`);
-                mapsLink.innerHTML = '📍';
+                mapsLink.innerHTML = 'G';
                 
                 // Add links to container
                 navIcons.appendChild(wazeLink);
