@@ -608,10 +608,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         /* תגובות */
+        .reviews-container {
+            position: relative;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+
         .reviews {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
             gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            cursor: grab;
+            user-select: none;
+            padding: 10px 0;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        .reviews::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .reviews.grabbing {
+            cursor: grabbing;
         }
         
         .review-card {
@@ -623,6 +643,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border-radius: 8px;
             transition: all 0.4s ease;
             position: relative;
+            flex: 0 0 calc(33.333% - 20px);
+            min-width: 300px;
+        }
+
+        @media (max-width: 1024px) {
+            .review-card {
+                flex: 0 0 calc(50% - 15px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .review-card {
+                flex: 0 0 calc(100% - 10px);
+            }
         }
 
         .review-card::before {
@@ -637,7 +671,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .review-card:hover {
-            transform: translateX(-5px);
+            transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
         }
         
@@ -1387,18 +1421,60 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <section id="reviews" class="card">
             <h2 class="section-title">מה אומרים הקוראים?</h2>
-            <div class="reviews">
-                <div class="review-card">
-                    סוף סוף ספר שמסביר הכל בצורה פשוטה ומקצועית. למדתי לנגן את הפתיחים שמיד מזהים והיום אני מלווה בכל זיצ בישיבה!
-                    <span class="review-author">שלמה, ירושלים</span>
-                </div>
-                <div class="review-card">
-                    השיטה בספר קיצרה לי חודשים של ניסיונות. היום אני מלווה בזיצים בישיבה בביטחון ובקלות. ממליץ בחום!
-                    <span class="review-author">מנחם, בני ברק</span>
-                </div>
-                <div class="review-card">
-                    קניתי את המהדורה הראשונה וקיבלתי אותה מיד! נוח מאוד לתרגל מהספר שווה כל שקל!
-                    <span class="review-author">אברהם, בית שמש</span>
+            <div class="reviews-container">
+                <div class="reviews" id="reviewsCarousel">
+                    <div class="review-card">
+                        מהבוקר אני קוראת בחוברת ומתפעלת מאדדדד, עשיתם עבודה יסודית ומושלמת, ניכרת ההשקעה העצומה
+                        <span class="review-author">ר. עוזרי</span>
+                    </div>
+                    <div class="review-card">
+                        וואוו וואוו וואוו ממש מרשים! לא ראיתי דבר כזה עוד בשוק, מוסיף שעות של הנאה וחוויה וכמובן עובק ללמוד, תודה רבה!
+                        <span class="review-author">מ. רותן</span>
+                    </div>
+                    <div class="review-card">
+                        אפי היקר קניתי את החוברת ומאז אני מתפרע על האורגן, יצירה למופת!!! פתחת עולם חדש בנגינה למתחילים ומתקדמים
+                        <span class="review-author">יעקב</span>
+                    </div>
+                    <div class="review-card">
+                        וואוו חוברת מאלפת באמת יש שם שירים שכיף לנגן וכל ההסברים בסוף מדהימים ומוסיפים מאד, אז תודה רבה!!!
+                        <span class="review-author">צ. פרי</span>
+                    </div>
+                    <div class="review-card">
+                        אחד הספרים היותר מוצלחים שראיתי! יישר כח!
+                        <span class="review-author">מ. ויכסלבוים</span>
+                    </div>
+                    <div class="review-card">
+                        קניתי, ובאמת זה משהו שאף פעם לא היה
+                        <span class="review-author">י. ה. שכטר</span>
+                    </div>
+                    <div class="review-card">
+                        ממש שימחת אותי קניתי את זה וזה עשה לי את הפורים ממש תודה רבה!!! יהי רצון שתזכה לעשות עוד דברים כאלה שמשמחים את עם ישראל!!!!!
+                        <span class="review-author">א. קדוש</span>
+                    </div>
+                    <div class="review-card">
+                        אפשר לומר בפה מלא שבלעדי החוברת לא הייתי מגיע לקמה שאני בה היום
+                        <span class="review-author">מ. ברוכי</span>
+                    </div>
+                    <div class="review-card">
+                        קניתי לאשתי והיא ממש נהנתה, לא ראיתי ספר כ"כ מעודכן מבחינת שירים חדשים והכל מסודר פצצה.
+                        <span class="review-author">ד. שקד</span>
+                    </div>
+                    <div class="review-card">
+                        הספר מדהים! מאז שהכרתי אותו אני לא פותחת גיטרה בלעדיו...
+                        <span class="review-author">ר. גולד</span>
+                    </div>
+                    <div class="review-card">
+                        אני אחת הלקוחות המרוצות ביותר של חוברת האקורדים להיטי עולם הישיבות, אז קודם תודה רבה היא חוברת מעניינת ומנגישה את לימוד הגיטרה בצורה קלה וברורה וכיפית, אז שוב תודה.
+                        <span class="review-author">א. ר. לקס</span>
+                    </div>
+                    <div class="review-card">
+                        זו חוברת הכי מוצלחת שיצאה אי פעם לגיטרה
+                        <span class="review-author">ש. עבאדי</span>
+                    </div>
+                    <div class="review-card">
+                        תודה רבה החוברת פשוט נפלאה היא קידמה אותי ב100 צעדים קדימה
+                        <span class="review-author">מ. שטיינר</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2272,6 +2348,54 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 imageModal.style.display = 'none';
             }
         });
+    })();
+
+    // Reviews Carousel Drag Functionality
+    (() => {
+        const carousel = document.getElementById('reviewsCarousel');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        carousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            carousel.classList.add('grabbing');
+            startX = e.pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            isDown = false;
+            carousel.classList.remove('grabbing');
+        });
+
+        carousel.addEventListener('mouseup', () => {
+            isDown = false;
+            carousel.classList.remove('grabbing');
+        });
+
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll speed multiplier
+            carousel.scrollLeft = scrollLeft - walk;
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchScrollLeft = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].pageX;
+            touchScrollLeft = carousel.scrollLeft;
+        }, { passive: true });
+
+        carousel.addEventListener('touchmove', (e) => {
+            const touchX = e.touches[0].pageX;
+            const walk = (touchX - touchStartX) * 2;
+            carousel.scrollLeft = touchScrollLeft - walk;
+        }, { passive: true });
     })();
 </script>
 
