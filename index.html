@@ -1102,6 +1102,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 0;
         }
 
+        /* Navigation Icons */
+        .nav-icons {
+            display: inline-flex;
+            gap: 8px;
+            margin-left: 12px;  /* Changed from margin-right for RTL layout */
+            align-items: center;
+        }
+
+        .nav-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .waze-icon {
+            background: linear-gradient(135deg, #33ccff, #0099ff);
+            color: white;
+        }
+
+        .waze-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
+        }
+
+        .maps-icon {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+        }
+
+        .maps-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+        }
+
 
 
         /* City Modal Styles */
@@ -2401,6 +2441,103 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 carousel.scrollLeft = touchScrollLeft - walk;
             }
         }, { passive: true });
+    })();
+
+    // Add navigation icons to location items
+    (() => {
+        // Function to escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Function to format address for URL
+        function formatAddressForUrl(address) {
+            // Replace spaces with + for better compatibility
+            // Both Waze and Google Maps can handle Hebrew and special characters
+            return address.replace(/\s+/g, '+');
+        }
+
+        // Function to extract address from location item text
+        function extractAddress(text) {
+            // Remove emojis and extract the main address part
+            // Pattern: Look for text after emoji and before phone number (📞) if present
+            let address = text.replace(/^[🏠🛍️🎹]\s*/, ''); // Remove leading emoji
+            
+            // If there's a phone number, take everything before it
+            const phoneIndex = address.indexOf('📞');
+            if (phoneIndex !== -1) {
+                address = address.substring(0, phoneIndex).trim();
+            }
+            
+            // If there's a clock emoji (hours), take everything before it
+            const clockIndex = address.indexOf('🕒');
+            if (clockIndex !== -1) {
+                address = address.substring(0, clockIndex).trim();
+            }
+            
+            // Remove trailing pipe and whitespace
+            address = address.replace(/\s*\|\s*$/, '').trim();
+            
+            return address;
+        }
+
+        // Function to create Waze URL
+        function createWazeUrl(address) {
+            const formattedAddress = formatAddressForUrl(address);
+            return `https://waze.com/ul?q=${formattedAddress}`;
+        }
+
+        // Function to create Google Maps URL
+        function createGoogleMapsUrl(address) {
+            const formattedAddress = formatAddressForUrl(address);
+            return `https://www.google.com/maps/search/?api=1&query=${formattedAddress}`;
+        }
+
+        // Get all location items
+        const locationItems = document.querySelectorAll('.location-item');
+
+        locationItems.forEach(item => {
+            const originalText = item.textContent;
+            const address = extractAddress(originalText);
+            
+            // Only add icons if we have a valid address
+            if (address && address.length > 0) {
+                const escapedAddress = escapeHtml(address);
+                
+                // Create navigation icons container
+                const navIcons = document.createElement('span');
+                navIcons.className = 'nav-icons';
+                
+                // Create Waze link
+                const wazeLink = document.createElement('a');
+                wazeLink.href = createWazeUrl(address);
+                wazeLink.target = '_blank';
+                wazeLink.rel = 'noopener noreferrer';
+                wazeLink.className = 'nav-icon waze-icon';
+                wazeLink.setAttribute('title', `נווט ב-Waze ל: ${escapedAddress}`);
+                wazeLink.setAttribute('aria-label', `פתח ב-Waze: ${escapedAddress}`);
+                wazeLink.innerHTML = '🚗';
+                
+                // Create Google Maps link
+                const mapsLink = document.createElement('a');
+                mapsLink.href = createGoogleMapsUrl(address);
+                mapsLink.target = '_blank';
+                mapsLink.rel = 'noopener noreferrer';
+                mapsLink.className = 'nav-icon maps-icon';
+                mapsLink.setAttribute('title', `פתח ב-Google Maps: ${escapedAddress}`);
+                mapsLink.setAttribute('aria-label', `פתח ב-Google Maps: ${escapedAddress}`);
+                mapsLink.innerHTML = '📍';
+                
+                // Add links to container
+                navIcons.appendChild(wazeLink);
+                navIcons.appendChild(mapsLink);
+                
+                // Append icons to the location item
+                item.appendChild(navIcons);
+            }
+        });
     })();
 </script>
 
