@@ -2353,6 +2353,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // Reviews Carousel Drag Functionality
     (() => {
         const carousel = document.getElementById('reviewsCarousel');
+        const SCROLL_SPEED_MULTIPLIER = 2;
         let isDown = false;
         let startX;
         let scrollLeft;
@@ -2378,7 +2379,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll speed multiplier
+            const walk = (x - startX) * SCROLL_SPEED_MULTIPLIER;
             carousel.scrollLeft = scrollLeft - walk;
         });
 
@@ -2393,7 +2394,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         carousel.addEventListener('touchmove', (e) => {
             const touchX = e.touches[0].pageX;
-            const walk = (touchX - touchStartX) * 2;
+            const walk = (touchX - touchStartX) * SCROLL_SPEED_MULTIPLIER;
             carousel.scrollLeft = touchScrollLeft - walk;
         }, { passive: true });
     })();
