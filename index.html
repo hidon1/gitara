@@ -2388,14 +2388,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         let touchScrollLeft = 0;
 
         carousel.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].pageX;
-            touchScrollLeft = carousel.scrollLeft;
+            if (e.touches && e.touches.length > 0) {
+                touchStartX = e.touches[0].pageX;
+                touchScrollLeft = carousel.scrollLeft;
+            }
         }, { passive: true });
 
         carousel.addEventListener('touchmove', (e) => {
-            const touchX = e.touches[0].pageX;
-            const walk = (touchX - touchStartX) * SCROLL_SPEED_MULTIPLIER;
-            carousel.scrollLeft = touchScrollLeft - walk;
+            if (e.touches && e.touches.length > 0) {
+                const touchX = e.touches[0].pageX;
+                const walk = (touchX - touchStartX) * SCROLL_SPEED_MULTIPLIER;
+                carousel.scrollLeft = touchScrollLeft - walk;
+            }
         }, { passive: true });
     })();
 </script>
