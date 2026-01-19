@@ -2420,6 +2420,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const nextBtn = document.getElementById('reviewsNext');
         const SCROLL_SPEED_MULTIPLIER = 2;
         const ARROW_SCROLL_AMOUNT = 350; // Scroll amount in pixels for arrow clicks
+        const SCROLL_END_TOLERANCE = 5; // Pixel tolerance for detecting scroll end
+        const ARROW_UPDATE_DELAY = 300; // Delay in ms to update arrow states after scroll animation
         let isDown = false;
         let startX;
         let scrollLeft;
@@ -2435,7 +2437,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             // Disable next button if at the end
             const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-            if (carousel.scrollLeft >= maxScroll - 5) { // 5px tolerance
+            if (carousel.scrollLeft >= maxScroll - SCROLL_END_TOLERANCE) {
                 nextBtn.disabled = true;
             } else {
                 nextBtn.disabled = false;
@@ -2448,7 +2450,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 left: -ARROW_SCROLL_AMOUNT,
                 behavior: 'smooth'
             });
-            setTimeout(updateArrowStates, 300);
+            setTimeout(updateArrowStates, ARROW_UPDATE_DELAY);
         });
 
         // Scroll right (prev in RTL)
@@ -2457,7 +2459,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 left: ARROW_SCROLL_AMOUNT,
                 behavior: 'smooth'
             });
-            setTimeout(updateArrowStates, 300);
+            setTimeout(updateArrowStates, ARROW_UPDATE_DELAY);
         });
 
         // Update arrow states on scroll
