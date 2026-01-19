@@ -2510,35 +2510,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 const navIcons = document.createElement('span');
                 navIcons.className = 'nav-icons';
                 
-                // Create Waze link
-                const wazeLink = document.createElement('a');
-                wazeLink.href = createWazeUrl(address);
-                wazeLink.target = '_blank';
-                wazeLink.rel = 'noopener noreferrer';
-                wazeLink.className = 'nav-icon waze-icon';
-                wazeLink.setAttribute('title', `נווט ב-Waze ל: ${escapedAddress}`);
-                wazeLink.setAttribute('aria-label', `פתח ב-Waze: ${escapedAddress}`);
-                wazeLink.innerHTML = '🚗';
-                
-                // Create Google Maps link
-                const mapsLink = document.createElement('a');
-                mapsLink.href = createGoogleMapsUrl(address);
-                mapsLink.target = '_blank';
-                mapsLink.rel = 'noopener noreferrer';
-                mapsLink.className = 'nav-icon maps-icon';
-                mapsLink.setAttribute('title', `פתח ב-Google Maps: ${escapedAddress}`);
-                mapsLink.setAttribute('aria-label', `פתח ב-Google Maps: ${escapedAddress}`);
-                mapsLink.innerHTML = '📍';
-                
-                // Add links to container
-                navIcons.appendChild(wazeLink);
-                navIcons.appendChild(mapsLink);
-                
-                // Append icons to the location item
-                item.appendChild(navIcons);
-            }
-        });
-    })();
+            // Create Waze link
+const wazeLink = document.createElement('a');
+wazeLink.href = createWazeUrl(address);
+wazeLink.target = '_blank';
+wazeLink.rel = 'noopener noreferrer';
+wazeLink.className = 'nav-icon waze-icon';
+wazeLink.setAttribute('title', `נווט ב-Waze ל: ${escapedAddress}`);
+wazeLink.setAttribute('aria-label', `פתח ב-Waze: ${escapedAddress}`);
+wazeLink.innerHTML = `
+  <img src="waze.png"
+       alt="Waze"
+       style="width:20px; height:20px; object-fit:contain;">
+`;
+
+// Create Google Maps link
+const mapsLink = document.createElement('a');
+mapsLink.href = createGoogleMapsUrl(address);
+mapsLink.target = '_blank';
+mapsLink.rel = 'noopener noreferrer';
+mapsLink.className = 'nav-icon maps-icon';
+mapsLink.setAttribute('title', `פתח ב-Google Maps: ${escapedAddress}`);
+mapsLink.setAttribute('aria-label', `פתח ב-Google Maps: ${escapedAddress}`);
+mapsLink.innerHTML = `
+  <img src="waze-logo.png"
+       alt="Google Maps"
+       style="width:20px; height:20px; object-fit:contain;">
+`;
+
+// Add links to container
+navIcons.appendChild(wazeLink);
+navIcons.appendChild(mapsLink);
+
+// Append icons to the location item
+item.appendChild(navIcons);
 </script>
 
 </body>
