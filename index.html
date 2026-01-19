@@ -633,6 +633,67 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .reviews.grabbing {
             cursor: grabbing;
         }
+
+        /* Navigation Arrows for Reviews Carousel */
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #2c4158);
+            color: white;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .carousel-nav-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            background: linear-gradient(135deg, var(--accent), #d3a25f);
+            box-shadow: 0 12px 30px rgba(176, 141, 87, 0.4);
+        }
+
+        .carousel-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .carousel-nav-btn.prev {
+            right: 10px;
+        }
+
+        .carousel-nav-btn.next {
+            left: 10px;
+        }
+
+        .carousel-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-nav-btn.prev {
+                right: 5px;
+            }
+
+            .carousel-nav-btn.next {
+                left: 5px;
+            }
+        }
         
         .review-card {
             background: linear-gradient(135deg, #fdfdfd 0%, #ffffff 100%);
@@ -1422,6 +1483,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <section id="reviews" class="card">
             <h2 class="section-title">מה אומרים הקוראים?</h2>
             <div class="reviews-container">
+                <button class="carousel-nav-btn prev" id="reviewsPrev" aria-label="תגובה קודמת">◄</button>
+                <button class="carousel-nav-btn next" id="reviewsNext" aria-label="תגובה הבאה">►</button>
                 <div class="reviews" id="reviewsCarousel">
                     <div class="review-card">
                         מהבוקר אני קוראת בחוברת ומתפעלת מאדדדד, עשיתם עבודה יסודית ומושלמת, ניכרת ההשקעה העצומה
@@ -2353,11 +2416,59 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // Reviews Carousel Drag Functionality
     (() => {
         const carousel = document.getElementById('reviewsCarousel');
+        const prevBtn = document.getElementById('reviewsPrev');
+        const nextBtn = document.getElementById('reviewsNext');
         const SCROLL_SPEED_MULTIPLIER = 2;
+        const ARROW_SCROLL_AMOUNT = 350; // Scroll amount in pixels for arrow clicks
+        const SCROLL_END_TOLERANCE = 5; // Pixel tolerance for detecting scroll end
+        const ARROW_UPDATE_DELAY = 300; // Delay in ms to update arrow states after scroll animation
         let isDown = false;
         let startX;
         let scrollLeft;
 
+        // Arrow navigation functionality
+        const updateArrowStates = () => {
+            // Disable prev button if at the start
+            if (carousel.scrollLeft <= 0) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+            
+            // Disable next button if at the end
+            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+            if (carousel.scrollLeft >= maxScroll - SCROLL_END_TOLERANCE) {
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.disabled = false;
+            }
+        };
+
+        // Scroll left (next in RTL)
+        nextBtn.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: -ARROW_SCROLL_AMOUNT,
+                behavior: 'smooth'
+            });
+            setTimeout(updateArrowStates, ARROW_UPDATE_DELAY);
+        });
+
+        // Scroll right (prev in RTL)
+        prevBtn.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: ARROW_SCROLL_AMOUNT,
+                behavior: 'smooth'
+            });
+            setTimeout(updateArrowStates, ARROW_UPDATE_DELAY);
+        });
+
+        // Update arrow states on scroll
+        carousel.addEventListener('scroll', updateArrowStates);
+
+        // Initial update
+        updateArrowStates();
+
+        // Existing drag functionality
         carousel.addEventListener('mousedown', (e) => {
             isDown = true;
             carousel.classList.add('grabbing');
