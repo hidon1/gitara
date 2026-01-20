@@ -2432,7 +2432,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const currentScroll = carousel.scrollLeft;
             
             // In RTL, scrollLeft can be negative or positive depending on browser
-            // Using Math.abs handles both cases
+            // Using Math.abs handles both cases uniformly
+            // At start (rightmost): scrollLeft ≈ 0
+            // At end (leftmost): scrollLeft ≈ maxScrollLeft (can be positive or negative)
             const isAtStart = Math.abs(currentScroll) <= SCROLL_END_TOLERANCE;
             const isAtEnd = Math.abs(currentScroll - maxScrollLeft) <= SCROLL_END_TOLERANCE;
             
