@@ -610,7 +610,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         /* תגובות */
         .reviews-container {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             padding: 10px 0;
         }
 
@@ -666,11 +666,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .carousel-nav-btn.prev {
-            right: -25px;
+            right: 10px;
         }
 
         .carousel-nav-btn.next {
-            left: -25px;
+            left: 10px;
         }
 
         .carousel-nav-btn:disabled {
@@ -687,11 +687,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
 
             .carousel-nav-btn.prev {
-                right: -20px;
+                right: 5px;
             }
 
             .carousel-nav-btn.next {
-                left: -20px;
+                left: 5px;
             }
         }
         
@@ -2428,20 +2428,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         // Arrow navigation functionality
         const updateArrowStates = () => {
-            // Disable prev button if at the start
-            if (carousel.scrollLeft <= 0) {
-                prevBtn.disabled = true;
-            } else {
-                prevBtn.disabled = false;
-            }
+            const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+            const currentScroll = carousel.scrollLeft;
             
-            // Disable next button if at the end
-            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-            if (carousel.scrollLeft >= maxScroll - SCROLL_END_TOLERANCE) {
-                nextBtn.disabled = true;
-            } else {
-                nextBtn.disabled = false;
-            }
+            // In RTL, scrollLeft can be negative or positive depending on browser
+            // We need to handle both cases
+            const isAtStart = Math.abs(currentScroll) <= SCROLL_END_TOLERANCE || 
+                             (currentScroll >= 0 && currentScroll <= SCROLL_END_TOLERANCE);
+            const isAtEnd = Math.abs(currentScroll - maxScrollLeft) <= SCROLL_END_TOLERANCE ||
+                           Math.abs(Math.abs(currentScroll) - maxScrollLeft) <= SCROLL_END_TOLERANCE;
+            
+            // For RTL: prev (right arrow) should be disabled at start (rightmost position)
+            prevBtn.disabled = isAtStart;
+            
+            // For RTL: next (left arrow) should be disabled at end (leftmost position)
+            nextBtn.disabled = isAtEnd;
         };
 
         // Scroll left (next in RTL)
