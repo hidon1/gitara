@@ -2432,11 +2432,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const currentScroll = carousel.scrollLeft;
             
             // In RTL, scrollLeft can be negative or positive depending on browser
-            // We need to handle both cases
-            const isAtStart = Math.abs(currentScroll) <= SCROLL_END_TOLERANCE || 
-                             (currentScroll >= 0 && currentScroll <= SCROLL_END_TOLERANCE);
-            const isAtEnd = Math.abs(currentScroll - maxScrollLeft) <= SCROLL_END_TOLERANCE ||
-                           Math.abs(Math.abs(currentScroll) - maxScrollLeft) <= SCROLL_END_TOLERANCE;
+            // Using Math.abs handles both cases
+            const isAtStart = Math.abs(currentScroll) <= SCROLL_END_TOLERANCE;
+            const isAtEnd = Math.abs(currentScroll - maxScrollLeft) <= SCROLL_END_TOLERANCE;
             
             // For RTL: prev (right arrow) should be disabled at start (rightmost position)
             prevBtn.disabled = isAtStart;
