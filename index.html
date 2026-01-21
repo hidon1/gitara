@@ -1497,6 +1497,230 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 font-size: 1rem;
             }
         }
+
+        /* Payment Instructions Modal */
+        .payment-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .payment-modal-overlay.active {
+            display: flex;
+        }
+
+        .payment-modal {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            border: 2px solid rgba(176, 141, 87, 0.3);
+        }
+
+        .payment-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .payment-modal-title {
+            font-family: 'Bellefair', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.4;
+            flex: 1;
+            padding-left: 15px;
+        }
+
+        .payment-modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .payment-modal-close:hover {
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.05);
+            transform: rotate(90deg);
+        }
+
+        .payment-modal-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .payment-modal-content h3 {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin: 25px 0 15px 0;
+            font-weight: 700;
+        }
+
+        .payment-modal-content p {
+            margin: 12px 0;
+        }
+
+        .payment-modal-content strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .payment-cities {
+            background: rgba(176, 141, 87, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 4px solid var(--accent);
+        }
+
+        .payment-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(31, 138, 84, 0.05);
+            border-radius: 10px;
+            border: 2px solid rgba(31, 138, 84, 0.2);
+        }
+
+        .payment-checkbox input[type="checkbox"] {
+            margin-top: 4px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .payment-checkbox label {
+            cursor: pointer;
+            line-height: 1.6;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .payment-continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--price), #1f8a54);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Assistant', sans-serif;
+            box-shadow: 0 4px 15px rgba(31, 138, 84, 0.3);
+        }
+
+        .payment-continue-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(31, 138, 84, 0.4);
+        }
+
+        .payment-continue-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .payment-terms {
+            font-size: 0.95rem;
+            color: #666;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+        }
+
+        .pickup-notice {
+            background: linear-gradient(135deg, rgba(176, 141, 87, 0.15), rgba(176, 141, 87, 0.05));
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin: 30px auto;
+            max-width: 850px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(176, 141, 87, 0.2);
+            animation: slideUp 0.5s ease;
+        }
+
+        .pickup-notice-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .pickup-notice-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .payment-modal {
+                padding: 30px 25px;
+                max-width: 95%;
+            }
+
+            .payment-modal-title {
+                font-size: 1.4rem;
+            }
+
+            .payment-modal-content {
+                font-size: 1rem;
+            }
+
+            .payment-modal-content h3 {
+                font-size: 1.15rem;
+            }
+
+            .payment-continue-btn {
+                font-size: 1.15rem;
+                padding: 15px;
+            }
+
+            .pickup-notice {
+                padding: 20px;
+            }
+
+            .pickup-notice-text {
+                font-size: 1.1rem;
+            }
+        }
     
     </style>
     </head>
@@ -1749,6 +1973,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <p style="text-align: center; font-size: 1.15rem; line-height: 1.8; max-width: 850px; margin: 0 auto 30px; color: #666;">
                 ניתן לרכוש את הספרים במוקדי המכירה שלנו ברחבי הארץ!
             </p>
+            
+            <div class="pickup-notice">
+                <span class="pickup-notice-icon">⚠️</span>
+                <p class="pickup-notice-text">
+                    <strong>לתשומת לבכם:</strong> במידה ושילמתם באתר, ניתן לאסוף את החוברת אך ורק בנקודות המוגדרות כ"מוקד"
+                </p>
+            </div>
             
             <div class="locations-buttons">
                 <button class="city-btn" data-city="בני ברק">בני ברק</button>
@@ -2136,6 +2367,52 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
     </div>
 
+    <!-- Payment Instructions Modal -->
+    <div class="payment-modal-overlay" id="paymentModalOverlay">
+        <div class="payment-modal">
+            <div class="payment-modal-header">
+                <h2 class="payment-modal-title">רגע לפני התשלום - הנחיות חשובות לאספקת הספר</h2>
+                <button class="payment-modal-close" id="paymentModalClose" aria-label="סגור">✕</button>
+            </div>
+            <div class="payment-modal-content">
+                <h3>📦 אספקה באיסוף עצמי בלבד</h3>
+                <p>
+                    האיסוף מתבצע <strong>אך ורק בנקודות המכירה המופיעות באתר תחת ההגדרה "מוקד"</strong>, אין משלוחים!
+                </p>
+
+                <h3>⚠️ הבחנה חשובה</h3>
+                <p>
+                    חנויות ספרים או מורים פרטיים המופיעים באתר (שאינם מוגדרים כ"מוקד") <strong>לא יוכלו למסור לכם ספר ששולם באתר</strong>.
+                </p>
+
+                <h3>🏙️ ערים עם מוקדים פעילים</h3>
+                <div class="payment-cities">
+                    <p><strong>בני ברק, מודיעין עילית, בית שמש, ביתר עילית, רכסים, חיפה, נתיבות, אלעד וצפת.</strong></p>
+                </div>
+
+                <h3>📋 חובת הצגת אישור</h3>
+                <p>
+                    בסיום התשלום תקבלו למייל <strong>"אישור הזמנה"</strong>. עליכם להדפיס את אישור ההזמנה המלא, למלא את הנספח המופיע בתחתיתו, ולהביא את הדף למוקד האיסוף.
+                </p>
+
+                <div class="payment-checkbox">
+                    <input type="checkbox" id="paymentConfirmCheckbox">
+                    <label for="paymentConfirmCheckbox">
+                        אני מאשר שקראתי והבנתי כי האיסוף מתבצע אך ורק מהמוקדים המורשים וכי עלי להביא אישור מודפס וחתום.
+                    </label>
+                </div>
+
+                <div class="payment-terms">
+                    <strong>תקנון ביטול עסקה:</strong> ביטול עסקה בהתאם לתקנות הגנת הצרכן (ביטול עסקה), התשע"א-2010 וחוק הגנת הצרכן, התשמ"א-1981.
+                </div>
+
+                <button class="payment-continue-btn" id="paymentContinueBtn" disabled>
+                    למעבר לתשלום מאובטח ←
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="cart-panel" id="cartPanel">
         <div class="cart-header">
             <span>סל הקניות</span>
@@ -2380,6 +2657,81 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         window.openContactModal = openContactModal;
     })();
 
+    // Payment Instructions Modal
+    (() => {
+        const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+        const paymentModalClose = document.getElementById('paymentModalClose');
+        const paymentConfirmCheckbox = document.getElementById('paymentConfirmCheckbox');
+        const paymentContinueBtn = document.getElementById('paymentContinueBtn');
+
+        function openPaymentModal() {
+            paymentModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            paymentConfirmCheckbox.checked = false;
+            paymentContinueBtn.disabled = true;
+        }
+
+        function closePaymentModal() {
+            paymentModalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Enable/disable continue button based on checkbox
+        paymentConfirmCheckbox.addEventListener('change', () => {
+            paymentContinueBtn.disabled = !paymentConfirmCheckbox.checked;
+        });
+
+        // Close modal when clicking close button
+        paymentModalClose.addEventListener('click', closePaymentModal);
+
+        // Close modal when clicking outside
+        paymentModalOverlay.addEventListener('click', (e) => {
+            if (e.target === paymentModalOverlay) {
+                closePaymentModal();
+            }
+        });
+
+        // Continue to payment
+        paymentContinueBtn.addEventListener('click', () => {
+            closePaymentModal();
+            
+            // Process the cart items
+            const itemsToSend = window.pendingCartItems || [];
+            if (!itemsToSend.length) return;
+            
+            // Calculate total price
+            const totalPrice = itemsToSend.reduce((sum, item) => {
+                const price = parseFloat(item.price) || 0;
+                const quantity = item.quantity || 1;
+                return sum + (price * quantity);
+            }, 0);
+            
+            const bodyLines = [
+                'שלום רב,',
+                '',
+                'אשמח לבצע רכישה של הפריטים הבאים:',
+                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - כמות: ${item.quantity} - ₪${item.price} x ${item.quantity} = ₪${(parseFloat(item.price) * item.quantity).toFixed(0)}`),
+                '',
+                `סה"כ לתשלום: ₪${totalPrice.toFixed(0)}`,
+                '',
+                'אני מאשר/ת שקראתי והבנתי את ההוראות לאיסוף מהמוקדים המורשים.',
+                '',
+                'תודה רבה!'
+            ];
+
+            // Clear pending cart items
+            delete window.pendingCartItems;
+            
+            // Open contact modal with pre-filled message
+            if (window.openContactModal) {
+                window.openContactModal(bodyLines.join('\n'));
+            }
+        });
+
+        // Make openPaymentModal globally accessible
+        window.openPaymentModal = openPaymentModal;
+    })();
+
     (() => {
         const cart = [];
         const cartPanel = document.getElementById('cartPanel');
@@ -2556,29 +2908,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 return;
             }
             
-            // Calculate total price
-            const totalPrice = itemsToSend.reduce((sum, item) => {
-                const price = parseFloat(item.price) || 0;
-                const quantity = item.quantity || 1;
-                return sum + (price * quantity);
-            }, 0);
+            // Store cart items for later use
+            window.pendingCartItems = itemsToSend;
             
-            const bodyLines = [
-                'שלום רב,',
-                '',
-                'אשמח לבצע רכישה של הפריטים הבאים:',
-                ...itemsToSend.map((item, i) => `${i + 1}. ${item.name} - כמות: ${item.quantity} - ₪${item.price} x ${item.quantity} = ₪${(parseFloat(item.price) * item.quantity).toFixed(0)}`),
-                '',
-                `סה"כ לתשלום: ₪${totalPrice.toFixed(0)}`,
-                '',
-                'תודה רבה!'
-            ];
-
-            cartStatus.textContent = 'פותחים טופס יצירת קשר...';
-            
-            // Open contact modal with pre-filled message
-            if (window.openContactModal) {
-                window.openContactModal(bodyLines.join('\n'));
+            // Open payment instructions modal
+            if (window.openPaymentModal) {
+                window.openPaymentModal();
             }
         });
 
