@@ -2720,7 +2720,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             ];
 
             // Clear pending cart items
-            window.pendingCartItems = null;
+            delete window.pendingCartItems;
             
             // Open contact modal with pre-filled message
             if (window.openContactModal) {
