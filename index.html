@@ -959,6 +959,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             display: flex;
             gap: 10px;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             margin-top: 12px;
         }
@@ -1438,6 +1439,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             resize: vertical;
         }
 
+        .contact-form-file-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Assistant', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+        }
+
+        .contact-form-file-input:hover {
+            border-color: var(--accent);
+            background: rgba(176, 141, 87, 0.05);
+        }
+
+        .contact-form-file-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.1);
+        }
+
         .contact-form-submit {
             width: 100%;
             padding: 18px;
@@ -1820,6 +1844,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <div class="book-details">
                             <h3 class="book-title">חלק א': האנציקלופדיה של השירים (280 שירים)</h3>
                             <div class="book-actions">
+                                <span class="book-price">80 ₪</span>
                                 <button type="button" class="book-btn add-to-cart" data-name="חלק א': האנציקלופדיה של השירים (280 שירים)" data-price="80">הוסף לסל</button>
                             </div>
                         </div>
@@ -1843,6 +1868,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <div class="book-details">
                             <h3 class="book-title">חלק ב': הלהיטים החדשים (93 שירים)</h3>
                             <div class="book-actions">
+                                <span class="book-price">70 ₪</span>
                                 <button type="button" class="book-btn add-to-cart" data-name="חלק ב': הלהיטים החדשים (93 שירים)" data-price="70">הוסף לסל</button>
                             </div>
                         </div>
@@ -2360,6 +2386,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="contact-form-group">
                     <label class="contact-form-label" for="contactMessage">הודעה</label>
                     <textarea id="contactMessage" name="message" class="contact-form-textarea" required></textarea>
+                </div>
+                
+                <div class="contact-form-group">
+                    <label class="contact-form-label" for="contactFile">קובץ מצורף (אופציונלי)</label>
+                    <input type="file" id="contactFile" name="attachment" class="contact-form-file-input" accept="image/*,application/pdf,.doc,.docx">
                 </div>
                 
                 <button type="submit" class="contact-form-submit">שלח הודעה</button>
