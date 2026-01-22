@@ -1442,24 +1442,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .contact-form-file-input {
             width: 100%;
             padding: 15px 20px;
-            border: 2px dashed #e0e0e0;
+            border: 2px dashed var(--accent);
             border-radius: 10px;
             font-family: 'Assistant', sans-serif;
             font-size: 1rem;
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.9);
             cursor: pointer;
+            opacity: 0.6;
         }
 
         .contact-form-file-input:hover {
             border-color: var(--accent);
             background: rgba(176, 141, 87, 0.05);
+            opacity: 1;
         }
 
         .contact-form-file-input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.1);
+            opacity: 1;
         }
 
         .contact-form-submit {
@@ -2390,7 +2393,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 
                 <div class="contact-form-group">
                     <label class="contact-form-label" for="contactFile">קובץ מצורף (אופציונלי)</label>
-                    <input type="file" id="contactFile" name="attachment" class="contact-form-file-input" accept="image/*,application/pdf,.doc,.docx">
+                    <input type="file" id="contactFile" name="attachment" class="contact-form-file-input" accept="image/*,application/pdf">
                 </div>
                 
                 <button type="submit" class="contact-form-submit">שלח הודעה</button>
