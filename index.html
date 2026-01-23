@@ -3171,6 +3171,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     })();
 </script>
 
+<script>
+    // Automatically display book prices from data-price attributes
+    document.addEventListener('DOMContentLoaded', () => {
+        // Find all book cards
+        const bookCards = document.querySelectorAll('.book-card');
+        
+        bookCards.forEach(card => {
+            // Check if a price element already exists to prevent duplicates
+            if (card.querySelector('.book-price')) {
+                return;
+            }
+            
+            // Find the button with data-price attribute
+            const button = card.querySelector('.add-to-cart[data-price]');
+            if (!button) {
+                return;
+            }
+            
+            // Get the price value and trim it
+            const rawPrice = button.getAttribute('data-price');
+            if (!rawPrice) {
+                return;
+            }
+            
+            const price = rawPrice.trim();
+            if (!price) {
+                return;
+            }
+            
+            // Validate that price is a valid number format (e.g., '80' or '12.50')
+            if (!/^\d+(\.\d+)?$/.test(price)) {
+                return;
+            }
+            
+            // Find the book-actions container
+            const bookActions = card.querySelector('.book-actions');
+            if (!bookActions) {
+                return;
+            }
+            
+            // Create the price element
+            const priceElement = document.createElement('div');
+            priceElement.className = 'book-price';
+            priceElement.textContent = `₪${price}`;
+            
+            // Insert the price before the book-actions container
+            bookActions.parentNode.insertBefore(priceElement, bookActions);
+        });
+    });
+</script>
+
 </body>
 </html>
 
