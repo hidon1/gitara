@@ -3189,22 +3189,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 return;
             }
             
-            // Get the price value
+            // Get the price value and validate it
             const price = button.getAttribute('data-price');
-            if (!price) {
+            if (!price || !price.trim()) {
+                return;
+            }
+            
+            // Validate that price contains only numbers
+            const trimmedPrice = price.trim();
+            if (!/^\d+(\.\d+)?$/.test(trimmedPrice)) {
+                return;
+            }
+            
+            // Find the book-actions container
+            const bookActions = card.querySelector('.book-actions');
+            if (!bookActions) {
                 return;
             }
             
             // Create the price element
             const priceElement = document.createElement('div');
             priceElement.className = 'book-price';
-            priceElement.textContent = `₪${price}`;
+            priceElement.textContent = `₪${trimmedPrice}`;
             
-            // Find the book-actions container and insert the price before it
-            const bookActions = card.querySelector('.book-actions');
-            if (bookActions) {
-                bookActions.parentNode.insertBefore(priceElement, bookActions);
-            }
+            // Insert the price before the book-actions container
+            bookActions.parentNode.insertBefore(priceElement, bookActions);
         });
     });
 </script>
