@@ -3189,15 +3189,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 return;
             }
             
-            // Get the price value and validate it
-            const price = button.getAttribute('data-price');
-            if (!price || !price.trim()) {
+            // Get the price value and trim it
+            const rawPrice = button.getAttribute('data-price');
+            if (!rawPrice) {
                 return;
             }
             
-            // Validate that price contains only numbers
-            const trimmedPrice = price.trim();
-            if (!/^\d+(\.\d+)?$/.test(trimmedPrice)) {
+            const price = rawPrice.trim();
+            if (!price) {
+                return;
+            }
+            
+            // Validate that price is a valid number format (e.g., '80' or '12.50')
+            if (!/^\d+(\.\d+)?$/.test(price)) {
                 return;
             }
             
@@ -3210,7 +3214,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             // Create the price element
             const priceElement = document.createElement('div');
             priceElement.className = 'book-price';
-            priceElement.textContent = `₪${trimmedPrice}`;
+            priceElement.textContent = `₪${price}`;
             
             // Insert the price before the book-actions container
             bookActions.parentNode.insertBefore(priceElement, bookActions);
