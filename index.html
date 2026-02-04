@@ -1664,6 +1664,152 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border-radius: 8px;
         }
 
+        .payment-terms a {
+            color: var(--accent);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .payment-terms a:hover {
+            color: var(--primary);
+        }
+
+        /* Regulations Modal */
+        .regulations-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 3500;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .regulations-modal-overlay.active {
+            display: flex;
+        }
+
+        .regulations-modal {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            border: 2px solid rgba(176, 141, 87, 0.3);
+        }
+
+        .regulations-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(176, 141, 87, 0.2);
+        }
+
+        .regulations-modal-title {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0;
+            flex: 1;
+            line-height: 1.3;
+        }
+
+        .regulations-modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-right: 15px;
+        }
+
+        .regulations-modal-close:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+            transform: rotate(90deg);
+        }
+
+        .regulations-modal-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .regulations-modal-content h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 0 0 25px 0;
+            text-align: center;
+        }
+
+        .regulations-modal-content h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+        }
+
+        .regulations-modal-content p {
+            margin: 0 0 15px 0;
+            text-align: justify;
+        }
+
+        .regulation-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(176, 141, 87, 0.05);
+            border-radius: 12px;
+            border-right: 4px solid var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .regulations-modal {
+                padding: 30px 25px;
+                max-width: 95%;
+            }
+
+            .regulations-modal-title {
+                font-size: 1.4rem;
+            }
+
+            .regulations-modal-content {
+                font-size: 1rem;
+            }
+
+            .regulations-modal-content h3 {
+                font-size: 1.3rem;
+            }
+
+            .regulations-modal-content h4 {
+                font-size: 1.1rem;
+            }
+        }
+
         .pickup-notice {
             background: linear-gradient(135deg, rgba(176, 141, 87, 0.15), rgba(176, 141, 87, 0.05));
             border: 2px solid var(--accent);
@@ -2403,12 +2549,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </div>
 
                 <div class="payment-terms">
-                    <strong>תקנון ביטול עסקה:</strong> ביטול עסקה בהתאם לתקנות הגנת הצרכן (ביטול עסקה), התשע"א-2010 וחוק הגנת הצרכן, התשמ"א-1981.
+                    <a id="openRegulationsLink">תקנון האתר</a>
                 </div>
 
                 <button class="payment-continue-btn" id="paymentContinueBtn" disabled>
                     למעבר לתשלום מאובטח ←
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Regulations Modal -->
+    <div class="regulations-modal-overlay" id="regulationsModalOverlay">
+        <div class="regulations-modal">
+            <div class="regulations-modal-header">
+                <h2 class="regulations-modal-title">תקנון האתר - מדיניות החזרות וביטולים</h2>
+                <button class="regulations-modal-close" id="regulationsModalClose" aria-label="סגור">✕</button>
+            </div>
+            <div class="regulations-modal-content">
+                <h3>מדיניות החזרות וביטולים</h3>
+                
+                <div class="regulation-section">
+                    <h4>הזכות לביטול:</h4>
+                    <p>בהתאם לחוק הגנת הצרכן, התשמ"א-1981 ובתקנות מכוחו, ניתן לבטל עסקת מכר מרחוק תוך 14 ימים מיום קבלת המוצר או מיום קבלת מסמך הגילוי, לפי המאוחר.</p>
+                </div>
+
+                <div class="regulation-section">
+                    <h4>אופן הביטול:</h4>
+                    <p>ביטול העסקה כפוף להחזרת המוצר כשהוא שלם לא נפגם ולא נעשה בו כל שימוש.</p>
+                </div>
+
+                <div class="regulation-section">
+                    <h4>דמי ביטול:</h4>
+                    <p>בעת ביטול עסקה שלא עקב פגם, ייגבו דמי ביטול בשיעור של 5% ממחיר המוצר או 100 ש"ח (הנמוך מביניהם), בהתאם לסעיף 14ה(ב) לחוק.</p>
+                </div>
+
+                <div class="regulation-section">
+                    <h4>איסוף עצמי ובדיקה:</h4>
+                    <p>מאחר והאיסוף מתבצע באופן עצמי, על הלקוח לבדוק את המוצר במעמד המסירה. במקרה של פגם הנראה לעין, יש להודיע על כך במקום.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -2551,7 +2730,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </footer>
 
 <footer>
-    &copy; 2025 להיטי עולם הישיבות | הוצאה לאור של ספרי נגינה איכותיים
+    &copy; 2025 להיטי עולם הישיבות | הוצאה לאור של ספרי נגינה איכותיים<br>
+    <a id="footerRegulationsLink" style="cursor: pointer; color: #aaa; text-decoration: underline; margin-top: 10px; display: inline-block;">תקנון האתר</a>
 </footer>
 
 <script>
@@ -2730,6 +2910,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         // Make openPaymentModal globally accessible
         window.openPaymentModal = openPaymentModal;
+    })();
+
+    // Regulations Modal functionality
+    (() => {
+        const regulationsModalOverlay = document.getElementById('regulationsModalOverlay');
+        const regulationsModalClose = document.getElementById('regulationsModalClose');
+        const openRegulationsLink = document.getElementById('openRegulationsLink');
+        const footerRegulationsLink = document.getElementById('footerRegulationsLink');
+
+        function openRegulationsModal() {
+            regulationsModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRegulationsModal() {
+            regulationsModalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Open modal when clicking the link in payment modal
+        if (openRegulationsLink) {
+            openRegulationsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                openRegulationsModal();
+            });
+        }
+
+        // Open modal when clicking the link in footer
+        if (footerRegulationsLink) {
+            footerRegulationsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                openRegulationsModal();
+            });
+        }
+
+        // Close modal when clicking close button
+        if (regulationsModalClose) {
+            regulationsModalClose.addEventListener('click', closeRegulationsModal);
+        }
+
+        // Close modal when clicking outside
+        if (regulationsModalOverlay) {
+            regulationsModalOverlay.addEventListener('click', (e) => {
+                if (e.target === regulationsModalOverlay) {
+                    closeRegulationsModal();
+                }
+            });
+        }
+
+        // Make openRegulationsModal globally accessible
+        window.openRegulationsModal = openRegulationsModal;
     })();
 
     (() => {
