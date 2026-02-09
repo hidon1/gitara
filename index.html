@@ -2544,12 +2544,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="payment-checkbox">
                     <input type="checkbox" id="paymentConfirmCheckbox">
                     <label for="paymentConfirmCheckbox">
-                        אני מאשר שקראתי והבנתי כי האיסוף מתבצע אך ורק מהמוקדים המורשים וכי עלי להביא אישור מודפס וחתום.
+                        אני מאשר שקראתי והבנתי את <a id="openRegulationsLink" style="color: var(--accent); text-decoration: underline; cursor: pointer; font-weight: 700;">תקנון האתר</a> וכי האיסוף מתבצע אך ורק מהמוקדים המורשים וכי עליי להביא אישור מודפס וחתום.
                     </label>
-                </div>
-
-                <div class="payment-terms">
-                    <a id="openRegulationsLink">תקנון האתר</a>
                 </div>
 
                 <button class="payment-continue-btn" id="paymentContinueBtn" disabled>
@@ -2933,6 +2929,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         if (openRegulationsLink) {
             openRegulationsLink.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 openRegulationsModal();
             });
         }
