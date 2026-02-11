@@ -1975,6 +1975,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         /* Payment Details Form */
+        #payment-details {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        #payment-details p {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #666;
+        }
+
         .payment-form-container {
             background: rgba(255, 255, 255, 0.9);
             padding: 30px;
@@ -2186,9 +2198,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </section>
 
         <!-- Payment Details Section -->
-        <section id="payment-details" class="card" style="max-width: 600px; margin: 40px auto;">
+        <section id="payment-details" class="card">
             <h2 class="section-title">פרטי תשלום</h2>
-            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 25px; color: #666;">
+            <p>
                 מלאו את הפרטים למעבר לתשלום מאובטח
             </p>
             
@@ -3237,11 +3249,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 }
 
                 // Build customer details object
-                const customerDetails = {
-                    name: name,
-                    email: email,
-                    city: city
-                };
+                const customerDetails = { name, email, city };
 
                 // Build Tranzila URL and redirect
                 const tranzilaUrl = buildTranzilaUrl(total, customerDetails);
