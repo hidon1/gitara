@@ -1973,6 +1973,88 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 font-size: 1.1rem;
             }
         }
+
+        /* Payment Details Form */
+        .payment-form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 2px solid rgba(176, 141, 87, 0.2);
+        }
+
+        .payment-input-group {
+            margin-bottom: 20px;
+        }
+
+        .payment-label {
+            display: block;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .payment-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Assistant', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .payment-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.1);
+        }
+
+        .payment-input::placeholder {
+            color: #999;
+        }
+
+        .payment-proceed-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+            background: linear-gradient(135deg, var(--accent), #d2a253);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(176, 141, 87, 0.3);
+            margin-top: 10px;
+        }
+
+        .payment-proceed-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(176, 141, 87, 0.4);
+        }
+
+        .payment-proceed-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .payment-form-container {
+                padding: 20px;
+            }
+
+            .payment-input {
+                font-size: 1rem;
+                padding: 12px;
+            }
+
+            .payment-proceed-btn {
+                font-size: 1.15rem;
+                padding: 15px;
+            }
+        }
     
     </style>
     </head>
@@ -2100,6 +2182,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Payment Details Section -->
+        <section id="payment-details" class="card" style="max-width: 600px; margin: 40px auto;">
+            <h2 class="section-title">פרטי תשלום</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 25px; color: #666;">
+                מלאו את הפרטים למעבר לתשלום מאובטח
+            </p>
+            
+            <div class="payment-form-container">
+                <div class="payment-input-group">
+                    <label for="customerName" class="payment-label">שם מלא</label>
+                    <input type="text" id="customerName" class="payment-input" placeholder="הכניסו שם מלא" required>
+                </div>
+                
+                <div class="payment-input-group">
+                    <label for="customerEmail" class="payment-label">אימייל</label>
+                    <input type="email" id="customerEmail" class="payment-input" placeholder="example@email.com" required>
+                </div>
+                
+                <div class="payment-input-group">
+                    <label for="customerCity" class="payment-label">עיר</label>
+                    <input type="text" id="customerCity" class="payment-input" placeholder="הכניסו עיר">
+                </div>
+                
+                <button type="button" id="proceedToPaymentBtn" class="payment-proceed-btn">
+                    מעבר לתשלום מאובטח 🔒
+                </button>
             </div>
         </section>
 
@@ -2994,9 +3105,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const itemsToSend = window.pendingCartItems || [];
             if (!itemsToSend.length) return;
             
-            // Open Tranzila payment modal
-            if (window.openTranzilaModal) {
-                window.openTranzilaModal();
+            // Scroll to payment details section
+            const paymentSection = document.getElementById('payment-details');
+            if (paymentSection) {
+                paymentSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
 
@@ -3056,68 +3168,95 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         window.openRegulationsModal = openRegulationsModal;
     })();
 
-    // Tranzila Payment Modal functionality
+    // Tranzila Payment functionality with customer details
     (() => {
-        const tranzilaModalOverlay = document.getElementById('tranzilaModalOverlay');
-        const tranzilaModalClose = document.getElementById('tranzilaModalClose');
-        const tranzilaIframe = document.getElementById('tranzilaIframe');
+        const proceedToPaymentBtn = document.getElementById('proceedToPaymentBtn');
+        const customerNameInput = document.getElementById('customerName');
+        const customerEmailInput = document.getElementById('customerEmail');
+        const customerCityInput = document.getElementById('customerCity');
 
-        // Helper function to get cart total
+        // Helper function to get cart total from the global cart
         function getCartTotal() {
-            const itemsToSend = window.pendingCartItems || [];
-            return itemsToSend.reduce((sum, item) => {
+            // Access the cart from the cart module
+            const cart = window.gitaraCart || [];
+            return cart.reduce((sum, item) => {
                 const price = parseFloat(item.price) || 0;
                 const quantity = item.quantity || 1;
                 return sum + (price * quantity);
             }, 0);
         }
 
-        // Helper function to build Tranzila URL
-        function buildTranzilaUrl(totalAmount) {
-            const baseUrl = 'https://pay.tranzila.com/fxplehitey?sum=120&currency=1&productdesc=%D7%9C%D7%94%D7%99%D7%98%D7%99%20%D7%A2%D7%95%D7%9C%D7%9D%20%D7%94%D7%99%D7%A9%D7%99%D7%91%D7%95%D7%AA&orderid=book1';
+        // Helper function to build Tranzila URL with customer details
+        function buildTranzilaUrl(totalAmount, customerDetails) {
+            const baseUrl = 'https://pay.tranzila.com/fxplehitey';
             const params = new URLSearchParams({
-                sum: totalAmount.toFixed(2),
-                currency: '1' // ILS
+                sum: totalAmount.toFixed(0), // Amount in shekels (no decimals)
+                currency: '1', // ILS (shekels)
+                contact: customerDetails.name,
+                email: customerDetails.email,
+                city: customerDetails.city || '',
+                productdesc: 'להיטי עולם הישיבות',
+                orderid: `LEHITEY-${Date.now()}`
             });
             return `${baseUrl}?${params.toString()}`;
         }
 
-        function openTranzilaModal() {
-            const total = getCartTotal();
-            if (total <= 0) {
-                alert('הסל ריק או סכום התשלום אינו תקין. אנא הוסיפו פריטים לסל.');
-                return;
-            }
-            
-            const tranzilaUrl = buildTranzilaUrl(total);
-            tranzilaIframe.src = tranzilaUrl;
-            tranzilaModalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        // Handle payment button click
+        if (proceedToPaymentBtn) {
+            proceedToPaymentBtn.addEventListener('click', () => {
+                // Validate cart total
+                const total = getCartTotal();
+                if (total <= 0) {
+                    alert('הסל ריק. אנא הוסיפו פריטים לסל לפני המעבר לתשלום.');
+                    return;
+                }
+
+                // Validate customer details
+                const name = customerNameInput.value.trim();
+                const email = customerEmailInput.value.trim();
+                const city = customerCityInput.value.trim();
+
+                if (!name) {
+                    alert('נא למלא שם מלא');
+                    customerNameInput.focus();
+                    return;
+                }
+
+                if (!email) {
+                    alert('נא למלא כתובת אימייל');
+                    customerEmailInput.focus();
+                    return;
+                }
+
+                // Basic email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('נא למלא כתובת אימייל תקינה');
+                    customerEmailInput.focus();
+                    return;
+                }
+
+                // Build customer details object
+                const customerDetails = {
+                    name: name,
+                    email: email,
+                    city: city
+                };
+
+                // Build Tranzila URL and redirect
+                const tranzilaUrl = buildTranzilaUrl(total, customerDetails);
+                
+                // Redirect to Tranzila
+                window.location.href = tranzilaUrl;
+            });
         }
-
-        function closeTranzilaModal() {
-            tranzilaModalOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-            // Clear iframe src when closing
-            tranzilaIframe.src = '';
-        }
-
-        // Close modal when clicking close button
-        tranzilaModalClose.addEventListener('click', closeTranzilaModal);
-
-        // Close modal when clicking outside
-        tranzilaModalOverlay.addEventListener('click', (e) => {
-            if (e.target === tranzilaModalOverlay) {
-                closeTranzilaModal();
-            }
-        });
-
-        // Make openTranzilaModal globally accessible
-        window.openTranzilaModal = openTranzilaModal;
     })();
 
     (() => {
         const cart = [];
+        // Expose cart globally for payment form
+        window.gitaraCart = cart;
+        
         const cartPanel = document.getElementById('cartPanel');
         const cartItemsContainer = document.getElementById('cartItems');
         const cartCount = document.getElementById('cartCount');
