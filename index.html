@@ -2702,7 +2702,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <button class="tranzila-modal-close" id="tranzilaModalClose" aria-label="סגור">✕</button>
             </div>
             <div class="tranzila-modal-content">
-                <iframe id="tranzilaIframe" class="tranzila-iframe" frameborder="0" allowtransparency="true"></iframe>
+                <iframe id="tranzilaIframe" class="tranzila-iframe" sandbox="allow-forms allow-scripts allow-same-origin allow-top-navigation" allowtransparency="true"></iframe>
             </div>
         </div>
     </div>
@@ -3084,7 +3084,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         function openTranzilaModal() {
             const total = getCartTotal();
-            if (total <= 0) return;
+            if (total <= 0) {
+                alert('הסל ריק או סכום התשלום אינו תקין. אנא הוסיפו פריטים לסל.');
+                return;
+            }
             
             const tranzilaUrl = buildTranzilaUrl(total);
             tranzilaIframe.src = tranzilaUrl;
