@@ -1889,12 +1889,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             flex: 1;
             display: flex;
             min-height: 0;
+            overflow: hidden;
         }
 
         .tranzila-iframe {
             width: 100%;
-            min-height: 600px;
             height: 100%;
+            min-height: 0;
+            max-height: 100%;
             border: none;
             border-radius: 10px;
             background: white;
@@ -1912,7 +1914,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
 
             .tranzila-iframe {
-                min-height: 500px;
+                min-height: 0;
             }
         }
 
@@ -2072,7 +2074,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <div class="book-details">
                             <h3 class="book-title">חלק א': האנציקלופדיה של השירים (280 שירים)</h3>
                             <div class="book-actions">
-                                <button type="button" class="book-btn add-to-cart" data-name="חלק א': האנציקלופדיה של השירים (280 שירים)" data-price="80">הוסף לסל</button>
+                                <button type="button" class="book-btn add-to-cart" data-name="חלק א': האנציקלופדיה של השירים (280 שירים)" data-price="80" data-tranzila-index="1">הוסף לסל</button>
                             </div>
                         </div>
                     </div>
@@ -2095,7 +2097,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <div class="book-details">
                             <h3 class="book-title">חלק ב': הלהיטים החדשים (93 שירים)</h3>
                             <div class="book-actions">
-                                <button type="button" class="book-btn add-to-cart" data-name="חלק ב': הלהיטים החדשים (93 שירים)" data-price="70">הוסף לסל</button>
+                                <button type="button" class="book-btn add-to-cart" data-name="חלק ב': הלהיטים החדשים (93 שירים)" data-price="70" data-tranzila-index="2">הוסף לסל</button>
                             </div>
                         </div>
                     </div>
@@ -3061,11 +3063,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const tranzilaModalOverlay = document.getElementById('tranzilaModalOverlay');
         const tranzilaModalClose = document.getElementById('tranzilaModalClose');
         const tranzilaIframe = document.getElementById('tranzilaIframe');
+        const DEFAULT_PRODUCT_NAME = 'מוצר';
+        const availableTranzilaProducts = Array.from(document.querySelectorAll('.add-to-cart[data-tranzila-index]'))
+            .map((btn) => ({
+                index: Number.parseInt(btn.dataset.tranzilaIndex, 10),
+                name: btn.dataset.name || DEFAULT_PRODUCT_NAME
+            }))
+            .filter((product) => Number.isFinite(product.index))
+            .sort((a, b) => a.index - b.index);
 
         // Helper function to get cart total
-        function getCartTotal() {
-            const itemsToSend = window.pendingCartItems || [];
-            return itemsToSend.reduce((sum, item) => {
+        function getCartTotal(items = []) {
+            return items.reduce((sum, item) => {
                 const price = parseFloat(item.price) || 0;
                 const quantity = item.quantity || 1;
                 return sum + (price * quantity);
@@ -3073,23 +3082,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         // Helper function to build Tranzila URL
-        function buildTranzilaUrl(totalAmount) {
-            const baseUrl = 'https://direct.tranzila.com/fxplehitey/?sum=&currency=1&email=test@mail.com&phone=0500000000';
-            const params = new URLSearchParams({
-                sum: totalAmount.toFixed(2),
-                currency: '1' // ILS
+        function buildTranzilaUrl(items) {
+            const baseUrl = 'https://pay.tranzila.com/fxplehitey';
+            const url = new URL(baseUrl);
+            const totalAmount = getCartTotal(items);
+            const quantitiesByIndex = items.reduce((acc, item) => {
+                if (Number.isFinite(item.tranzilaIndex)) {
+                    acc[item.tranzilaIndex] = (acc[item.tranzilaIndex] || 0) + (item.quantity || 1);
+                }
+                return acc;
+            }, {});
+
+            url.searchParams.set('sum', totalAmount.toFixed(2));
+            url.searchParams.set('currency', '1');
+
+            availableTranzilaProducts.forEach((product) => {
+                const quantity = quantitiesByIndex[product.index] || 0;
+                url.searchParams.set(`prod${product.index}`, product.name);
+                url.searchParams.set(`quant${product.index}`, quantity);
             });
-            return `${baseUrl}?${params.toString()}`;
+
+            return url.toString();
         }
 
         function openTranzilaModal() {
-            const total = getCartTotal();
+            const itemsToSend = window.pendingCartItems || [];
+            const total = getCartTotal(itemsToSend);
             if (total <= 0) {
                 alert('הסל ריק או סכום התשלום אינו תקין. אנא הוסיפו פריטים לסל.');
                 return;
             }
             
-            const tranzilaUrl = buildTranzilaUrl(total);
+            const tranzilaUrl = buildTranzilaUrl(itemsToSend);
             tranzilaIframe.src = tranzilaUrl;
             tranzilaModalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -3259,6 +3283,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             btn.addEventListener('click', () => {
                 const name = btn.dataset.name || DEFAULT_ITEM_NAME;
                 const price = btn.dataset.price || DEFAULT_ITEM_PRICE;
+                const tranzilaIndex = Number.parseInt(btn.dataset.tranzilaIndex, 10);
                 const existing = cart.find(item => item.name === name);
                 if (existing) {
                     existing.quantity += 1;
@@ -3267,7 +3292,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     showCart(true);
                     return;
                 }
-                cart.push({ name, price, selected: true, quantity: 1 });
+                cart.push({ name, price, selected: true, quantity: 1, tranzilaIndex: Number.isFinite(tranzilaIndex) ? tranzilaIndex : undefined });
                 renderCart();
                 cartStatus.textContent = `${name} נוסף לסל.`;
                 showCart(true);
@@ -3608,10 +3633,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
-
-
 
 
 
