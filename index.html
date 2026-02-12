@@ -3066,7 +3066,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const DEFAULT_PRODUCT_NAME = 'מוצר';
         const availableTranzilaProducts = Array.from(document.querySelectorAll('.add-to-cart[data-tranzila-index]'))
             .map((btn) => ({
-                index: Number.parseInt(btn.dataset.tranzilaIndex, 10),
+                index: parseInt(btn.dataset.tranzilaIndex, 10),
                 name: btn.dataset.name || DEFAULT_PRODUCT_NAME
             }))
             .filter((product) => Number.isFinite(product.index))
@@ -3283,7 +3283,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             btn.addEventListener('click', () => {
                 const name = btn.dataset.name || DEFAULT_ITEM_NAME;
                 const price = btn.dataset.price || DEFAULT_ITEM_PRICE;
-                const tranzilaIndex = Number.parseInt(btn.dataset.tranzilaIndex, 10);
+                const tranzilaIndex = parseInt(btn.dataset.tranzilaIndex, 10);
                 const existing = cart.find(item => item.name === name);
                 if (existing) {
                     existing.quantity += 1;
