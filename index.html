@@ -3229,8 +3229,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 return;
             }
             
-            // Validate that customer details were provided
-            if (!window.customerDetails || !window.customerDetails.name || !window.customerDetails.email) {
+            // Validate that customer details were provided (safety check)
+            if (!window.customerDetails || !window.customerDetails.name || !window.customerDetails.email || !window.customerDetails.phone) {
                 alert('פרטי לקוח חסרים. אנא מלא את הפרטים הנדרשים.');
                 return;
             }
