@@ -3063,11 +3063,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const tranzilaModalOverlay = document.getElementById('tranzilaModalOverlay');
         const tranzilaModalClose = document.getElementById('tranzilaModalClose');
         const tranzilaIframe = document.getElementById('tranzilaIframe');
-        const DEFAULT_PRODUCT_NAME = 'מוצר';
         const availableTranzilaProducts = Array.from(document.querySelectorAll('.add-to-cart[data-tranzila-index]'))
             .map((btn) => ({
                 index: parseInt(btn.dataset.tranzilaIndex, 10),
-                name: btn.dataset.name || DEFAULT_PRODUCT_NAME
+                name: btn.dataset.name || 'מוצר'
             }))
             .filter((product) => Number.isFinite(product.index))
             .sort((a, b) => a.index - b.index);
@@ -3087,8 +3086,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const url = new URL(baseUrl);
             const totalAmount = getCartTotal(items);
             const quantitiesByIndex = items.reduce((acc, item) => {
-                if (Number.isFinite(item.tranzilaIndex)) {
-                    acc[item.tranzilaIndex] = (acc[item.tranzilaIndex] || 0) + (item.quantity || 1);
+                let productIndex = item.tranzilaIndex;
+                if (!Number.isFinite(productIndex)) {
+                    const match = availableTranzilaProducts.find((product) => product.name === item.name);
+                    productIndex = match?.index;
+                }
+                if (Number.isFinite(productIndex)) {
+                    acc[productIndex] = (acc[productIndex] || 0) + (item.quantity || 1);
                 }
                 return acc;
             }, {});
@@ -3637,7 +3641,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
 
 
 
