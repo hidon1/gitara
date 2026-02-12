@@ -3292,7 +3292,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     showCart(true);
                     return;
                 }
-                cart.push({ name, price, selected: true, quantity: 1, tranzilaIndex: Number.isFinite(tranzilaIndex) ? tranzilaIndex : undefined });
+                const cartItem = { name, price, selected: true, quantity: 1 };
+                if (Number.isFinite(tranzilaIndex)) {
+                    cartItem.tranzilaIndex = tranzilaIndex;
+                }
+                cart.push(cartItem);
                 renderCart();
                 cartStatus.textContent = `${name} נוסף לסל.`;
                 showCart(true);
