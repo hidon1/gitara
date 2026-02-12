@@ -3063,7 +3063,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const tranzilaModalOverlay = document.getElementById('tranzilaModalOverlay');
         const tranzilaModalClose = document.getElementById('tranzilaModalClose');
         const tranzilaIframe = document.getElementById('tranzilaIframe');
-        const getAvailableTranzilaProducts = () => (
+        const getTranzilaProducts = () => (
             Array.from(document.querySelectorAll('.add-to-cart[data-tranzila-index]'))
                 .map((btn) => ({
                     index: parseInt(btn.dataset.tranzilaIndex, 10),
@@ -3087,11 +3087,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const baseUrl = 'https://pay.tranzila.com/fxplehitey';
             const url = new URL(baseUrl);
             const totalAmount = getCartTotal(items);
-            const availableTranzilaProducts = getAvailableTranzilaProducts();
+            const availableTranzilaProducts = getTranzilaProducts();
+            const productsByName = new Map(
+                availableTranzilaProducts.map((product) => [product.name, product])
+            );
             const quantitiesByIndex = items.reduce((acc, item) => {
                 let productIndex = item.tranzilaIndex;
                 if (!Number.isFinite(productIndex)) {
-                    const match = availableTranzilaProducts.find((product) => product.name === item.name);
+                    const match = productsByName.get(item.name);
                     productIndex = match?.index;
                 }
                 if (Number.isFinite(productIndex)) {
@@ -3644,7 +3647,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
 
 
 
