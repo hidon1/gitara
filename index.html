@@ -3185,11 +3185,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Returns a formatted string with all cart items
         function getCartDescription() {
             const items = window.pendingCartItems || [];
-            if (items.length === 0) return 'Empty cart';
+            if (items.length === 0) return 'עגלה ריקה';
             
             // Format: "Book Name x2 (80₪) | Another Book x1 (70₪)"
             return items.map(item => {
-                const name = item.name || 'Unknown';
+                const name = item.name || 'לא ידוע';
                 const quantity = item.quantity || 1;
                 const price = parseFloat(item.price) || 0;
                 return `${name} x${quantity} (${price}₪)`;
@@ -3226,6 +3226,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const total = getCartTotal();
             if (total <= 0) {
                 alert('הסל ריק או סכום התשלום אינו תקין. אנא הוסיפו פריטים לסל.');
+                return;
+            }
+            
+            // Validate that customer details were provided
+            if (!window.customerDetails || !window.customerDetails.name || !window.customerDetails.email) {
+                alert('פרטי לקוח חסרים. אנא מלא את הפרטים הנדרשים.');
                 return;
             }
             
