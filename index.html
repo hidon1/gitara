@@ -1603,6 +1603,48 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border-right: 4px solid var(--accent);
         }
 
+        .payment-customer-details {
+            background: rgba(176, 141, 87, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid rgba(176, 141, 87, 0.2);
+        }
+
+        .payment-form-group {
+            margin-bottom: 15px;
+        }
+
+        .payment-form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        .payment-form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Assistant', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            box-sizing: border-box;
+        }
+
+        .payment-form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.1);
+        }
+
+        .payment-form-input::placeholder {
+            color: #999;
+        }
+
         .payment-checkbox {
             display: flex;
             align-items: flex-start;
@@ -2647,6 +2689,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     בסיום התשלום תקבלו למייל <strong>"אישור הזמנה"</strong>. עליכם להדפיס את אישור ההזמנה המלא, למלא את הנספח המופיע בתחתיתו, ולהביא את הדף למוקד האיסוף.
                 </p>
 
+                <h3>👤 פרטי הלקוח לתשלום</h3>
+                <div class="payment-customer-details">
+                    <div class="payment-form-group">
+                        <label class="payment-form-label" for="customerName">שם מלא *</label>
+                        <input type="text" id="customerName" class="payment-form-input" placeholder="הזן שם מלא" required>
+                    </div>
+                    
+                    <div class="payment-form-group">
+                        <label class="payment-form-label" for="customerEmail">אימייל *</label>
+                        <input type="email" id="customerEmail" class="payment-form-input" placeholder="example@mail.com" required>
+                    </div>
+                    
+                    <div class="payment-form-group">
+                        <label class="payment-form-label" for="customerPhone">טלפון *</label>
+                        <input type="tel" id="customerPhone" class="payment-form-input" placeholder="050-0000000" required>
+                    </div>
+                    
+                    <div class="payment-form-group">
+                        <label class="payment-form-label" for="customerAddress">כתובת</label>
+                        <input type="text" id="customerAddress" class="payment-form-input" placeholder="רחוב, עיר">
+                    </div>
+                </div>
+
                 <div class="payment-checkbox">
                     <input type="checkbox" id="paymentConfirmCheckbox">
                     <label for="paymentConfirmCheckbox">
@@ -2958,12 +3023,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const paymentModalClose = document.getElementById('paymentModalClose');
         const paymentConfirmCheckbox = document.getElementById('paymentConfirmCheckbox');
         const paymentContinueBtn = document.getElementById('paymentContinueBtn');
+        
+        // Customer details input fields
+        const customerNameInput = document.getElementById('customerName');
+        const customerEmailInput = document.getElementById('customerEmail');
+        const customerPhoneInput = document.getElementById('customerPhone');
+        const customerAddressInput = document.getElementById('customerAddress');
 
         function openPaymentModal() {
             paymentModalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             paymentConfirmCheckbox.checked = false;
-            paymentContinueBtn.disabled = true;
+            // Clear customer fields when opening modal
+            customerNameInput.value = '';
+            customerEmailInput.value = '';
+            customerPhoneInput.value = '';
+            customerAddressInput.value = '';
+            updateContinueButton();
         }
 
         function closePaymentModal() {
@@ -2971,9 +3047,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             document.body.style.overflow = '';
         }
 
-        // Enable/disable continue button based on checkbox
-        paymentConfirmCheckbox.addEventListener('change', () => {
-            paymentContinueBtn.disabled = !paymentConfirmCheckbox.checked;
+        // Validate customer details - name, email, phone are required
+        function validateCustomerDetails() {
+            const nameValid = customerNameInput.value.trim().length > 0;
+            const emailValid = customerEmailInput.value.trim().length > 0 && 
+                              customerEmailInput.value.includes('@');
+            const phoneValid = customerPhoneInput.value.trim().length > 0;
+            return nameValid && emailValid && phoneValid;
+        }
+
+        // Update continue button state based on checkbox and customer details
+        function updateContinueButton() {
+            const checkboxChecked = paymentConfirmCheckbox.checked;
+            const detailsValid = validateCustomerDetails();
+            paymentContinueBtn.disabled = !(checkboxChecked && detailsValid);
+        }
+
+        // Enable/disable continue button based on checkbox and customer details
+        paymentConfirmCheckbox.addEventListener('change', updateContinueButton);
+        
+        // Add input event listeners to customer fields for real-time validation
+        [customerNameInput, customerEmailInput, customerPhoneInput].forEach(input => {
+            input.addEventListener('input', updateContinueButton);
         });
 
         // Close modal when clicking close button
@@ -2988,6 +3083,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         // Continue to payment
         paymentContinueBtn.addEventListener('click', () => {
+            // Validate one more time before proceeding
+            if (!validateCustomerDetails()) {
+                alert('נא למלא את כל השדות הנדרשים (שם, אימייל, טלפון).');
+                return;
+            }
+
+            // Store customer details globally for Tranzila
+            window.customerDetails = {
+                name: customerNameInput.value.trim(),
+                email: customerEmailInput.value.trim(),
+                phone: customerPhoneInput.value.trim(),
+                address: customerAddressInput.value.trim()
+            };
+
             closePaymentModal();
             
             // Process the cart items
@@ -3072,13 +3181,44 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }, 0);
         }
 
-        // Helper function to build Tranzila URL
+        // Helper function to build cart description for Tranzila
+        // Returns a formatted string with all cart items
+        function getCartDescription() {
+            const items = window.pendingCartItems || [];
+            if (items.length === 0) return 'Empty cart';
+            
+            // Format: "Book Name x2 (80₪) | Another Book x1 (70₪)"
+            return items.map(item => {
+                const name = item.name || 'Unknown';
+                const quantity = item.quantity || 1;
+                const price = parseFloat(item.price) || 0;
+                return `${name} x${quantity} (${price}₪)`;
+            }).join(' | ');
+        }
+
+        // Helper function to build Tranzila URL with all parameters
+        // Customize the baseUrl and parameter names as needed for your Tranzila account
         function buildTranzilaUrl(totalAmount) {
-            const baseUrl = 'https://direct.tranzila.com/fxplehitey/?sum=&currency=1&email=test@mail.com&phone=0500000000';
+            // Base URL - update 'fxplehitey' to your Tranzila terminal name if different
+            const baseUrl = 'https://direct.tranzila.com/fxplehitey/';
+            
+            // Get customer details from global variable (set in payment modal)
+            const customer = window.customerDetails || {};
+            
+            // Build all query parameters
             const params = new URLSearchParams({
-                sum: totalAmount.toFixed(2),
-                currency: '1' // ILS
+                sum: totalAmount.toFixed(2),        // Total amount with 2 decimal places
+                currency: '1',                       // ILS currency code
+                // Customer details - adjust parameter names if your Tranzila config uses different names
+                contact: customer.name || '',        // Customer full name
+                email: customer.email || '',         // Customer email
+                phone: customer.phone || '',         // Customer phone
+                address: customer.address || '',     // Customer address (optional)
+                // Cart description - contains full item list
+                // You can rename this to 'description' or 'remarks' if needed
+                order_desc: getCartDescription()
             });
+            
             return `${baseUrl}?${params.toString()}`;
         }
 
