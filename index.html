@@ -3063,13 +3063,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const tranzilaModalOverlay = document.getElementById('tranzilaModalOverlay');
         const tranzilaModalClose = document.getElementById('tranzilaModalClose');
         const tranzilaIframe = document.getElementById('tranzilaIframe');
-        const availableTranzilaProducts = Array.from(document.querySelectorAll('.add-to-cart[data-tranzila-index]'))
-            .map((btn) => ({
-                index: parseInt(btn.dataset.tranzilaIndex, 10),
-                name: btn.dataset.name || 'מוצר'
-            }))
-            .filter((product) => Number.isFinite(product.index))
-            .sort((a, b) => a.index - b.index);
+        const getAvailableTranzilaProducts = () => (
+            Array.from(document.querySelectorAll('.add-to-cart[data-tranzila-index]'))
+                .map((btn) => ({
+                    index: parseInt(btn.dataset.tranzilaIndex, 10),
+                    name: btn.dataset.name || 'מוצר'
+                }))
+                .filter((product) => Number.isFinite(product.index))
+                .sort((a, b) => a.index - b.index)
+        );
 
         // Helper function to get cart total
         function getCartTotal(items = []) {
@@ -3085,6 +3087,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const baseUrl = 'https://pay.tranzila.com/fxplehitey';
             const url = new URL(baseUrl);
             const totalAmount = getCartTotal(items);
+            const availableTranzilaProducts = getAvailableTranzilaProducts();
             const quantitiesByIndex = items.reduce((acc, item) => {
                 let productIndex = item.tranzilaIndex;
                 if (!Number.isFinite(productIndex)) {
@@ -3287,7 +3290,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             btn.addEventListener('click', () => {
                 const name = btn.dataset.name || DEFAULT_ITEM_NAME;
                 const price = btn.dataset.price || DEFAULT_ITEM_PRICE;
-                const tranzilaIndex = parseInt(btn.dataset.tranzilaIndex, 10);
+                const parsedTranzilaIndex = parseInt(btn.dataset.tranzilaIndex, 10);
                 const existing = cart.find(item => item.name === name);
                 if (existing) {
                     existing.quantity += 1;
@@ -3297,8 +3300,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     return;
                 }
                 const cartItem = { name, price, selected: true, quantity: 1 };
-                if (Number.isFinite(tranzilaIndex)) {
-                    cartItem.tranzilaIndex = tranzilaIndex;
+                if (Number.isFinite(parsedTranzilaIndex)) {
+                    cartItem.tranzilaIndex = parsedTranzilaIndex;
                 }
                 cart.push(cartItem);
                 renderCart();
@@ -3641,7 +3644,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
 
 
 
