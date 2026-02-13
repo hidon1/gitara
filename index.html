@@ -2679,11 +2679,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <p class="payment-details-note" id="paymentDetailsNote">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentName">שם מלא לקבלה</label>
-                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-required="true" aria-describedby="paymentDetailsNote" required>
+                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" required>
                     </div>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentEmail">אימייל לקבלה</label>
-                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-required="true" aria-describedby="paymentDetailsNote" required>
+                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" required>
                     </div>
                 </div>
 
@@ -3005,9 +3005,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             if (!paymentContinueBtn) return;
             const nameValue = paymentNameInput ? paymentNameInput.value.trim() : '';
             const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
-            const hasValidEmail = paymentEmailInput ? (emailValue && paymentEmailInput.checkValidity()) : false;
+            const isEmailValid = paymentEmailInput ? (emailValue && paymentEmailInput.checkValidity()) : false;
             const isConfirmed = paymentConfirmCheckbox?.checked;
-            paymentContinueBtn.disabled = !(isConfirmed && nameValue && hasValidEmail);
+            paymentContinueBtn.disabled = !(isConfirmed && nameValue && isEmailValid);
         }
 
         function openPaymentModal() {
@@ -3724,8 +3724,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
 
 
 
