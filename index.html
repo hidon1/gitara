@@ -2679,11 +2679,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <p class="payment-details-note" id="paymentDetailsNote">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentName">שם מלא לקבלה</label>
-                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" required>
+                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" aria-required="true" required>
                     </div>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentEmail">אימייל לקבלה</label>
-                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" required>
+                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" aria-required="true" required>
                     </div>
                 </div>
 
@@ -3001,13 +3001,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const paymentNameInput = document.getElementById('paymentName');
         const paymentEmailInput = document.getElementById('paymentEmail');
 
-        function updatePaymentContinueState() {
-            if (!paymentContinueBtn) return;
+        function getPaymentFormState() {
             const nameValue = paymentNameInput ? paymentNameInput.value.trim() : '';
             const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
-            const isEmailValid = paymentEmailInput ? (emailValue && paymentEmailInput.checkValidity()) : false;
+            const isNameProvided = Boolean(nameValue);
+            const isEmailProvidedAndValid = paymentEmailInput ? Boolean(emailValue && paymentEmailInput.checkValidity()) : false;
+            return {
+                nameValue,
+                emailValue,
+                isNameProvided,
+                isEmailProvidedAndValid
+            };
+        }
+
+        function updatePaymentContinueState() {
+            if (!paymentContinueBtn) return;
+            const { isNameProvided, isEmailProvidedAndValid } = getPaymentFormState();
             const isConfirmed = paymentConfirmCheckbox?.checked;
-            paymentContinueBtn.disabled = !(isConfirmed && nameValue && isEmailValid);
+            paymentContinueBtn.disabled = !(isConfirmed && isNameProvided && isEmailProvidedAndValid);
         }
 
         function openPaymentModal() {
@@ -3041,19 +3052,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         // Continue to payment
         paymentContinueBtn?.addEventListener('click', () => {
-            const name = paymentNameInput ? paymentNameInput.value.trim() : '';
-            const email = paymentEmailInput ? paymentEmailInput.value.trim() : '';
-            if (!name) {
+            const { nameValue, emailValue, isNameProvided, isEmailProvidedAndValid } = getPaymentFormState();
+            if (!isNameProvided) {
                 paymentNameInput?.reportValidity();
                 paymentNameInput?.focus();
                 return;
             }
-            if (!paymentEmailInput?.checkValidity()) {
+            if (!isEmailProvidedAndValid) {
                 paymentEmailInput?.reportValidity();
                 paymentEmailInput?.focus();
                 return;
             }
-            window.pendingCustomerDetails = { name, email };
+            window.pendingCustomerDetails = { name: nameValue, email: emailValue };
 
             closePaymentModal();
 
@@ -3724,9 +3734,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
-
 
 
 
