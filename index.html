@@ -2678,11 +2678,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="payment-details">
                     <p class="payment-details-note">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
                     <div class="contact-form-group">
-                        <label class="contact-form-label" for="paymentName">שם מלא לקבלת קבלה</label>
+                        <label class="contact-form-label" for="paymentName">שם מלא לקבלה</label>
                         <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" required>
                     </div>
                     <div class="contact-form-group">
-                        <label class="contact-form-label" for="paymentEmail">אימייל לקבלת קבלה</label>
+                        <label class="contact-form-label" for="paymentEmail">אימייל לקבלה</label>
                         <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" required>
                     </div>
                 </div>
@@ -3002,6 +3002,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const paymentEmailInput = document.getElementById('paymentEmail');
 
         function updatePaymentContinueState() {
+            if (!paymentContinueBtn || !paymentConfirmCheckbox) return;
             const nameValue = paymentNameInput ? paymentNameInput.value.trim() : '';
             const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
             const hasValidEmail = paymentEmailInput ? (emailValue && paymentEmailInput.checkValidity()) : false;
@@ -3021,7 +3022,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         // Enable/disable continue button based on checkbox and input fields
-        paymentConfirmCheckbox.addEventListener('change', updatePaymentContinueState);
+        if (paymentConfirmCheckbox) {
+            paymentConfirmCheckbox.addEventListener('change', updatePaymentContinueState);
+        }
         paymentNameInput?.addEventListener('input', updatePaymentContinueState);
         paymentEmailInput?.addEventListener('input', updatePaymentContinueState);
 
@@ -3036,7 +3039,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         });
 
         // Continue to payment
-        paymentContinueBtn.addEventListener('click', () => {
+        paymentContinueBtn?.addEventListener('click', () => {
             const name = paymentNameInput ? paymentNameInput.value.trim() : '';
             const email = paymentEmailInput ? paymentEmailInput.value.trim() : '';
             if (!name) {
@@ -3720,8 +3723,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
 
 
 
