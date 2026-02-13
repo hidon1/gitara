@@ -2679,11 +2679,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <p class="payment-details-note" id="paymentDetailsNote">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentName">שם מלא לקבלה</label>
-                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" aria-required="true" required>
+                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" required>
                     </div>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentEmail">אימייל לקבלה</label>
-                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" aria-required="true" required>
+                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" required>
                     </div>
                 </div>
 
@@ -2890,6 +2890,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </footer>
 
 <script>
+    let pendingCustomerDetails = null;
+
     // Contact Modal functionality
     (() => {
         const modalOverlay = document.getElementById('contactModalOverlay');
@@ -3063,7 +3065,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 paymentEmailInput?.focus();
                 return;
             }
-            window.pendingCustomerDetails = { name: nameValue, email: emailValue };
+            pendingCustomerDetails = { name: nameValue, email: emailValue };
 
             closePaymentModal();
 
@@ -3209,7 +3211,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 return;
             }
             
-            const customerDetails = window.pendingCustomerDetails || {};
+            const customerDetails = pendingCustomerDetails || {};
             const tranzilaUrl = buildTranzilaUrl(itemsToSend, customerDetails);
             tranzilaIframe.src = tranzilaUrl;
             tranzilaModalOverlay.classList.add('active');
@@ -3734,9 +3736,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
-
 
 
 
