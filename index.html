@@ -2676,14 +2676,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </p>
 
                 <div class="payment-details">
-                    <p class="payment-details-note">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
+                    <p class="payment-details-note" id="paymentDetailsNote">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentName">שם מלא לקבלה</label>
-                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" required>
+                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-required="true" aria-describedby="paymentDetailsNote" required>
                     </div>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentEmail">אימייל לקבלה</label>
-                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" required>
+                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-required="true" aria-describedby="paymentDetailsNote" required>
                     </div>
                 </div>
 
@@ -3002,11 +3002,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const paymentEmailInput = document.getElementById('paymentEmail');
 
         function updatePaymentContinueState() {
-            if (!paymentContinueBtn || !paymentConfirmCheckbox) return;
+            if (!paymentContinueBtn) return;
             const nameValue = paymentNameInput ? paymentNameInput.value.trim() : '';
             const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
             const hasValidEmail = paymentEmailInput ? (emailValue && paymentEmailInput.checkValidity()) : false;
-            paymentContinueBtn.disabled = !(paymentConfirmCheckbox.checked && nameValue && hasValidEmail);
+            const isConfirmed = paymentConfirmCheckbox?.checked;
+            paymentContinueBtn.disabled = !(isConfirmed && nameValue && hasValidEmail);
         }
 
         function openPaymentModal() {
@@ -3152,8 +3153,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const url = new URL(baseUrl);
             const totalAmount = getCartTotal(items);
             const availableTranzilaProducts = getTranzilaProducts();
-            const customerName = customerDetails?.name?.trim();
-            const customerEmail = customerDetails?.email?.trim();
+            const customerName = customerDetails?.name;
+            const customerEmail = customerDetails?.email;
             const productsByName = new Map(
                 availableTranzilaProducts.map((product) => [product.name, product])
             );
@@ -3723,9 +3724,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
-
 
 
 
