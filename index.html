@@ -1595,6 +1595,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             font-weight: 700;
         }
 
+        .payment-details {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(176, 141, 87, 0.08);
+            border: 1px solid rgba(176, 141, 87, 0.2);
+        }
+
+        .payment-details-note {
+            margin: 0 0 15px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .payment-details .contact-form-group {
+            margin-bottom: 15px;
+        }
+
+        .payment-details .contact-form-group:last-child {
+            margin-bottom: 0;
+        }
+
         .payment-cities {
             background: rgba(176, 141, 87, 0.1);
             padding: 15px;
@@ -1836,9 +1858,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 95%;
+            max-width: 1200px;
+            width: 98%;
+            height: 90vh;
             max-height: 95vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             animation: slideUp 0.4s ease;
@@ -1905,8 +1929,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         @media (max-width: 768px) {
             .tranzila-modal {
                 padding: 20px;
-                width: 98%;
+                width: 99%;
+                height: 94vh;
                 max-height: 98vh;
+                min-height: 0;
             }
 
             .tranzila-modal-title {
@@ -2649,6 +2675,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     בסיום התשלום תקבלו למייל <strong>"אישור הזמנה"</strong>. עליכם להדפיס את אישור ההזמנה המלא, למלא את הנספח המופיע בתחתיתו, ולהביא את הדף למוקד האיסוף.
                 </p>
 
+                <div class="payment-details">
+                    <p class="payment-details-note">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
+                    <div class="contact-form-group">
+                        <label class="contact-form-label" for="paymentName">שם מלא לקבלת קבלה</label>
+                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" required>
+                    </div>
+                    <div class="contact-form-group">
+                        <label class="contact-form-label" for="paymentEmail">אימייל לקבלת קבלה</label>
+                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" required>
+                    </div>
+                </div>
+
                 <div class="payment-checkbox">
                     <input type="checkbox" id="paymentConfirmCheckbox">
                     <label for="paymentConfirmCheckbox">
@@ -2960,12 +2998,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         const paymentModalClose = document.getElementById('paymentModalClose');
         const paymentConfirmCheckbox = document.getElementById('paymentConfirmCheckbox');
         const paymentContinueBtn = document.getElementById('paymentContinueBtn');
+        const paymentNameInput = document.getElementById('paymentName');
+        const paymentEmailInput = document.getElementById('paymentEmail');
+
+        function updatePaymentContinueState() {
+            const nameValue = paymentNameInput ? paymentNameInput.value.trim() : '';
+            const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
+            const hasValidEmail = paymentEmailInput ? (emailValue && paymentEmailInput.checkValidity()) : false;
+            paymentContinueBtn.disabled = !(paymentConfirmCheckbox.checked && nameValue && hasValidEmail);
+        }
 
         function openPaymentModal() {
             paymentModalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             paymentConfirmCheckbox.checked = false;
-            paymentContinueBtn.disabled = true;
+            updatePaymentContinueState();
         }
 
         function closePaymentModal() {
@@ -2973,10 +3020,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             document.body.style.overflow = '';
         }
 
-        // Enable/disable continue button based on checkbox
-        paymentConfirmCheckbox.addEventListener('change', () => {
-            paymentContinueBtn.disabled = !paymentConfirmCheckbox.checked;
-        });
+        // Enable/disable continue button based on checkbox and input fields
+        paymentConfirmCheckbox.addEventListener('change', updatePaymentContinueState);
+        paymentNameInput?.addEventListener('input', updatePaymentContinueState);
+        paymentEmailInput?.addEventListener('input', updatePaymentContinueState);
 
         // Close modal when clicking close button
         paymentModalClose.addEventListener('click', closePaymentModal);
@@ -2990,8 +3037,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         // Continue to payment
         paymentContinueBtn.addEventListener('click', () => {
+            const name = paymentNameInput ? paymentNameInput.value.trim() : '';
+            const email = paymentEmailInput ? paymentEmailInput.value.trim() : '';
+            if (!name) {
+                paymentNameInput?.reportValidity();
+                paymentNameInput?.focus();
+                return;
+            }
+            if (!paymentEmailInput?.checkValidity()) {
+                paymentEmailInput?.reportValidity();
+                paymentEmailInput?.focus();
+                return;
+            }
+            window.pendingCustomerDetails = { name, email };
+
             closePaymentModal();
-            
+
             // Process the cart items
             const itemsToSend = window.pendingCartItems || [];
             if (!itemsToSend.length) return;
@@ -3083,11 +3144,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         // Helper function to build Tranzila URL
-        function buildTranzilaUrl(items) {
+        function buildTranzilaUrl(items, customerDetails = {}) {
             const baseUrl = 'https://directng.tranzila.com/fxplehitey/iframenew.php';
             const url = new URL(baseUrl);
             const totalAmount = getCartTotal(items);
             const availableTranzilaProducts = getTranzilaProducts();
+            const customerName = customerDetails?.name?.trim();
+            const customerEmail = customerDetails?.email?.trim();
             const productsByName = new Map(
                 availableTranzilaProducts.map((product) => [product.name, product])
             );
@@ -3105,6 +3168,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             url.searchParams.set('sum', totalAmount.toFixed(2));
             url.searchParams.set('currency', '1');
+            url.searchParams.set('lang', 'he');
+
+            if (customerName) {
+                url.searchParams.set('name', customerName);
+            }
+
+            if (customerEmail) {
+                url.searchParams.set('email', customerEmail);
+            }
 
             availableTranzilaProducts.forEach((product) => {
                 const quantity = quantitiesByIndex[product.index] || 0;
@@ -3123,7 +3195,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 return;
             }
             
-            const tranzilaUrl = buildTranzilaUrl(itemsToSend);
+            const customerDetails = window.pendingCustomerDetails || {};
+            const tranzilaUrl = buildTranzilaUrl(itemsToSend, customerDetails);
             tranzilaIframe.src = tranzilaUrl;
             tranzilaModalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -3647,12 +3720,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
-
-
-
-
 
 
 
