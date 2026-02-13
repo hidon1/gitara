@@ -2679,11 +2679,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <p class="payment-details-note" id="paymentDetailsNote">נשמח לקבל את הפרטים הבאים כדי לשלוח אליכם את הקבלה:</p>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentName">שם מלא לקבלה</label>
-                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" aria-required="true" required>
+                        <input type="text" id="paymentName" class="contact-form-input" autocomplete="name" aria-describedby="paymentDetailsNote" required>
                     </div>
                     <div class="contact-form-group">
                         <label class="contact-form-label" for="paymentEmail">אימייל לקבלה</label>
-                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" aria-required="true" required>
+                        <input type="email" id="paymentEmail" class="contact-form-input" autocomplete="email" aria-describedby="paymentDetailsNote" required>
                     </div>
                 </div>
 
@@ -3007,15 +3007,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const nameValue = paymentNameInput ? paymentNameInput.value.trim() : '';
             const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
             const isNameProvided = Boolean(nameValue);
-            const isEmailProvided = Boolean(emailValue);
-            const isEmailValid = paymentEmailInput ? (isEmailProvided ? paymentEmailInput.checkValidity() : true) : false;
-            const isEmailProvidedAndValid = isEmailProvided && isEmailValid;
+            const isEmailProvidedAndValid = paymentEmailInput ? paymentEmailInput.checkValidity() : false;
             return {
                 nameValue,
                 emailValue,
                 isNameProvided,
-                isEmailProvided,
-                isEmailValid,
                 isEmailProvidedAndValid
             };
         }
@@ -3225,6 +3221,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             document.body.style.overflow = '';
             // Clear iframe src when closing
             tranzilaIframe.src = '';
+            pendingCustomerDetails = null;
         }
 
         // Close modal when clicking close button
@@ -3738,9 +3735,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
-
 
 
 
