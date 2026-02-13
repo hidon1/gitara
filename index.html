@@ -3008,7 +3008,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const emailValue = paymentEmailInput ? paymentEmailInput.value.trim() : '';
             const isNameProvided = Boolean(nameValue);
             const isEmailProvided = Boolean(emailValue);
-            const isEmailValid = paymentEmailInput ? paymentEmailInput.checkValidity() : false;
+            const isEmailValid = paymentEmailInput ? (isEmailProvided ? paymentEmailInput.checkValidity() : true) : false;
             const isEmailProvidedAndValid = isEmailProvided && isEmailValid;
             return {
                 nameValue,
@@ -3024,7 +3024,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             if (!paymentContinueBtn) return;
             const { isNameProvided, isEmailProvidedAndValid } = getPaymentFormState();
             const isConfirmed = paymentConfirmCheckbox?.checked;
-            paymentContinueBtn.disabled = !(isConfirmed && isNameProvided && isEmailProvidedAndValid);
+            paymentContinueBtn.disabled = !isConfirmed || !isNameProvided || !isEmailProvidedAndValid;
         }
 
         function openPaymentModal() {
@@ -3169,8 +3169,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const url = new URL(baseUrl);
             const totalAmount = getCartTotal(items);
             const availableTranzilaProducts = getTranzilaProducts();
-            const customerName = customerDetails?.name;
-            const customerEmail = customerDetails?.email;
             const productsByName = new Map(
                 availableTranzilaProducts.map((product) => [product.name, product])
             );
@@ -3190,12 +3188,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             url.searchParams.set('currency', '1');
             url.searchParams.set('lang', 'he');
 
-            if (customerName) {
-                url.searchParams.set('name', customerName);
+            if (customerDetails?.name) {
+                url.searchParams.set('name', customerDetails.name);
             }
 
-            if (customerEmail) {
-                url.searchParams.set('email', customerEmail);
+            if (customerDetails?.email) {
+                url.searchParams.set('email', customerDetails.email);
             }
 
             availableTranzilaProducts.forEach((product) => {
@@ -3740,8 +3738,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
-
 
 
 
