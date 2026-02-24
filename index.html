@@ -3264,10 +3264,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 }
                 return acc;
             }, {});
+            const purchaseData = items
+                .filter((item) => (item.quantity || 0) > 0)
+                .map((item) => ({
+                    product_name: item.name || 'מוצר ללא שם',
+                    product_quantity: item.quantity || 1,
+                    product_price: Number((parseFloat(item.price) || 0).toFixed(2))
+                }));
 
             url.searchParams.set('sum', totalAmount.toFixed(2));
             url.searchParams.set('currency', '1');
             url.searchParams.set('lang', 'il');
+
+            if (purchaseData.length > 0) {
+                const compactJson = JSON.stringify(purchaseData);
+                url.searchParams.set('json_purchase_data', encodeURIComponent(compactJson));
+            }
 
             if (customerDetails?.name) {
                 url.searchParams.set('contact', customerDetails.name);
@@ -3843,7 +3855,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </body>
 </html>
-
 
 
 
